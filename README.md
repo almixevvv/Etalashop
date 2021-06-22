@@ -1,2 +1,2 @@
-# project HMI
+# project Etalashop
  
