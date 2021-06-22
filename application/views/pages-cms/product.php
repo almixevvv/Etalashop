@@ -940,10 +940,241 @@
       $('#editPRODID').val(resp[0].PRODUCT_ID);
       $('#editPRODCategory').val(resp[0].PRODUCT_ID);
       $('#editPRODName').val(resp[0].PRODUCT_NAME);
+<<<<<<< Updated upstream
       $('#editPRODSKU').val(resp[0].SKU);
       $('#editPRODCategory').val(resp[0].CATEGORY_NAME);
       $('#editPRODWeight').val(resp[0].WEIGHT);
       $('#editPRODDetail').val(resp[0].PRODUCT_DETAIL);
+=======
+
+      //6.1.1 Buat nampilin gambar secara otomatis pas klik tombol Edit
+      let imagesArr = [];
+
+      if (resp[0].IMAGES1.length > 0) {
+        imagesArr.push(resp[0].IMAGES1);
+      }
+
+      if (resp[0].IMAGES2.length > 0) {
+        imagesArr.push(resp[0].IMAGES2);
+      }
+
+      if (resp[0].IMAGES3.length > 0) {
+        imagesArr.push(resp[0].IMAGES3);
+      }
+
+      if (resp[0].IMAGES4.length > 0) {
+        imagesArr.push(resp[0].IMAGES4);
+      }
+
+      $.each(imagesArr, function(index, value) {
+        if (index == 0) {
+          $imageContainer = $('<img>').attr('src', baseUrl + 'assets/uploads/products/' + value).addClass('img-preview');
+          $('.father-preview').append($imageContainer);
+
+          $imageHolder = $('<div>').addClass('d-flex mr-2 container-preview');
+          $imageContainer = $('<img>').attr('src', baseUrl + 'assets/uploads/products/' + value).addClass('img-thumbnail');
+
+          $imageHolder.append($imageContainer);
+          $('.mother-preview').append($imageHolder);
+        } else if (index == 3) {
+          $imageHolder = $('<div>').addClass('d-flex container-preview');
+          $imageContainer = $('<img>').attr('src', baseUrl + 'assets/uploads/products/' + value).addClass('img-thumbnail');
+
+          $imageHolder.append($imageContainer);
+          $('.mother-preview').append($imageHolder);
+        } else {
+          $imageHolder = $('<div>').addClass('d-flex mr-2 container-preview');
+          $imageContainer = $('<img>').attr('src', baseUrl + 'assets/uploads/products/' + value).addClass('img-thumbnail');
+
+          $imageHolder.append($imageContainer);
+          $('.mother-preview').append($imageHolder);
+        }
+      });
+      //EoL 6.1.1
+
+      //6.1.2 Nampilin Quantity sesuai jumlahnya
+      let qtyArr = [];
+      let $container = $('#editPriceList');
+      let $btn = $($container).siblings('.priceButton');
+      let $clonePrice = $container.clone();
+
+      $.each(resp, function(index, value) {
+        let qtyDetail = {};
+
+        qtyDetail = {
+          'QTY_MIN': value.QUANTITY_MIN,
+          'QTY_MAX': value.QUANTITY_MAX,
+          'QTY_PRICE': value.QUANTITY_PRICE,
+        }
+
+        qtyArr.push(qtyDetail);
+      });
+
+      $.each(qtyArr, function(index, value) {
+        let curMin = ($($container).find('.editQUANMin'));
+        let curMax = ($($container).find('.editQUANMax'));
+        let curPrice = ($($container).find('.editQUANPrice'));
+
+        if (index == 0) {
+          $(curMin).val(value.QTY_MIN);
+          $(curMax).val(value.QTY_MAX);
+          $(curPrice).val(value.QTY_PRICE);
+        } else {
+          $clonePrice.removeAttr('id');
+          $clonePrice.removeClass('originalPrice').addClass('clonePrice');
+          $clonePrice.find('.btnRemoveRow').removeAttr('disabled');
+
+          $($clonePrice).find('.editQUANMin').val(value.QTY_MIN);
+          $($clonePrice).find('.editQUANMax').val(value.QTY_MAX);
+          $($clonePrice).find('.editQUANPrice').val(value.QTY_PRICE);
+
+          $clonePrice.insertBefore($btn);
+        }
+      });
+      //EoL 6.1.2
+
+      //6.2 Function buat nampilin preview gambar yang di upload
+      function previewImages() {
+        $('.father-preview').empty();
+        $('.mother-preview').empty();
+
+        if (this.files.length > 4) {
+          swal.fire({
+            title: 'Upload Failed',
+            text: `Cannot upload more than 4 files at once`,
+            type: 'warning',
+            showCancelButton: false,
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Close',
+            confirmButtonColor: '#3085d6'
+          });
+        } else {
+          if (this.files) $.each(this.files, readAndPreview);
+
+          function readAndPreview(i, file) {
+
+            if (file.size > 2000000) {
+              return swal.fire({
+                title: 'Upload Failed',
+                text: `File size exceeded! Maximum file size is 2MB`,
+                type: 'warning',
+                showCancelButton: false,
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Close',
+                confirmButtonColor: '#3085d6'
+              });
+            }
+
+            var reader = new FileReader();
+
+            $(reader).on('load', function() {
+              if (i == 0) {
+                $imageContainer = $('<img>').attr('src', this.result).addClass('img-preview');
+                $('.father-preview').append($imageContainer);
+
+                $imageHolder = $('<div>').addClass('d-flex mr-2 container-preview');
+                $imageContainer = $('<img>').attr('src', this.result).addClass('img-thumbnail');
+
+                $imageHolder.append($imageContainer);
+                $('.mother-preview').append($imageHolder);
+              } else if (i == 3) {
+                $imageHolder = $('<div>').addClass('d-flex container-preview');
+                $imageContainer = $('<img>').attr('src', this.result).addClass('img-thumbnail');
+
+                $imageHolder.append($imageContainer);
+                $('.mother-preview').append($imageHolder);
+              } else {
+                $imageHolder = $('<div>').addClass('d-flex mr-2 container-preview');
+                $imageContainer = $('<img>').attr('src', this.result).addClass('img-thumbnail');
+
+                $imageHolder.append($imageContainer);
+                $('.mother-preview').append($imageHolder);
+              }
+            });
+
+            reader.readAsDataURL(file);
+          }
+        }
+      }
+      //EoL 6.2
+
+      //6.3 Detect perubahan tiap kali user upload gambar
+      $('#editfilePRODImage').on('change', previewImages);
+      //EoL 6.3
+
+      //6.4 Submit Form
+      $('#editProduct').submit(function(ex) {
+        ex.preventDefault();
+
+        let qtyMin, qtyMax, qtyPrice;
+        let minCheck, maxCheck, prcCheck;
+        let minCounter, maxCounter, prcCounter;
+        let rowCounter = $('#editProduct').find('.originalPrice').length + 1;
+        let emptyCheck = checkEmptyEditForm(this);
+
+        minCheck = false;
+        maxCheck = false;
+        prcCheck = false;
+
+        minCounter = 0;
+        maxCounter = 0;
+        prcCounter = 0;
+
+        qtyMin = [];
+        qtyMax = [];
+        qtyPrice = [];
+
+        //DISNI
+        qtyMin = $('#editProduct input[name="editQUANMin[]"]').map(function() {
+          return $(this).val();
+        }).get();
+        qtyMax = $('#editProduct input[name="editQUANMax[]"]').map(function() {
+          return $(this).val();
+        }).get();
+        qtyPrice = $('#editProduct input[name="editQUANPrice[]"]').map(function() {
+          return $(this).val();
+        }).get();
+
+        $.each(qtyMin, function(index, value) {
+          if (value.length != 0) {
+            minCounter++;
+          }
+        });
+
+        $.each(qtyMax, function(index, value) {
+          if (value.length != 0) {
+            maxCounter++
+          }
+        });
+
+        $.each(qtyPrice, function(index, value) {
+          if (value.length != 0) {
+            prcCounter++;
+          }
+        });
+
+        minCheck = (minCounter == rowCounter ? true : false);
+        maxCheck = (maxCounter == rowCounter ? true : false);
+        prcCheck = (prcCounter == rowCounter ? true : false);
+
+        if (minCheck == false || maxCheck == false || prcCheck == false) {
+          $('#editProduct .priceButton').before(`
+          <div class="mt-2 alert alert-danger" role="alert">
+            Cannot be empty!
+          </div>
+        `);
+        } else if (minCheck == true && maxCheck == true && prcCheck == true) {
+          $('#editProduct .priceButton').prev('.alert').remove();
+        }
+
+        //Final Check
+        if (minCheck && maxCheck && prcCheck && emptyCheck) {
+          $('#editProduct')[0].submit();
+        }
+        //EoL Final Check
+      })
+      //EoL 6.4
+>>>>>>> Stashed changes
     });
     //EoL 6.1
 
@@ -951,7 +1182,7 @@
     $('#editPRODCategory').autocomplete({
       lookup: countries,
       onSelect: function(suggestion) {
-        console.log(suggestion);
+        // console.log(suggestion);
       }
     });
     //EoL 6.2
