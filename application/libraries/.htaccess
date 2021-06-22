@@ -1,0 +1,21 @@
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php/$1 [L]
+</IfModule>
+
+
+# <IfModule authz_core_module>
+# Order deny,allow
+# Deny from all
+# Allow from 103.235.67.202
+# Allow from 120.188.64.175
+# </IfModule>
+# DO NOT REMOVE THIS LINE AND THE LINES BELOW SSL_REDIRECT:beacukaikanwilbanten.net
+RewriteEngine on
+RewriteCond %{HTTPS} off
+RewriteCond %{HTTP_HOST} ^beacukaikanwilbanten.net$
+RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
+# DO NOT REMOVE THIS LINE AND THE LINES ABOVE SSL_REDIRECT:beacukaikanwilbanten.net
