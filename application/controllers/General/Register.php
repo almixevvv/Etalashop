@@ -6,7 +6,7 @@ class Register extends CI_Controller
 	{
 
 		parent::__construct();
-
+ 
 		date_default_timezone_set('Asia/Jakarta');
 
 		$this->load->model('M_user', 'user');
@@ -156,12 +156,13 @@ class Register extends CI_Controller
 
 			if ($this->email->send()) {
 				$this->session->set_flashdata('verification', 'pending');
-				redirect('home');
+				redirect(base_url('home'));
 			}
 		} else {
 			$this->session->set_flashdata('verification', 'error');
-			redirect('home');
-		}
+			redirect(base_url('home'));
+		}  
+		redirect(base_url('home'));
 	}
 
 	public function verification()

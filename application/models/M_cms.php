@@ -1,7 +1,5 @@
 <?php class M_cms extends CI_Model
 {
-
-
     //General Function
     public function getGeneralListOrderedLimit($table, $field, $query, $limit)
     {

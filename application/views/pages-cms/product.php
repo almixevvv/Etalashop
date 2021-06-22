@@ -126,8 +126,6 @@
                           <span><?= $dt->CATEGORY_NAME; ?></span>
                         </div>
                       </div>
-
-
                     </td>
 
                     <td>

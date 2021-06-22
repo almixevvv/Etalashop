@@ -5,8 +5,9 @@ class Product_cms extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        // $this->output->enable_profiler(TRUE);
+        $this->output->enable_profiler(TRUE);
         $this->load->model('M_pages');
+        $this->load->model('M_cms');
     }
 
     public function index()
@@ -16,7 +17,7 @@ class Product_cms extends CI_Controller
 
         $data['new_order']      = $this->cms->select_order_new();
         $data['unview_order']   = $this->cms->select_order_unview();
-        $data['product_master'] = $this->cms->getGeneralListGroup('v_g_products', 'PRODUCT_ID');
+        $data['product_master'] = $this->cms->getGeneralListGroup('v_g_products', 'PRODUCT_ID', 'USER_NAME');
 
         $this->load->view('templates-cms/header', $data);
         $this->load->view('templates-cms/navbar');
@@ -148,6 +149,7 @@ class Product_cms extends CI_Controller
                 'CATEGORY'          => $queryCheck->row()->LINK,
                 'CREATED'           => date('Y-m-d h:i:s'),
                 'STATUS'            => 'ACTIVE',
+                'USER_ID'           => $this->session->userdata('id')
             );
 
             $this->cms->insertGeneralData('g_product_master', $masterData);
@@ -166,6 +168,7 @@ class Product_cms extends CI_Controller
                     'PRODUCT_ID'        => $this->input->post('txtPRODID'),
                     'QUANTITY_MIN'      => $arrMin[$i],
                     'QUANTITY_MAX'      => $arrMax[$i],
+                    'QUANTITY_PRICE'      => $arrPrice[$i],
                     'CREATED'           => date('Y-m-d h:i:s'),
                 );
 
@@ -183,7 +186,7 @@ class Product_cms extends CI_Controller
                 $_FILES['filePRODImage']['name']         = $files['filePRODImage']['name'][$i];
                 $_FILES['filePRODImage']['type']         = $files['filePRODImage']['type'][$i];
                 $_FILES['filePRODImage']['tmp_name']     = $files['filePRODImage']['tmp_name'][$i];
-                $_FILES['filePRODImage']['error']         = $files['filePRODImage']['error'][$i];
+                $_FILES['filePRODImage']['error']        = $files['filePRODImage']['error'][$i];
                 $_FILES['filePRODImage']['size']         = $files['filePRODImage']['size'][$i];
 
                 $config['upload_path']          = './assets/uploads/products/';
@@ -204,10 +207,10 @@ class Product_cms extends CI_Controller
 
             $imageData = array(
                 'PRODUCT_ID'        => $this->input->post('txtPRODID'),
-                'IMAGES1'           => (isset($imageArr[0]['IMAGES']) ? $imageArr[0]['IMAGES'] : ''),
-                'IMAGES2'           => (isset($imageArr[1]['IMAGES']) ? $imageArr[1]['IMAGES'] : ''),
-                'IMAGES3'           => (isset($imageArr[2]['IMAGES']) ? $imageArr[2]['IMAGES'] : ''),
-                'IMAGES4'           => (isset($imageArr[3]['IMAGES']) ? $imageArr[3]['IMAGES'] : ''),
+                'IMAGES1'           => base_url('assets/uploads/products/').(isset($imageArr[0]['IMAGES']) ? $imageArr[0]['IMAGES'] : ''),
+                'IMAGES2'           => base_url('assets/uploads/products/').(isset($imageArr[1]['IMAGES']) ? $imageArr[1]['IMAGES'] : ''),
+                'IMAGES3'           => base_url('assets/uploads/products/').(isset($imageArr[2]['IMAGES']) ? $imageArr[2]['IMAGES'] : ''),
+                'IMAGES4'           => base_url('assets/uploads/products/').(isset($imageArr[3]['IMAGES']) ? $imageArr[3]['IMAGES'] : ''),
                 'CREATED'           => date('Y-m-d h:i:s'),
             );
 
@@ -260,9 +263,6 @@ class Product_cms extends CI_Controller
 
         $this->load->view('templates-cms/footer');
     }
-
-
-
 
     public function getProductTypes()
     {
@@ -317,7 +317,7 @@ class Product_cms extends CI_Controller
         $this->load->view('templates-cms/navbar');
         $this->load->view('pages-cms/edit_product', $data);
         $this->load->view('templates-cms/footer');
-    } 
+    }
 
     public function updateProduct()
     {
@@ -363,6 +363,5 @@ class Product_cms extends CI_Controller
         $this->M_cms->deleteGeneralData('g_product_quantity','PRODUCT_ID', $id_product);
 
         redirect(base_url('cms/products'));
-    }
-
+    }  
 }
