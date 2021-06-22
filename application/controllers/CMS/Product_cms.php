@@ -23,6 +23,109 @@ class Product_cms extends CI_Controller
         $this->load->view('pages-cms/product', $data);
         $this->load->view('templates-cms/footer');
     }
+
+    public function get_product_detail(){
+      $idproduct=$this->input->post('idproduct');
+      $get_product=$this->cms->getProductDetail($idproduct);
+      $getQty = $this->cms->getGeneralData('v_g_products', 'PRODUCT_ID', $idproduct);
+
+      foreach ($get_product->result() as $key);
+
+          // echo $this->db->last_query();
+          echo'
+            <div class="row">
+                <div class="col-6">
+                  <div class="form-group">
+                    <label><b>IMAGES</b></label>
+                    <div class="row">
+                        <div class="col-12">
+                            <img src='.$key->IMAGES1.' class="img-responsive" style="width:100%; max-height: 300px">
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-4">
+                            <img src='.$key->IMAGES2.' class="img-responsive" style="width:100%; max-height: 300px">
+                        </div>
+                        <div class="col-4">
+                            <img src='.$key->IMAGES3.' class="img-responsive" style="width:100%; max-height: 300px">
+                        </div>
+                        <div class="col-4">
+                            <img src='.$key->IMAGES4.' class="img-responsive" style="width:100%; max-height: 300px">
+                        </div>
+                    </div> 
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="row">
+                    <div class="col-12">
+                      <label><b>Product ID</b></label> <br>
+                      <p>'.$key->PRODUCT_ID.'</p>
+                      <hr>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-12">
+                      <label><b>SKU</b></label> <br>
+                      <p>'.$key->SKU.'</p>
+                      <hr>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-12">
+                      <label><b>Name</b></label> <br>
+                       <p>'.$key->PRODUCT_NAME.'</p>
+                       <hr>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-12">
+                      <label><b>Category</b></label>
+                      <p>'.$key->CATEGORY_NAME.'</p>
+                       <hr>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-12">
+                      <label><b>Weight (Kg)</b></label>
+                      <p>'.$key->WEIGHT.'</p>
+                       <hr>
+                    </div>
+                  </div> ';
+
+            echo   '<div class="row">
+                    <div class="col-12">
+                      <label><b>Price</b></label>
+                      <table class="table">
+                        <tr>
+                            <td>Min</td>
+                            <td>Maks</td>
+                            <td>Price</td>
+                        </tr>';
+                      foreach ($getQty->result() as $dataPrice) {
+                        $price = (int)$dataPrice->QUANTITY_PRICE;
+            echo        '<tr>
+                            <td>'.$dataPrice->QUANTITY_MIN.'</td> 
+                            <td>'.$dataPrice->QUANTITY_MAX.'</td> 
+                            <td>'. number_format($price,0).'</td> 
+                        </tr>
+                        ';
+                      }  
+            echo   '</table>
+                    <hr>
+                    </div>
+                  </div>';
+
+                echo'<div class="row">
+                    <div class="col-12">
+                      <label><b>Description</b></label>
+                      <p>'.$key->PRODUCT_DETAIL.'</p>
+                      <hr>
+                    </div>
+                  </div> 
+                  </div>
+                </div>'; 
+    }
+
     public function add_product()
     {
         //Check if category
@@ -214,7 +317,7 @@ class Product_cms extends CI_Controller
         $this->load->view('templates-cms/navbar');
         $this->load->view('pages-cms/edit_product', $data);
         $this->load->view('templates-cms/footer');
-    }
+    } 
 
     public function updateProduct()
     {
@@ -225,14 +328,41 @@ class Product_cms extends CI_Controller
         // echo "masuk";
         $this->load->model('M_cms', 'cms');
 
-        $id = $this->input->post('txt_rec');
-        $name = $this->input->post('txt_name');
-        $division = $this->input->post('txt_division');
-        $category = $this->input->post('txt_category');
-        $desc = $this->input->post('txt_desc');
+        $id = $this->input->post('editPRODID');
+        // $name = $this->input->post('txt_name');
+        // $division = $this->input->post('txt_division');
+        // $category = $this->input->post('txt_category');
+        // $desc = $this->input->post('txt_desc');
 
-        $this->cms->update_product($id, $name, $division, $category, $desc);
+        // $this->cms->update_product($id, $name, $division, $category, $desc);
+         //1. Upload master data
+         $queryCheck = $this->cms->getGeneralData('m_category', 'DESCRIPTION', $this->input->post('editPRODCategory'));
+        $masterData = array(
+            'SKU'               => $this->input->post('editPRODSKU'),
+            'WEIGHT'            => $this->input->post('editPRODWeight'),
+            'PRODUCT_NAME'      => $this->input->post('editPRODName'),
+            'CATEGORY'          => $queryCheck->row()->LINK,
+            'UPDATED'           => date('Y-m-d h:i:s'),
+            'STATUS'            => 'ACTIVE',
+            'USER_ID'           => $this->session->userdata('id')
+        );
 
-        redirect('cms/product');
+        $this->M_cms->updateGeneralData('g_product_master','PRODUCT_ID',$id,  $masterData);  
+
+        redirect(base_url('cms/products'));
     }
+     public function delete_product()
+    {
+
+        $id_product = $this->input->get('id');
+
+        $this->M_cms->deleteGeneralData('g_product_master','PRODUCT_ID', $id_product);
+
+        $this->M_cms->deleteGeneralData('g_product_images','PRODUCT_ID', $id_product);
+
+        $this->M_cms->deleteGeneralData('g_product_quantity','PRODUCT_ID', $id_product);
+
+        redirect(base_url('cms/products'));
+    }
+
 }
