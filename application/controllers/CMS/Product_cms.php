@@ -5,9 +5,7 @@ class Product_cms extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->output->enable_profiler(TRUE);
-        $this->load->model('M_pages');
-        $this->load->model('M_cms');
+        // $this->output->enable_profiler(TRUE);
     }
 
     public function index()
@@ -25,33 +23,30 @@ class Product_cms extends CI_Controller
         $this->load->view('templates-cms/footer');
     }
 
-    public function get_product_detail(){
-      $idproduct=$this->input->post('idproduct');
-      $get_product=$this->cms->getProductDetail($idproduct);
-      $getQty = $this->cms->getGeneralData('v_g_products', 'PRODUCT_ID', $idproduct);
+    public function get_product_detail()
+    {
+        $getQty = $this->cms->getGeneralData('v_g_products', 'PRODUCT_ID', $this->input->post('idproduct'));
 
-      foreach ($get_product->result() as $key);
-
-          // echo $this->db->last_query();
-          echo'
+        echo '
             <div class="row">
                 <div class="col-6">
                   <div class="form-group">
                     <label><b>IMAGES</b></label>
                     <div class="row">
                         <div class="col-12">
-                            <img src='.$key->IMAGES1.' class="img-responsive" style="width:100%; max-height: 300px">
+                            <img src=' . (strpos($getQty->row()->IMAGES1, 'http') === false ? base_url('assets/uploads/products/' . $getQty->row()->IMAGES1) : $getQty->row()->IMAGES1) . ' class="img-responsive" style="width:100%; max-height: 300px">
                         </div>
                     </div>
                     <div class="row mt-3">
                         <div class="col-4">
-                            <img src='.$key->IMAGES2.' class="img-responsive" style="width:100%; max-height: 300px">
+                            <img src=' . (strpos($getQty->row()->IMAGES2, 'http') === false ? base_url('assets/uploads/products/' . $getQty->row()->IMAGES2) : $getQty->row()->IMAGES2) . ' class="img-responsive" style="width:100%; max-height: 300px">
                         </div>
                         <div class="col-4">
-                            <img src='.$key->IMAGES3.' class="img-responsive" style="width:100%; max-height: 300px">
+                            <img src=' . (strpos($getQty->row()->IMAGES3, 'http') === false ? base_url('assets/uploads/products/' . $getQty->row()->IMAGES3) : $getQty->row()->IMAGES3) . ' class="img-responsive" style="width:100%; max-height: 300px">
                         </div>
                         <div class="col-4">
-                            <img src='.$key->IMAGES4.' class="img-responsive" style="width:100%; max-height: 300px">
+                        
+                            <img src=' . (strpos($getQty->row()->IMAGES4, 'http') === false ? base_url('assets/uploads/products/' . $getQty->row()->IMAGES4) : $getQty->row()->IMAGES4) . ' class="img-responsive" style="width:100%; max-height: 300px">
                         </div>
                     </div> 
                   </div>
@@ -60,40 +55,40 @@ class Product_cms extends CI_Controller
                   <div class="row">
                     <div class="col-12">
                       <label><b>Product ID</b></label> <br>
-                      <p>'.$key->PRODUCT_ID.'</p>
+                      <p>' . $getQty->row()->PRODUCT_ID . '</p>
                       <hr>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-12">
                       <label><b>SKU</b></label> <br>
-                      <p>'.$key->SKU.'</p>
+                      <p>' . $getQty->row()->SKU . '</p>
                       <hr>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-12">
                       <label><b>Name</b></label> <br>
-                       <p>'.$key->PRODUCT_NAME.'</p>
+                       <p>' . $getQty->row()->PRODUCT_NAME . '</p>
                        <hr>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-12">
                       <label><b>Category</b></label>
-                      <p>'.$key->CATEGORY_NAME.'</p>
+                      <p>' . $getQty->row()->CATEGORY_NAME . '</p>
                        <hr>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-12">
                       <label><b>Weight (Kg)</b></label>
-                      <p>'.$key->WEIGHT.'</p>
+                      <p>' . (!isset($getQty->row()->WEIGHT) ? '-' : $getQty->row()->WEIGHT) . '</p>
                        <hr>
                     </div>
                   </div> ';
 
-            echo   '<div class="row">
+        echo   '<div class="row">
                     <div class="col-12">
                       <label><b>Price</b></label>
                       <table class="table">
@@ -102,29 +97,29 @@ class Product_cms extends CI_Controller
                             <td>Maks</td>
                             <td>Price</td>
                         </tr>';
-                      foreach ($getQty->result() as $dataPrice) {
-                        $price = (int)$dataPrice->QUANTITY_PRICE;
+        foreach ($getQty->result() as $dataPrice) {
+            $price = (int)$dataPrice->QUANTITY_PRICE;
             echo        '<tr>
-                            <td>'.$dataPrice->QUANTITY_MIN.'</td> 
-                            <td>'.$dataPrice->QUANTITY_MAX.'</td> 
-                            <td>'. number_format($price,0).'</td> 
+                            <td>' . $dataPrice->QUANTITY_MIN . '</td> 
+                            <td>' . $dataPrice->QUANTITY_MAX . '</td> 
+                            <td>' . number_format($price, 0) . '</td> 
                         </tr>
                         ';
-                      }  
-            echo   '</table>
+        }
+        echo   '</table>
                     <hr>
                     </div>
                   </div>';
 
-                echo'<div class="row">
+        echo '<div class="row">
                     <div class="col-12">
                       <label><b>Description</b></label>
-                      <p>'.$key->PRODUCT_DETAIL.'</p>
+                      <p>' . $getQty->row()->PRODUCT_DETAIL . '</p>
                       <hr>
                     </div>
                   </div> 
                   </div>
-                </div>'; 
+                </div>';
     }
 
     public function add_product()
@@ -170,6 +165,7 @@ class Product_cms extends CI_Controller
                     'QUANTITY_MAX'      => $arrMax[$i],
                     'QUANTITY_PRICE'      => $arrPrice[$i],
                     'CREATED'           => date('Y-m-d h:i:s'),
+                    'CREATED'           => '',
                 );
 
                 $this->cms->insertGeneralData('g_product_quantity', $qtyData);
@@ -207,10 +203,10 @@ class Product_cms extends CI_Controller
 
             $imageData = array(
                 'PRODUCT_ID'        => $this->input->post('txtPRODID'),
-                'IMAGES1'           => base_url('assets/uploads/products/').(isset($imageArr[0]['IMAGES']) ? $imageArr[0]['IMAGES'] : ''),
-                'IMAGES2'           => base_url('assets/uploads/products/').(isset($imageArr[1]['IMAGES']) ? $imageArr[1]['IMAGES'] : ''),
-                'IMAGES3'           => base_url('assets/uploads/products/').(isset($imageArr[2]['IMAGES']) ? $imageArr[2]['IMAGES'] : ''),
-                'IMAGES4'           => base_url('assets/uploads/products/').(isset($imageArr[3]['IMAGES']) ? $imageArr[3]['IMAGES'] : ''),
+                'IMAGES1'           => base_url('assets/uploads/products/') . (isset($imageArr[0]['IMAGES']) ? $imageArr[0]['IMAGES'] : ''),
+                'IMAGES2'           => base_url('assets/uploads/products/') . (isset($imageArr[1]['IMAGES']) ? $imageArr[1]['IMAGES'] : ''),
+                'IMAGES3'           => base_url('assets/uploads/products/') . (isset($imageArr[2]['IMAGES']) ? $imageArr[2]['IMAGES'] : ''),
+                'IMAGES4'           => base_url('assets/uploads/products/') . (isset($imageArr[3]['IMAGES']) ? $imageArr[3]['IMAGES'] : ''),
                 'CREATED'           => date('Y-m-d h:i:s'),
             );
 
@@ -221,147 +217,146 @@ class Product_cms extends CI_Controller
 
             if ($this->db->trans_status() === FALSE) {
                 $this->db->trans_rollback();
-                $this->session->set_flashdata('inputError', true);
+                $this->session->set_flashdata('inputError', '1');
 
                 redirect(base_url('cms/products'));
             } else {
                 $this->db->trans_commit();
-                $this->session->set_flashdata('inputError', false);
+                $this->session->set_flashdata('inputError', '0');
 
                 redirect(base_url('cms/products'));
             }
         }
     }
 
-    public function getProductCategories()
+    public function edit_product()
     {
-        $data['title']      = 'Product Categories';
-        $data['page']       = 'Product Categories';
+        $queryCheck = $this->cms->getGeneralData('m_category', 'DESCRIPTION', $this->input->post('editPRODCategory'));
 
-        $module = $this->cms->module_check("CATEGORY", $this->session->userdata('GROUP_ID'));
+        if ($queryCheck->num_rows() == 0) {
+            //Invalid Category
+            // $this->session->set_flashdata('errorInvalidID', true);
+            // redirect(base_url('cms/products'));
+        } else {
+            $this->db->trans_start();
 
-        if ($module->num_rows() > 0) {
-
-            $session = array(
-                'ROLE' => $module->row()->ROLE
+            //1. Update master data
+            $masterData = array(
+                'SKU'               => $this->input->post('editPRODSKU'),
+                'WEIGHT'            => $this->input->post('editPRODWeight'),
+                'PRODUCT_NAME'      => $this->input->post('editPRODName'),
+                'CATEGORY'          => $queryCheck->row()->LINK,
+                'UPDATED'           => date('Y-m-d h:i:s'),
+                'STATUS'            => 'ACTIVE',
+                'PRODUCT_DETAIL'    => $this->input->post('editPRODDetail'),
+                'USER_ID'           => $this->session->userdata('id')
             );
 
-            $this->session->set_userdata($session);
+            $this->cms->updateGeneralData('g_product_master', 'PRODUCT_ID', $this->input->post('editPRODID'),  $masterData);
+            //EoL 1
+
+            //2. Update Images 
+            if (isset($_FILES['editfilePRODImage'])) {
+                //2.1 Only run the function if image exist
+                $imageArr   = array();
+                $files = $_FILES;
+                $imageCount = count($_FILES['editfilePRODImage']['name']);
+
+                for ($i = 0; $i < $imageCount; $i++) {
+
+                    $_FILES['editfilePRODImage']['name']        = $files['editfilePRODImage']['name'][$i];
+                    $_FILES['editfilePRODImage']['type']        = $files['editfilePRODImage']['type'][$i];
+                    $_FILES['editfilePRODImage']['tmp_name']    = $files['editfilePRODImage']['tmp_name'][$i];
+                    $_FILES['editfilePRODImage']['error']       = $files['editfilePRODImage']['error'][$i];
+                    $_FILES['editfilePRODImage']['size']        = $files['editfilePRODImage']['size'][$i];
+
+                    $config['upload_path']          = './assets/uploads/products/';
+                    $config['allowed_types']        = 'gif|jpg|png|jpeg|JPG|PNG';
+                    $config['overwrite']            = true;
+                    $config['encrypt_name']         = true;
+
+                    $this->load->library('upload', $config);
+
+                    $this->upload->do_upload('editfilePRODImage');
+                    $data = $this->upload->data();
+
+                    // $error = array('error' => $this->upload->display_errors());
+                    // var_dump($error);
+
+                    $imageArr[] = array(
+                        'IMAGES'          => $data['file_name'],
+                        'ORDER'           => $i
+                    );
+                }
+
+                $imageData = array(
+                    'IMAGES1'           => (isset($imageArr[0]['IMAGES']) ? $imageArr[0]['IMAGES'] : ''),
+                    'IMAGES2'           => (isset($imageArr[1]['IMAGES']) ? $imageArr[1]['IMAGES'] : ''),
+                    'IMAGES3'           => (isset($imageArr[2]['IMAGES']) ? $imageArr[2]['IMAGES'] : ''),
+                    'IMAGES4'           => (isset($imageArr[3]['IMAGES']) ? $imageArr[3]['IMAGES'] : ''),
+                    'CREATED'           => date('Y-m-d h:i:s'),
+                );
+
+                $this->cms->updateGeneralData('g_product_images', 'PRODUCT_ID', $this->input->post('editPRODID'),  $imageData);
+                //EoL 2.1
+            }
+            //EoL 2
+
+            //3. Edit Product Quantity
+            $arrPrice   = $this->input->post('editQUANPrice');
+            $arrMin     = $this->input->post('editQUANMin');
+            $arrMax     = $this->input->post('editQUANMax');
+
+            $qtyCount = count($arrPrice);
+
+            $this->cms->deleteGeneralData('g_product_quantity', 'PRODUCT_ID', $this->input->post('editPRODID'));
+
+            for ($i = 0; $i < $qtyCount; $i++) {
+
+                $qtyData = array(
+                    'PRODUCT_ID'        => $this->input->post('editPRODID'),
+                    'QUANTITY_MIN'      => $arrMin[$i],
+                    'QUANTITY_MAX'      => $arrMax[$i],
+                    'CREATED'           => date('Y-m-d h:i:s'),
+                    'UPDATED'           => date('Y-m-d h:i:s'),
+                );
+
+                $this->cms->insertGeneralData('g_product_quantity', $qtyData);
+            }
+            //EoL 3
+
+            $this->db->trans_complete();
+
+            if ($this->db->trans_status() === FALSE) {
+                $this->db->trans_rollback();
+                $this->session->set_flashdata('inputError', '1');
+
+                redirect(base_url('cms/products'));
+            } else {
+                $this->db->trans_commit();
+                $this->session->set_flashdata('inputError', '0');
+
+                redirect(base_url('cms/products'));
+            }
         }
-
-        $this->load->view('templates-cms/header', $data);
-        $this->load->view('templates-cms/frame_side');
-        $this->load->view('templates-cms/navbar');
-
-        if (stripos($this->session->userdata('ROLE'), "VIEW;") === false) {
-            $data['user'] = "empty";
-            $this->session->set_flashdata('perm_err', true);
-        } else {
-            $data['categories'] = $this->cms->select_category();
-            $this->load->view('pages-cms/product_categories', $data);
-        }
-
-        $this->load->view('templates-cms/footer');
-    }
-
-    public function getProductTypes()
-    {
-        $data['title'] = 'Product Markets';
-        $data['page'] = 'Product Markets';
-
-        $module = $this->cms->module_check("TYPES", $this->session->userdata('GROUP_ID'));
-
-        if ($module->num_rows() > 0) {
-
-            $session = array(
-                'ROLE' => $module->row()->ROLE
-            );
-
-            $this->session->set_userdata($session);
-        }
-
-        $this->load->view('templates-cms/header', $data);
-        $this->load->view('templates-cms/frame_side');
-        $this->load->view('templates-cms/navbar');
-
-        if (stripos($this->session->userdata('ROLE'), "VIEW;") === false) {
-            $data['user'] = "empty";
-            $this->session->set_flashdata('perm_err', true);
-        } else {
-            $data['types'] = $this->cms->select_division();
-            $this->load->view('pages-cms/product_types', $data);
-        }
-
-        $this->load->view('templates-cms/footer');
-    }
-
-    public function getEditProduct()
-    {
-
-        // $this->output->enable_profiler(TRUE);
-        // echo 'masuk';
-        // $this->load->helper('form');
-
-        $data['title'] = 'Edit Product';
-
-        $data['page'] = 'Edit Product';
-
-        $id = $this->input->get('id');
-        $this->load->model('M_cms', 'cms');
-        $data['product'] = $this->cms->singleProduct($id);
-        $data['division'] = $this->cms->select_division();
-        $data['category'] = $this->cms->select_category();
-
-        $this->load->view('templates-cms/header', $data);
-        $this->load->view('templates-cms/frame_side');
-        $this->load->view('templates-cms/navbar');
-        $this->load->view('pages-cms/edit_product', $data);
-        $this->load->view('templates-cms/footer');
     }
 
     public function updateProduct()
     {
-
-        // date_default_timezone_set('Asia/Jakarta');
         // $this->output->enable_profiler(TRUE);
-        // $this->load->helper('form');
-        // echo "masuk";
-        $this->load->model('M_cms', 'cms');
 
-        $id = $this->input->post('editPRODID');
-        // $name = $this->input->post('txt_name');
-        // $division = $this->input->post('txt_division');
-        // $category = $this->input->post('txt_category');
-        // $desc = $this->input->post('txt_desc');
+        // $id = $this->input->post('editPRODID');
+        // $this->M_cms->updateGeneralData('g_product_master', 'PRODUCT_ID', $id,  $masterData);
+        // redirect(base_url('cms/products'));
+    }
+    public function delete_product()
+    {
+        $id_product = $this->input->get('id');
 
-        // $this->cms->update_product($id, $name, $division, $category, $desc);
-         //1. Upload master data
-         $queryCheck = $this->cms->getGeneralData('m_category', 'DESCRIPTION', $this->input->post('editPRODCategory'));
-        $masterData = array(
-            'SKU'               => $this->input->post('editPRODSKU'),
-            'WEIGHT'            => $this->input->post('editPRODWeight'),
-            'PRODUCT_NAME'      => $this->input->post('editPRODName'),
-            'CATEGORY'          => $queryCheck->row()->LINK,
-            'UPDATED'           => date('Y-m-d h:i:s'),
-            'STATUS'            => 'ACTIVE',
-            'USER_ID'           => $this->session->userdata('id')
-        );
-
-        $this->M_cms->updateGeneralData('g_product_master','PRODUCT_ID',$id,  $masterData);  
+        $this->cms->deleteGeneralData('g_product_master', 'PRODUCT_ID', $id_product);
+        $this->cms->deleteGeneralData('g_product_images', 'PRODUCT_ID', $id_product);
+        $this->cms->deleteGeneralData('g_product_quantity', 'PRODUCT_ID', $id_product);
 
         redirect(base_url('cms/products'));
     }
-     public function delete_product()
-    {
-
-        $id_product = $this->input->get('id');
-
-        $this->M_cms->deleteGeneralData('g_product_master','PRODUCT_ID', $id_product);
-
-        $this->M_cms->deleteGeneralData('g_product_images','PRODUCT_ID', $id_product);
-
-        $this->M_cms->deleteGeneralData('g_product_quantity','PRODUCT_ID', $id_product);
-
-        redirect(base_url('cms/products'));
-    }  
 }

@@ -114,13 +114,16 @@ class API extends CI_Controller
 
                 if ($queryProduct->num_rows() > 0) {
                     foreach ($queryProduct->result() as $data) {
+
+                        $calculateFinalPrice = ($data->QUANTITY_PRICE == null ? 'Price Negotiable' : number_format($data->QUANTITY_PRICE, 2, '.', ','));
+
                         $result[] = array(
                             'ID'                => $data->PRODUCT_ID,
                             'TITLE'             => $data->PRODUCT_NAME,
-                            'PICTURE'           => $data->IMAGES1,
-                            'ORIGINAL_PRICE'    => number_format($data->QUANTITY_PRICE, 2, '.', ','),
+                            'PICTURE'           => (strpos($data->IMAGES1, 'http') === false ? base_url('assets/uploads/products/' . $data->IMAGES1) : $data->IMAGES1),
+                            'ORIGINAL_PRICE'    => $calculateFinalPrice,
                             'START_QUANTITY'    => $data->QUANTITY_MIN,
-                            'PRICE'             => ($data->QUANTITY_PRICE == null ? 'Price Negotiable' : number_format($data->QUANTITY_PRICE, 2, '.', ','))
+                            'PRICE'             => $calculateFinalPrice
                         );
                     }
 
