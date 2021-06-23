@@ -8,7 +8,7 @@
  
 		<div id="registration-inner-container">
 
-			<div class="row">
+			<div class="row"> 
 				<div class="col-12">
 					<div class="row pb-md-2 pb-lg-2 pb-xl-2 pt-md-1 pt-lg-1 pt-xl-1">
 						<div class="col-12 pt-3 pb-3 pt-md-0 pt-lg-0 pt-xl-0 pb-md-0 pb-lg-0 pb-xl-0">

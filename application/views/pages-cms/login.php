@@ -1,4 +1,4 @@
-<style type="text/css">
+<style type="text/css"> 
   body {
     background-image: linear-gradient(to bottom, #ffffff 0%, #18b589 100%);
   }
