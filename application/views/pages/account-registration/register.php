@@ -4,8 +4,8 @@
 
 <div class="registration-container">
 
-	<form action="<?php echo base_url('Register/input'); ?>" method="POST" class="needs-validation" novalidate>
-
+	<form action="<?php echo base_url('General/Register/input'); ?>" method="POST" class="needs-validation" novalidate>
+ 
 		<div id="registration-inner-container">
 
 			<div class="row">
