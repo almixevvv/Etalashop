@@ -25,6 +25,18 @@
         return $query;
     }
 
+    public function getSpecificListGroup($table, $field, $query, $group)
+    {
+        $this->db->select('*');
+        $this->db->from($table);
+        $this->db->where($field, $query);
+        $this->db->group_by($group);
+
+        $query = $this->db->get();
+
+        return $query;
+    }
+
     public function getGeneralListOrdered($table, $field, $query)
     {
         $this->db->select('*');

@@ -68,7 +68,7 @@
 		<!-- COMPONENT LEFT PART -->
 		<div class="custom-column-left header-desktop">
 			<div class="accordion" id="main-accordion">
-				<?php foreach ($categories->result() as $data) : ?>
+				<?php foreach ($categories->result() as $data) { ?>
 					<div class="card">
 						<div class="card-header" data-toggle="collapse" data-target="#collapse-<?php echo $data->ID; ?>" aria-expanded="false" aria-controls="collapse-<?php echo $data->ID; ?>" id="heading-<?php echo $data->ID; ?>" style="padding: 0!important;">
 							<p class=" categoryCardContainer">
@@ -85,16 +85,16 @@
 								<ul>
 									<?php $categoryQuery = $this->M_category->getChildCategory($data->ID); ?>
 
-									<?php foreach ($categoryQuery->result() as $list) : ?>
+									<?php foreach ($categoryQuery->result() as $list) { ?>
 										<li class="category-list">
 											<a class="text-capitalize" href="<?php echo base_url('home?category=' . $data->ID . '&id=' . ucfirst(strtolower($list->LINK))); ?>">&nbsp;<?php echo ucfirst(strtolower($list->NAME)); ?></a>
 										</li>
-									<?php endforeach; ?>
+									<?php } ?>
 								</ul>
 							</div>
 						</div>
 					</div>
-				<?php endforeach; ?>
+				<?php } ?>
 
 				<div class="card">
 					<span id="banner-sidebar">
