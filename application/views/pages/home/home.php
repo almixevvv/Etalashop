@@ -200,7 +200,7 @@
 		});
 	</script>
 <?php endif; ?>
- 
+
 <?php
 //VERIFICATION AJAX FUNCTION
 if ($this->input->get('key') != null && $this->input->get('email') != null) :

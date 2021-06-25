@@ -5,7 +5,7 @@ class Product_cms extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        // $this->output->enable_profiler(TRUE);
+        $this->output->enable_profiler(TRUE);
     }
 
     public function index()
@@ -163,7 +163,7 @@ class Product_cms extends CI_Controller
                     'PRODUCT_ID'        => $this->input->post('txtPRODID'),
                     'QUANTITY_MIN'      => $arrMin[$i],
                     'QUANTITY_MAX'      => $arrMax[$i],
-                    'QUANTITY_PRICE'      => $arrPrice[$i],
+                    'QUANTITY_PRICE'    => $arrPrice[$i],
                     'CREATED'           => date('Y-m-d h:i:s'),
                     'CREATED'           => '',
                 );
@@ -235,7 +235,8 @@ class Product_cms extends CI_Controller
 
         if ($queryCheck->num_rows() == 0) {
             //Invalid Category
-            // $this->session->set_flashdata('errorInvalidID', true);
+            echo 'kesini';
+            $this->session->set_flashdata('errorInvalidID', true);
             // redirect(base_url('cms/products'));
         } else {
             $this->db->trans_start();
@@ -253,10 +254,10 @@ class Product_cms extends CI_Controller
             );
 
             $this->cms->updateGeneralData('g_product_master', 'PRODUCT_ID', $this->input->post('editPRODID'),  $masterData);
-            //EoL 1
+            //EoL 1 
 
-            //2. Update Images 
-            if (isset($_FILES['editfilePRODImage'])) {
+            // 2. Update Images 
+            if (strlen($_FILES['editfilePRODImage']['name'][0]) != 0) {
                 //2.1 Only run the function if image exist
                 $imageArr   = array();
                 $files = $_FILES;
@@ -317,6 +318,7 @@ class Product_cms extends CI_Controller
                     'PRODUCT_ID'        => $this->input->post('editPRODID'),
                     'QUANTITY_MIN'      => $arrMin[$i],
                     'QUANTITY_MAX'      => $arrMax[$i],
+                    'QUANTITY_PRICE'    => $arrPrice[$i],
                     'CREATED'           => date('Y-m-d h:i:s'),
                     'UPDATED'           => date('Y-m-d h:i:s'),
                 );

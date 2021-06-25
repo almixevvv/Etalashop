@@ -164,10 +164,12 @@ $('#addProductModal').on('show.bs.modal', function(event) {
 	$('#addProduct').submit(function(ex) {
 		ex.preventDefault();
 
+		console.log('clicked here');
+
 		let qtyMin, qtyMax, qtyPrice;
 		let minCheck, maxCheck, prcCheck;
 		let minCounter, maxCounter, prcCounter;
-		let rowCounter = $('.originalPrice').length + 1;
+		let rowCounter = $('#addProduct .originalPrice').length + $('#addProduct .clonePrice').length;
 		let emptyCheck = checkEmptyForm(this);
 
 		minCheck = false;
@@ -221,18 +223,31 @@ $('#addProductModal').on('show.bs.modal', function(event) {
 		prcCheck = prcCounter == rowCounter ? true : false;
 
 		if (minCheck == false || maxCheck == false || prcCheck == false) {
-			$('#btnAddQuantity').before(`
-          <div class="mt-2 alert alert-danger" role="alert">
-            Cannot be empty!
-          </div>
-        `);
+			$('#addProduct .priceButton').before(`
+          		<div class="mt-2 alert alert-danger" role="alert">
+            		Cannot be empty!
+          		</div>
+        	`);
 		} else if (minCheck == true && maxCheck == true && prcCheck == true) {
-			$('#btnAddQuantity').prev('.alert').remove();
+			$('#addProduct .priceButton').prev('.alert').remove();
 		}
+
+		console.log('min counter ' + minCounter);
+		console.log('max counter ' + maxCounter);
+		console.log('price counter ' + prcCounter);
+
+		console.log('min check ' + minCheck);
+		console.log('max check ' + maxCheck);
+		console.log('price check ' + prcCheck);
+
+		console.log('row counter ' + rowCounter);
 
 		//Final Check
 		if (minCheck && maxCheck && prcCheck && emptyCheck) {
-			// $('#addProduct')[0].submit();
+			console.log('ke klik');
+			$('#addProduct')[0].submit();
+		} else {
+			console.log('masih ada yabg miss');
 		}
 		//EoL Final Check
 	});
@@ -262,10 +277,11 @@ $('#editProductModal').on('show.bs.modal', function(event) {
 			//Buat ngeliat datanya apa aja
 			console.log(resp);
 			$('#editPRODID').val(resp[0].PRODUCT_ID);
-			$('#editPRODCategory').val(resp[0].PRODUCT_ID);
+			$('#editPRODCategory').val(resp[0].CATEGORY_NAME);
 			$('#editPRODName').val(resp[0].PRODUCT_NAME);
 			$('#editPRODSKU').val(resp[0].SKU);
 			$('#editPRODWeight').val(resp[0].WEIGHT);
+			$('#editPRODDetail').text(resp[0].PRODUCT_DETAIL);
 
 			//6.1.1 Buat nampilin gambar secara otomatis pas klik tombol Edit
 			let imagesArr = [];
@@ -292,13 +308,19 @@ $('#editProductModal').on('show.bs.modal', function(event) {
 
 				if (index == 0) {
 					$imageContainer = $('<img>')
-						.attr('src', baseUrl + 'assets/uploads/products/' + value)
+						.attr(
+							'src',
+							value.substring(0, 4) == 'http' ? value : baseUrl + 'assets/uploads/products/' + value
+						)
 						.addClass('img-preview');
 					$('.father-preview').append($imageContainer);
 
 					$imageHolder = $('<div>').addClass('d-flex mr-2 container-preview');
 					$imageContainer = $('<img>')
-						.attr('src', baseUrl + 'assets/uploads/products/' + value)
+						.attr(
+							'src',
+							value.substring(0, 4) == 'http' ? value : baseUrl + 'assets/uploads/products/' + value
+						)
 						.addClass('img-thumbnail');
 
 					$imageHolder.append($imageContainer);
@@ -306,7 +328,10 @@ $('#editProductModal').on('show.bs.modal', function(event) {
 				} else if (index == 3) {
 					$imageHolder = $('<div>').addClass('d-flex container-preview');
 					$imageContainer = $('<img>')
-						.attr('src', baseUrl + 'assets/uploads/products/' + value)
+						.attr(
+							'src',
+							value.substring(0, 4) == 'http' ? value : baseUrl + 'assets/uploads/products/' + value
+						)
 						.addClass('img-thumbnail');
 
 					$imageHolder.append($imageContainer);
@@ -314,7 +339,10 @@ $('#editProductModal').on('show.bs.modal', function(event) {
 				} else {
 					$imageHolder = $('<div>').addClass('d-flex mr-2 container-preview');
 					$imageContainer = $('<img>')
-						.attr('src', baseUrl + 'assets/uploads/products/' + value)
+						.attr(
+							'src',
+							value.substring(0, 4) == 'http' ? value : baseUrl + 'assets/uploads/products/' + value
+						)
 						.addClass('img-thumbnail');
 
 					$imageHolder.append($imageContainer);
@@ -439,7 +467,7 @@ $('#editProductModal').on('show.bs.modal', function(event) {
 				let qtyMin, qtyMax, qtyPrice;
 				let minCheck, maxCheck, prcCheck;
 				let minCounter, maxCounter, prcCounter;
-				let rowCounter = $('#editProduct').find('.clonePrice').length + 1;
+				let rowCounter = $('#editProduct .originalPrice').length + $('#editProduct .clonePrice').length;
 				let emptyCheck = checkEmptyEditForm(this);
 
 				minCheck = false;

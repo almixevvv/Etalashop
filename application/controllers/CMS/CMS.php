@@ -12,7 +12,7 @@ class CMS extends CI_Controller
 
 		$this->load->model('M_cms', 'cms');
 
-		// $this->output->enable_profiler(TRUE);
+		$this->output->enable_profiler(TRUE);
 	}
 
 	public function index()
