@@ -1,4 +1,4 @@
-<?php class M_user extends CI_Model
+<?php class M_user extends CI_Model 
 {
 
 	function checkExistingEmail($email)

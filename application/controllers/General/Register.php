@@ -1,4 +1,4 @@
-<?php if (!defined("BASEPATH")) exit("Hack Attempt");
+<?php if (!defined("BASEPATH")) exit("Hack Attempt"); 
 class Register extends CI_Controller
 {
 
@@ -13,7 +13,7 @@ class Register extends CI_Controller
 		$this->load->helper('form');
 		$this->load->library('email');
 
-		// $this->output->enable_profiler(TRUE);
+		$this->output->enable_profiler(TRUE);
 	}
 
 	public function index()
@@ -128,7 +128,35 @@ class Register extends CI_Controller
 			'IMAGE'			=> $saveDirectory
 		);
 
-		$query = $this->user->registration($data);
+		$query = $this->user->registration($data); 
+
+		// Verifikasi Email dengan Localhost
+
+		// function verify($verificationText=NULL){  
+		// 	$noRecords = $this->HomeModel->verifyEmailAddress($verificationText);  
+		//   	if ($noRecords > 0){
+		//    		$error = array( 'success' => "Email Verified Successfully!"); 
+		//   	}
+		//   	else{
+		//    		$error = array( 'error' => "Sorry Unable to Verify Your Email!"); 
+		//   	}
+		//   	$data['errormsg'] = $error; 
+		//   	$this->load->view('home.php', $data);   
+		// }
+
+		// function sendVerificationEmail(){  
+		//   	$this->EmailModel->sendVerificatinEmail("admin@etalashop.com","rV#qMNCdt,W!");
+		// 	$this->load->view('home.php', $data);   
+		// } 
+
+		// $this->load->library('email', $config);
+		// $this->email->set_newline("\r\n");
+		// $this->email->from('admin@yourdomain.com', "Admin Team");
+		// $this->email->to($email);  
+		// $this->email->subject("Email Verification");
+		// $this->email->message("Dear User,\nPlease click on below URL or paste into your browser to verify your Email Address\n\n http://www.yourdomain.com/verify/".$verificationText."\n"."\n\nThanks\nAdmin Team");
+		// $this->email->send();
+
 
 		if ($query) {
 			$data['email'] = $email;
@@ -136,8 +164,8 @@ class Register extends CI_Controller
 
 			//Disable this for debug only
 			//$this->load->view('email-template/verification-email', $data);
-			$config['smtp_user']   = 'admin@kikikuku.com';
-			$config['smtp_pass']   = 'nOX-D8NlrF#Z';
+			$config['smtp_user']   = 'admin@etalashop.com';
+			$config['smtp_pass']   = 'rV#qMNCdt,W!';
 			$config['smtp_port']   = 25;
 			$config['charset']     = 'utf-8';
 			$config['wordwrap']    = TRUE;
@@ -145,7 +173,7 @@ class Register extends CI_Controller
 
 			$this->email->initialize($config);
 
-			$this->email->from('admin@kikikuku.com', 'Kikikuku Team');
+			$this->email->from('admin@etalashop.com', 'Etalashop Admin');
 			$this->email->to($email);
 			$this->email->set_mailtype('html');
 
