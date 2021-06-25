@@ -15,6 +15,39 @@ class Home extends CI_Controller
 		date_default_timezone_set('Asia/Jakarta');
 	}
 
+	public function tmp()
+	{
+		$curl = curl_init();
+
+		$data = array(
+			'cpage'	=> mt_rand(1, 100)
+		);
+
+		$urlEndpoint = 'http://app.yiwugo.com/product/2016product/onetest.htm?password=wien.suh@gmail.com';
+		$params = array(
+			'key'	=> $data
+		);
+
+		$finalUrl = $urlEndpoint . '&' . http_build_query($params);
+
+		echo $finalUrl;
+
+		curl_setopt_array($curl, array(
+			CURLOPT_URL => $finalUrl,
+			CURLOPT_RETURNTRANSFER => true,
+			CURLOPT_ENCODING => '',
+			CURLOPT_MAXREDIRS => 10,
+			CURLOPT_TIMEOUT => 0,
+			CURLOPT_FOLLOWLOCATION => true,
+			CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+			CURLOPT_CUSTOMREQUEST => 'GET',
+		));
+
+		$response = curl_exec($curl);
+
+		curl_close($curl);
+	}
+
 	public function index()
 	{
 
@@ -22,7 +55,7 @@ class Home extends CI_Controller
 		$marginParameter = $this->product->getMarginPrice();
 
 		//GET PARENT CATEGORY TITLE
-		$data['categories'] = $this->M_category->getParentCategory();
+		$tmp['categories'] = $this->M_category->getParentCategory();
 
 		$industryID = $this->input->get('id');
 
@@ -31,33 +64,48 @@ class Home extends CI_Controller
 			'cpage'	=> $randomPage
 		);
 
-		$productList = $this->incube->getProductList($queryArray);
+		// $productList = $this->incube->getProductList($queryArray);
+		$queryProduct = $this->api->getGeneralListGroup('v_g_products', 'PRODUCT_ID');
 
-		//Get the category
+		foreach ($queryProduct->result() as $data) {
+
+			$calculateFinalPrice = ($data->QUANTITY_PRICE == null ? 'Price Negotiable' : 'IDR ' . number_format($data->QUANTITY_PRICE, 2, '.', ','));
+
+			$result[] = array(
+				'ID'                => $data->PRODUCT_ID,
+				'TITLE'             => $data->PRODUCT_NAME,
+				'PICTURE'           => (strpos($data->IMAGES1, 'http') === false ? base_url('assets/uploads/products/' . $data->IMAGES1) : $data->IMAGES1),
+				'ORIGINAL_PRICE'    => $calculateFinalPrice,
+				'START_QUANTITY'    => $data->QUANTITY_MIN,
+				'PRICE'             => $calculateFinalPrice
+			);
+		}
+
+		// //Get the category
 		$mainCategory = $this->input->get('category');
 		$subCategory = $this->input->get('id');
 
 		if ($mainCategory != null && $subCategory != null) {
-			$data['mainCategory'] 	= $this->home->getMainCategory($mainCategory);
-			$data['subCategory'] 	= $this->home->getSubcategory($subCategory);
-			$data['breadcrumb'] 	= true;
-			$data['bikePart'] 		= false;
-			$data['margin'] 		= $marginParameter;
-			$data['productList'] 	= $productList;
+			$tmp['mainCategory'] 	= $this->home->getMainCategory($mainCategory);
+			$tmp['subCategory'] 	= $this->home->getSubcategory($subCategory);
+			$tmp['breadcrumb'] 		= true;
+			$tmp['bikePart'] 		= false;
+			$tmp['margin'] 			= $marginParameter;
+			$tmp['productList'] 	= $result;
 		} else {
-			$data['breadcrumb'] 	= false;
-			$data['bikePart'] 		= true;
-			$data['margin'] 		= $marginParameter;
-			$data['productList'] 	= $productList;
+			$tmp['breadcrumb'] 		= false;
+			$tmp['bikePart'] 		= true;
+			$tmp['margin'] 			= $marginParameter;
+			$tmp['productList'] 	= $result;
 		}
 
-		$data['sectionName'] = 'Home';
+		$tmp['sectionName'] = 'Home';
 
-		$this->load->view('templates/header', $data);
-		$this->load->view('templates/navbar', $data);
-		$this->load->view('pages/home/home', $data);
-		// $this->load->view('pages/home/autoload-desktop');
-		$this->load->view('templates/footer', $data);
+		$this->load->view('templates/header', $tmp);
+		$this->load->view('templates/navbar', $tmp);
+		$this->load->view('pages/home/home', $tmp);
+		$this->load->view('pages/home/autoload-desktop');
+		$this->load->view('templates/footer', $tmp);
 	}
 
 	/* TMP ELECTRIC BIKE */

@@ -9,7 +9,6 @@ class M_category extends CI_Model
 
 	function getParentCategory()
 	{
-
 		$this->db->select('*');
 		$this->db->from('m_category');
 		$this->db->where('PARENT', '0');

@@ -136,17 +136,17 @@
 
 			<div class="row" id="product-main-list">
 
-				<?php foreach ($productList->prslist as $data) { ?>
+				<?php foreach ($productList as $data) { ?>
 
 					<div class="custom-product-list">
-						<div class="card product-list" id="prod_" <?= $data->id; ?>>
-							<a href="<?= base_url('product_detail?id=' . $data->id); ?>" style="text-decoration: none;">
+						<div class="card product-list" id="prod_" <?= $data['ID']; ?>>
+							<a href="<?= base_url('product_detail?id=' . $data['ID']); ?>" style="text-decoration: none;">
 								<div class="d-flex justify-content-center">
-									<img alt="<?= $data->title; ?>" class="product-image" src="<?= 'http://img1.yiwugo.com/' . $data->picture1; ?>" onerror="this.onerror=null;this.src='.'\''.base_url('assets/images/no-image-icon.png').' \''.'" />
+									<img alt="<?= $data['TITLE']; ?>" class="product-image" src="<?= (strpos($data['PICTURE'], 'http') === false ? base_url('assets/uploads/products/' . $data['PICTURE']) : $data['PICTURE']); ?>" onerror="this.onerror=null;this.src='.'\''.base_url('assets/images/no-image-icon.png').' \''.'" />
 								</div>
-								<p class="product-title mt-2"><?= ucwords(mb_strimwidth($data->title, 0, 35, '...')); ?></p>
+								<p class="product-title mt-2"><?= ucwords(mb_strimwidth($data['TITLE'], 0, 35, '...')); ?></p>
 								<label class="product-label">Estimated Price</label></br>
-								<span class="product-price">IDR <?= number_format($data->sellPrice, 2, '.', ','); ?></span>
+								<span class="product-price"><?= $data['PRICE']; ?></span>
 							</a>
 						</div>
 					</div>
