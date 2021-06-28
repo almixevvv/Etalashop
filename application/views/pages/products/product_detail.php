@@ -4,16 +4,18 @@
 
     <!-- PRODUCT LEFT PART -->
     <div class="col-1 col-md-1 col-lg-1 col-xl-1 order-0 order-md-1 order-lg-1 order-xl-1 d-none d-md-block d-lg-block d-xl-block">
-      <?php echo form_open('Cart/addtoCart');
+      <?php echo form_open('General/Cart/addtoCart');
 
-      if (!empty($dataproduct->detail->sdiProductsPicList)) {
+      // if (!empty($dataproduct->detail->sdiProductsPicList)) {
+      if (($countProduct>=1)) {
 
-        foreach ($dataproduct->detail->sdiProductsPicList as $picture) {
+        // foreach ($dataproduct->detail->sdiProductsPicList as $picture) {
+        foreach ($dataproduct->result() as $databasePicture) {
 
-          if (isset($picture->picture1) && strlen($picture->picture1) > 1) { ?>
+          if (isset($databasePicture->IMAGES1) && strlen($databasePicture->IMAGES1) > 1) { ?>
             <div class="detail-border">
               <center>
-                <img data-picture="<?= 'http://img1.yiwugo.com/' . $picture->picture1; ?>" class="row-images" alt="Product Picture" src="<?= 'http://img1.yiwugo.com/' . $picture->picture1; ?>" onerror="this.onerror=null;this.src='<?php echo base_url('assets/images/no-image-icon.png'); ?>' " />
+                <img data-picture="<?= base_url('assets/uploads/products/') .$databasePicture->IMAGES1; ?>" class="row-images" alt="Product Picture" src="<?= base_url('assets/uploads/products/').$databasePicture->IMAGES1; ?>" onerror="this.onerror=null;this.src='<?php echo base_url('assets/images/no-image-icon.png'); ?>' " />
               </center>
             </div>
         <?php }
@@ -22,7 +24,7 @@
 
         <div class="detail-border">
           <center>
-            <img data-picture="<?= 'http://img1.yiwugo.com/' . $dataproduct->detail->productDetailVO->picture; ?>" class="row-images" alt="Product Picture" src="<?= 'http://img1.yiwugo.com/' . $dataproduct->detail->productDetailVO->picture; ?>" onerror="this.onerror=null;this.src='<?php echo base_url('assets/images/no-image-icon.png'); ?>' " />
+            <img data-picture="<?= base_url('assets/uploads/products/') . $databasePicture->IMAGES1; ?>" class="row-images" style="max-width: 30px" alt="Product Picture" src="<?= base_url('assets/uploads/products/') . $databasePicture->IMAGES1; ?>" onerror="this.onerror=null;this.src='<?php echo base_url('assets/images/no-image-icon.png'); ?>' " />
           </center>
         </div>
 
@@ -36,39 +38,31 @@
     <div class="col-12 d-md-none d-lg-none-xl-none order-2">
       <div class="d-flex flex-row">
 
-        <?php if (!empty($dataproduct->detail->sdiProductsPicList)) {
+        <?php
+          foreach ($dataproduct->result() as $databasePicture) {
 
-          foreach ($dataproduct->detail->sdiProductsPicList as $picture) {
-
-            if (isset($picture->picture1) && strlen($picture->picture1) > 1) { ?>
+            if (isset($databasePicture->IMAGES1) && strlen($databasePicture->IMAGES1) > 1) { ?>
               <div class="detail-border">
                 <center>
-                  <img data-picture="<?= 'http://img1.yiwugo.com/' . $picture->picture1; ?>" class="row-images" alt="Product Picture" src="<?= 'http://img1.yiwugo.com/' . $picture->picture1; ?>" onerror="this.onerror=null;this.src='<?php echo base_url('assets/images/no-image-icon.png'); ?>' " />
+                  <img data-picture="<?= base_url('assets/uploads/products/') . $databasePicture->IMAGES1; ?>" class="row-images" alt="Product Picture" src="<?= 'assets/uploads/products/' . $databasePicture->IMAGES1; ?>" onerror="this.onerror=null;this.src='<?php echo base_url('assets/images/no-image-icon.png'); ?>' " />
                 </center>
               </div>
           <?php }
-          }
-        } else { ?>
+          } 
 
-          <div class="detail-border">
-            <center>
-              <img data-picture="<?= 'http://img1.yiwugo.com/' . $dataproduct->detail->productDetailVO->picture; ?>" class="row-images" alt="Product Picture" src="<?= 'http://img1.yiwugo.com/' . $dataproduct->detail->productDetailVO->picture; ?>" onerror="this.onerror=null;this.src='<?php echo base_url('assets/images/no-image-icon.png'); ?>' " />
-            </center>
-          </div>
-
-        <?php } ?>
+        ?>
 
       </div>
     </div>
-    <!-- END OF MOBILE IMAGE NAVIGATOR -->
+    <!-- END OF MOBILE IMAGE NAVIGATOR --> 
 
     <!-- PRODUCT CENTER PART -->
     <div class="col-12 col-md-5 col-lg-5 col-xl-5 order-1 order-md-2 order-lg-2 order-xl-3">
       <div class="detail-border">
         <div class="d-flex justify-content-center">
-          <img class="detail-main-images" alt="<?= $dataproduct->detail->productDetailVO->title; ?>" src="<?= 'http://img1.yiwugo.com/' . $dataproduct->detail->productDetailVO->picture; ?>" />
+          <img class="detail-main-images" alt="<?= $productName; ?>" src="<?= base_url('assets/uploads/products/') . $databasePicture->IMAGES1; ?>" />
           <!-- HIDDEN INPUT FOR SAVING IMAGE -->
-          <input type="hidden" name="hidden-images" value="<?= 'http://img1.yiwugo.com/' . $dataproduct->detail->productDetailVO->picture; ?>">
+          <input type="hidden" name="hidden-images" value="<?= base_url('assets/uploads/products/') . $databasePicture->IMAGES1; ?>">
         </div>
       </div>
     </div>
@@ -81,77 +75,48 @@
         <div class="detail-inner-container">
           <!-- Product Title Part -->
           <span class="detail-title">
-            <label class="detail-txt-color text-left text-capitalize"><?= $dataproduct->detail->productDetailVO->title; ?></label>
+            <label class="detail-txt-color text-left text-capitalize"><?= $productName; ?></label>
           </span>
 
           <!-- Product EXW Price -->
           <div class="exw-container">
             <label class="detail-label">EXW Price:</label>
 
-            <?php
-
-            $priceArr = [];
-            foreach ($dataproduct->detail->sdiProductsPriceList as $key) {
-
-              $priceList = array(
-                'startNumber' => $key->startNumber,
-                'endNumber'   => $key->endNumber,
-                'sellPrice'   => $key->sellPrice,
-                'conferPrice' => $key->conferPrice
-              );
-
-              array_push($priceArr, $priceList);
-            }
-            ?>
-
-            <?php foreach ($dataproduct->detail->sdiProductsPriceList as $key) { ?>
+            <?php foreach ($dataproduct->result() as $qty) { ?>
               <div class="row">
                 <div class="col-6 col-md-12 col-lg-6 col-xl-6" style="padding-right: 0!important;">
                   <label class="detail-txt-color detail-exw-size font-weight-bold">
-                    <?php if ($key->endNumber == null) { ?>
-                      <?= $key->startNumber . ' ' . $dataproduct->detail->productDetailVO->metric; ?>
-                    <?php } else { ?>
-                      <?= $key->startNumber . ' ' . $dataproduct->detail->productDetailVO->metric; ?> ~ <?= $key->endNumber . ' ' . $dataproduct->detail->productDetailVO->metric; ?>
-                    <?php } ?>
+                     <?= $qty->QUANTITY_MIN; ?> ~ <?= $qty->QUANTITY_MAX; ?>
                   </label>
                 </div>
                 <div class="col-6 col-md-12 col-lg-6 col-xl-6">
                   <label class="detail-txt-color detail-exw-size font-weight-bold">
-                    <span class="detail-exw-color">IDR <?php echo number_format($key->sellPrice, 2, ',', '.'); ?></span>/<?php echo $dataproduct->detail->productDetailVO->metric; ?>
+                    <span class="detail-exw-color">IDR <?php echo number_format($qty->QUANTITY_PRICE, 2, '.', ','); ?></span>/Pcs
                   </label>
                 </div>
               </div>
             <?php } ?>
           </div>
 
-          <?php
-          // foreach ($dataproduct['item']['PRICE'] as $key) {
-          //   $priceList[] = $key['STARTING_QUANTITY'];
-          // }
-          ?>
-
-          <!-- <input type="hidden" name="minimumQty" id="minimumQty" value="<?php //echo min($priceList); 
-                                                                              ?>"> -->
-
           <div class="row mt-4">
-            <div class="col-12 col-md-6 col-lg-12 col-xl-7">
+            <div class="col-12 col-md-6 col-lg-12">
               <label class="detail-label">Estimated Price :</label>
-              <?php if ($dataproduct->detail->productDetailVO->sellPrice == 0) { ?>
+              <?php if ($dataproduct->row()->QUANTITY_PRICE == 0) { ?>
                 <span class="detail-exw-color detail-label">Price Negotiable</span>
               <?php } else { ?>
                 <span class="detail-exw-color detail-label font-weight-bold">
-                  IDR <span id="estimated-price"><?php echo number_format($dataproduct->detail->productDetailVO->sellPrice, 2, '.', ','); ?></span>
+                  IDR <span id="estimated-price"><?php echo number_format($dataproduct->row()->QUANTITY_PRICE, 2, '.', ','); ?></span>
                 </span>
               <?php } ?>
             </div>
 
-            <div class="col-12 col-md-6 col-lg-12 col-xl-5">
+            <div class="col-12 col-md-6 col-lg-12">
               <label class="detail-label">Est. Weight :</label>
               <span class="detail-exw-color font-weight-bold" id="detail-weight">
-                <?php if (is_numeric($dataproduct->detail->productDetailVO->weightetc)) { ?>
-                  <?php echo substr($dataproduct->detail->productDetailVO->weightetc, 0, 4); ?> gr
+                <?php if (is_numeric($dataproduct->row()->WEIGHT)) { ?>
+                  <?= number_format($dataproduct->row()->WEIGHT, 2, '.',','); ?> Kg
                 <?php } else { ?>
-                  <?php echo substr('-', 0, 4); ?>
+                  <?php echo ('-'); ?>
                 <?php } ?>
               </span>
             </div>
@@ -163,11 +128,11 @@
             </div>
             <div class="col-12 col-md-9 col-lg-9 col-xl-11" style="overflow:scroll; ">
               <span class="detail-txt-color">
-                <?php if (strlen($dataproduct->detail->productDetailVO->detaill) == 0) { ?>
+                <?php if (strlen($dataproduct->row()->PRODUCT_DETAIL) == 0) { ?>
                   <label>No Product Description</label>
                 <?php } else { ?>
                   <label>
-                    <?php echo $dataproduct->detail->productDetailVO->detaill; ?>
+                    <?php echo $dataproduct->row()->PRODUCT_DETAIL; ?>
                   </label>
                 <?php } ?>
               </span>
@@ -264,7 +229,7 @@
 
   </div>
 
-  <div class="row mt-2">
+  <!-- <div class="row mt-2">
 
     <?php
     $counter = 1;
@@ -292,9 +257,9 @@
 
     <?php } ?>
 
-  </div>
+  </div> -->
 
-</div>
+</div> 
 
 <script type="text/javascript" src="<?php echo base_url('assets/zoom-master/jquery.zoom.min.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/number-format/jquery.number.min.js'); ?>"></script>

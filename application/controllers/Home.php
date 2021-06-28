@@ -83,7 +83,7 @@ class Home extends CI_Controller
 
 		// //Get the category
 		$mainCategory = $this->input->get('category');
-		$subCategory = $this->input->get('id');
+		$subCategory = $this->input->get('id'); 
 
 		if ($mainCategory != null && $subCategory != null) {
 			$tmp['mainCategory'] 	= $this->home->getMainCategory($mainCategory);

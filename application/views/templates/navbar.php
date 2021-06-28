@@ -148,7 +148,7 @@
 
 			</div>
 
-			<div class="navbar-column-account">
+			<div class="navbar-column-account"> 
 
 				<span id="account-left">
 					<a href="<?php echo base_url('mycart'); ?>">
@@ -164,7 +164,7 @@
 					<span class="account-position-fix dropdown-toggle" id="dropdown-account" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-offset="20,15">
 						<a href="#" style="color: #C1C1C1;">
 							<?php if (!isset($userData['IMAGE'])) { ?>
-								<img src="<?php echo $userData['IMAGE']; ?>" alt="<?php echo $userData['FIRST_NAME']; ?> Profile Image" id="navbar-account-profile">
+								<img src="<?php echo $userData['IMAGE']; ?>" alt="<?php echo $userData['FIRST_NAME']; ?> Profile Image" id="navbar-account-profile" onError="this.onerror=null;this.src='<?= base_url('assets/images/member-img/no-profile.png') ?>'" style="width: 30px">
 							<?php } else { ?>
 								<i class="fas fa-user-circle" id="navbar-account-logo"></i>
 							<?php } ?>

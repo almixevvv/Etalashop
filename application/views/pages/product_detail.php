@@ -52,11 +52,11 @@
                   <div class="feature-img">
                      <img class="img-fluid" src="<?= $product->row()->IMAGES; ?>" alt="">
                   </div>
-                  <div class="blog_details">
+                  <div class="blog_details"> 
                      <div class="row text-center mb-5">
                         <?php foreach ($images->result() as $dt2) { ?>
                            <div class="col-md-4 mt-2">
-                              <img src="<?= base_url($dt2->IMAGES); ?>" alt="" class="responsive picture-detail"> 
+                              <img src="<?= base_url($dt2->IMAGES); ?>" alt="" class="responsive picture-detail img-detail"> 
                            </div>
                         <?php } ?>
                      </div>

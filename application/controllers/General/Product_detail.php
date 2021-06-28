@@ -1,5 +1,5 @@
-<?php if (!defined("BASEPATH")) exit("Hack Attempt");
-class Product_detail extends CI_Controller
+<?php if (!defined("BASEPATH")) exit("Hack Attempt");  
+class Product_detail extends CI_Controller 
 {
 
     public function view()
@@ -7,40 +7,35 @@ class Product_detail extends CI_Controller
         $this->load->helper('form');
         $this->load->library('incube');
         $this->load->model('M_product', 'product');
+        $this->load->model('M_cms', 'cms');
 
         // $this->output->enable_profiler(TRUE);
         $id = $this->input->get('id');
 
-        $randomPage     = mt_rand(1, 500);
-
-        $finalUrl       = 'http://kikikuku.com/API/product?key=c549303dcef12a687e9077a21e1a51fb67851efb&id=' . $id;
-
-
-        $json           = file_get_contents($finalUrl);
-        $obj            = json_decode($json, true);
-
-        $randomPage = mt_rand(1, 100);
-        $queryArray = array(
-            'cpage'    => $randomPage
-        );
-
-        $data['dataproduct']            = $this->incube->getProductDetails($id);
+        // $data['dataproduct']            = $this->incube->getProductDetails($id);
+         
+        $data['dataproduct']            = $this->cms->getGeneralData('v_g_products','PRODUCT_ID',$id);
         $data['priceList']              = array();
-        $data['recomended']             = $this->incube->getProductList($queryArray);;
+        // $data['recomended']             = $this->incube->getProductList($queryArray);;
         $data['imageCounter']           = 1;
         $data['imageCounterMobile']     = 1;
+        $data['countProduct']           = 1;
 
-        if ($obj['status'] == "error") {
+        if($data['dataproduct']->num_rows() == 0) {
 
-            //THERE IS NO DATA FOR THIS
+              //THERE IS NO DATA FOR THIS
             $data['productName'] = 'Product not Available';
 
             $this->load->view('templates/header', $data);
             $this->load->view('templates/navbar');
             $this->load->view('pages/products/empty_product', $data);
             $this->load->view('templates/footer', $data);
-        } else {
-            $productTitle = $data['dataproduct']->detail->productDetailVO->title;
+
+        } else { 
+            $productTitle = $data['dataproduct']->row()->PRODUCT_NAME;
+            
+            // foreach ($dataproduct->result() as $key);
+            //  $productTitle = $key->PRODUCT_NAME;
 
             //Product Name
             if (strlen($productTitle) > 20) {

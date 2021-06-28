@@ -1,8 +1,8 @@
-<?php defined('BASEPATH') or exit('No direct script access allowed');
+<?php defined('BASEPATH') or exit('No direct script access allowed'); 
 class Cart extends CI_Controller
 {
 
-	public function __construct()
+	public function __construct() 
 	{
 		parent::__construct();
 
@@ -20,12 +20,9 @@ class Cart extends CI_Controller
 
 		$cartArray = array();
 
-		$url  		= file_get_contents("http://en.yiwugo.com/ywg/productlist.html?account=Wien.suh@gmail.com&s=1001105&pageSize=5&cpage=" . $randomPage);
-		$obj 		= json_decode($url, TRUE);
-
 		$hashEmail  = sha1($this->session->EMAIL);
 
-		$data['recomended'] 	 = $obj;
+		// $data['recomended'] 	 = $obj;
 		$data['productName'] 	 = 'Shopping Cart';
 		$userData 				 = $this->session->user_data;
 

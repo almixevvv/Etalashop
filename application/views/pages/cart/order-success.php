@@ -1,4 +1,4 @@
-<div class="order-container">
+<div class="order-container"> 
 
 	<div class="order-inner-container">
 		

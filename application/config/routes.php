@@ -65,7 +65,7 @@ $route['API/completePayment'] = 'General/Checkout/postPaymentProcess';
 
 
 /* ROUTES FOR PROCESS */
-$route['addcart'] = 'Cart/addtocart';
+$route['addcart'] = 'General/Cart/addtocart';
 
 /* Basic Part */
 $route['change_pass'] = 'cpassword/view';

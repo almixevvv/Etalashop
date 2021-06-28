@@ -40,4 +40,14 @@ Class M_product extends CI_Model {
     return $query;
   }
 
+  //GET V_G_PRODUCT
+  function getProductDetail(){
+    $this->db->select('*');
+    $this->db->from('v_g_products');
+    $this->db->where('');
+
+    $query  = $this->db->get()->row()->VALUE;
+    return $query;
+  }
+
 }
