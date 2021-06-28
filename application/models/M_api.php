@@ -40,6 +40,16 @@
 		return $query;
 	}
 
+	public function getGeneralList($table)
+	{
+		$this->db->select('*');
+		$this->db->from($table);
+
+		$query = $this->db->get();
+
+		return $query;
+	}
+
 	public function getGeneralData($table, $field, $query)
 	{
 		$this->db->select('*');
@@ -82,7 +92,6 @@
 	//INSERT MEMBER DATA
 	function insertMember($data)
 	{
-
 		$query = $this->db->insert('g_member', $data);
 
 		return $query;
