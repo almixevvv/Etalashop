@@ -4,30 +4,38 @@
 
     <!-- PRODUCT LEFT PART -->
     <div class="col-1 col-md-1 col-lg-1 col-xl-1 order-0 order-md-1 order-lg-1 order-xl-1 d-none d-md-block d-lg-block d-xl-block">
-      <?php echo form_open('General/Cart/addtoCart');
+      <?php echo form_open('General/Cart/addtoCart'); ?>
 
-      // if (!empty($dataproduct->detail->sdiProductsPicList)) {
-      if (($countProduct>=1)) {
-
-        // foreach ($dataproduct->detail->sdiProductsPicList as $picture) {
-        foreach ($dataproduct->result() as $databasePicture) {
-
-          if (isset($databasePicture->IMAGES1) && strlen($databasePicture->IMAGES1) > 1) { ?>
-            <div class="detail-border">
-              <center>
-                <img data-picture="<?= base_url('assets/uploads/products/') .$databasePicture->IMAGES1; ?>" class="row-images" alt="Product Picture" src="<?= base_url('assets/uploads/products/').$databasePicture->IMAGES1; ?>" onerror="this.onerror=null;this.src='<?php echo base_url('assets/images/no-image-icon.png'); ?>' " />
-              </center>
-            </div>
-        <?php }
-        }
-      } else { ?>
-
+      <?php if (isset($dataproduct->row()->IMAGES1) && strlen($dataproduct->row()->IMAGES1) > 1) { ?>
         <div class="detail-border">
           <center>
-            <img data-picture="<?= base_url('assets/uploads/products/') . $databasePicture->IMAGES1; ?>" class="row-images" style="max-width: 30px" alt="Product Picture" src="<?= base_url('assets/uploads/products/') . $databasePicture->IMAGES1; ?>" onerror="this.onerror=null;this.src='<?php echo base_url('assets/images/no-image-icon.png'); ?>' " />
+            <img data-picture="<?= base_url('assets/uploads/products/') . $dataproduct->row()->IMAGES1; ?>" class="row-images" alt="Product Picture" src="<?= base_url('assets/uploads/products/' . $dataproduct->row()->IMAGES1); ?>" onerror="this.onerror=null;this.src='<?= base_url('assets/images/no-image-icon.png'); ?>' " />
           </center>
         </div>
+      <?php } ?>
 
+      <?php if (isset($dataproduct->row()->IMAGES2) && strlen($dataproduct->row()->IMAGES2) > 1) { ?>
+        <div class="detail-border">
+          <center>
+            <img data-picture="<?= base_url('assets/uploads/products/' . $dataproduct->row()->IMAGES2); ?>" class="row-images" alt="Product Picture" src="<?= base_url('assets/uploads/products/' . $dataproduct->row()->IMAGES2); ?>" onerror="this.onerror=null;this.src='<?= base_url('assets/images/no-image-icon.png'); ?>' " />
+          </center>
+        </div>
+      <?php } ?>
+
+      <?php if (isset($dataproduct->row()->IMAGES3) && strlen($dataproduct->row()->IMAGES3) > 1) { ?>
+        <div class="detail-border">
+          <center>
+            <img data-picture="<?= base_url('assets/uploads/products/' . $dataproduct->row()->IMAGES3); ?>" class="row-images" alt="Product Picture" src="<?= base_url('assets/uploads/products/' . $dataproduct->row()->IMAGES3); ?>" onerror="this.onerror=null;this.src='<?= base_url('assets/images/no-image-icon.png'); ?>' " />
+          </center>
+        </div>
+      <?php } ?>
+
+      <?php if (isset($dataproduct->row()->IMAGES4) && strlen($dataproduct->row()->IMAGES4) > 1) { ?>
+        <div class="detail-border">
+          <center>
+            <img data-picture="<?= base_url('assets/uploads/products/' . $dataproduct->row()->IMAGES4); ?>" class="row-images" alt="Product Picture" src="<?= base_url('assets/uploads/products/' . $dataproduct->row()->IMAGES4); ?>" onerror="this.onerror=null;this.src='<?= base_url('assets/images/no-image-icon.png'); ?>' " />
+          </center>
+        </div>
       <?php } ?>
 
 
@@ -38,31 +46,49 @@
     <div class="col-12 d-md-none d-lg-none-xl-none order-2">
       <div class="d-flex flex-row">
 
-        <?php
-          foreach ($dataproduct->result() as $databasePicture) {
+        <?php if (isset($dataproduct->row()->IMAGES1) && strlen($dataproduct->row()->IMAGES1) > 1) { ?>
+          <div class="detail-border">
+            <center>
+              <img data-picture="<?= base_url('assets/uploads/products/') . $dataproduct->row()->IMAGES1; ?>" class="row-images" alt="Product Picture" src="<?= base_url('assets/uploads/products/' . $dataproduct->row()->IMAGES1); ?>" onerror="this.onerror=null;this.src='<?= base_url('assets/images/no-image-icon.png'); ?>' " />
+            </center>
+          </div>
+        <?php } ?>
 
-            if (isset($databasePicture->IMAGES1) && strlen($databasePicture->IMAGES1) > 1) { ?>
-              <div class="detail-border">
-                <center>
-                  <img data-picture="<?= base_url('assets/uploads/products/') . $databasePicture->IMAGES1; ?>" class="row-images" alt="Product Picture" src="<?= 'assets/uploads/products/' . $databasePicture->IMAGES1; ?>" onerror="this.onerror=null;this.src='<?php echo base_url('assets/images/no-image-icon.png'); ?>' " />
-                </center>
-              </div>
-          <?php }
-          } 
+        <?php if (isset($dataproduct->row()->IMAGES2) && strlen($dataproduct->row()->IMAGES2) > 1) { ?>
+          <div class="detail-border">
+            <center>
+              <img data-picture="<?= base_url('assets/uploads/products/' . $dataproduct->row()->IMAGES2); ?>" class="row-images" alt="Product Picture" src="<?= base_url('assets/uploads/products/' . $dataproduct->row()->IMAGES2); ?>" onerror="this.onerror=null;this.src='<?= base_url('assets/images/no-image-icon.png'); ?>' " />
+            </center>
+          </div>
+        <?php } ?>
 
-        ?>
+        <?php if (isset($dataproduct->row()->IMAGES3) && strlen($dataproduct->row()->IMAGES3) > 1) { ?>
+          <div class="detail-border">
+            <center>
+              <img data-picture="<?= base_url('assets/uploads/products/' . $dataproduct->row()->IMAGES3); ?>" class="row-images" alt="Product Picture" src="<?= base_url('assets/uploads/products/' . $dataproduct->row()->IMAGES3); ?>" onerror="this.onerror=null;this.src='<?= base_url('assets/images/no-image-icon.png'); ?>' " />
+            </center>
+          </div>
+        <?php } ?>
+
+        <?php if (isset($dataproduct->row()->IMAGES4) && strlen($dataproduct->row()->IMAGES4) > 1) { ?>
+          <div class="detail-border">
+            <center>
+              <img data-picture="<?= base_url('assets/uploads/products/' . $dataproduct->row()->IMAGES4); ?>" class="row-images" alt="Product Picture" src="<?= base_url('assets/uploads/products/' . $dataproduct->row()->IMAGES4); ?>" onerror="this.onerror=null;this.src='<?= base_url('assets/images/no-image-icon.png'); ?>' " />
+            </center>
+          </div>
+        <?php } ?>
 
       </div>
     </div>
-    <!-- END OF MOBILE IMAGE NAVIGATOR --> 
+    <!-- END OF MOBILE IMAGE NAVIGATOR -->
 
     <!-- PRODUCT CENTER PART -->
     <div class="col-12 col-md-5 col-lg-5 col-xl-5 order-1 order-md-2 order-lg-2 order-xl-3">
       <div class="detail-border">
         <div class="d-flex justify-content-center">
-          <img class="detail-main-images" alt="<?= $productName; ?>" src="<?= base_url('assets/uploads/products/') . $databasePicture->IMAGES1; ?>" />
+          <img class="detail-main-images" alt="<?= $productName; ?>" src="<?= base_url('assets/uploads/products/') . $dataproduct->row()->IMAGES1; ?>" />
           <!-- HIDDEN INPUT FOR SAVING IMAGE -->
-          <input type="hidden" name="hidden-images" value="<?= base_url('assets/uploads/products/') . $databasePicture->IMAGES1; ?>">
+          <input type="hidden" name="hidden-images" value="<?= base_url('assets/uploads/products/') . $dataproduct->row()->IMAGES1; ?>">
         </div>
       </div>
     </div>
@@ -86,7 +112,7 @@
               <div class="row">
                 <div class="col-6 col-md-12 col-lg-6 col-xl-6" style="padding-right: 0!important;">
                   <label class="detail-txt-color detail-exw-size font-weight-bold">
-                     <?= $qty->QUANTITY_MIN; ?> ~ <?= $qty->QUANTITY_MAX; ?>
+                    <?= $qty->QUANTITY_MIN; ?> ~ <?= $qty->QUANTITY_MAX; ?>
                   </label>
                 </div>
                 <div class="col-6 col-md-12 col-lg-6 col-xl-6">
@@ -114,7 +140,7 @@
               <label class="detail-label">Est. Weight :</label>
               <span class="detail-exw-color font-weight-bold" id="detail-weight">
                 <?php if (is_numeric($dataproduct->row()->WEIGHT)) { ?>
-                  <?= number_format($dataproduct->row()->WEIGHT, 2, '.',','); ?> Kg
+                  <?= number_format($dataproduct->row()->WEIGHT, 2, '.', ','); ?> Kg
                 <?php } else { ?>
                   <?php echo ('-'); ?>
                 <?php } ?>
@@ -259,7 +285,7 @@
 
   </div> -->
 
-</div> 
+</div>
 
 <script type="text/javascript" src="<?php echo base_url('assets/zoom-master/jquery.zoom.min.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/number-format/jquery.number.min.js'); ?>"></script>

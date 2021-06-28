@@ -1,54 +1,35 @@
-<?php if (!defined("BASEPATH")) exit("Hack Attempt");  
-class Product_detail extends CI_Controller 
+<?php if (!defined("BASEPATH")) exit("Hack Attempt");
+class Product_detail extends CI_Controller
 {
+    public function __construct()
+    {
+        parent::__construct();
+        // $this->output->enable_profiler(TRUE);
+    }
 
     public function view()
     {
-        $this->load->helper('form');
-        $this->load->library('incube');
-        $this->load->model('M_product', 'product');
-        $this->load->model('M_cms', 'cms');
+        $data['dataproduct'] = $this->cms->getGeneralData('v_g_products', 'PRODUCT_ID', $this->input->get('id'));
 
-        // $this->output->enable_profiler(TRUE);
-        $id = $this->input->get('id');
-
-        // $data['dataproduct']            = $this->incube->getProductDetails($id);
-         
-        $data['dataproduct']            = $this->cms->getGeneralData('v_g_products','PRODUCT_ID',$id);
-        $data['priceList']              = array();
-        // $data['recomended']             = $this->incube->getProductList($queryArray);;
-        $data['imageCounter']           = 1;
-        $data['imageCounterMobile']     = 1;
-        $data['countProduct']           = 1;
-
-        if($data['dataproduct']->num_rows() == 0) {
-
-              //THERE IS NO DATA FOR THIS
+        //1. Kalo ga ada data
+        if ($data['dataproduct']->num_rows() == 0) {
             $data['productName'] = 'Product not Available';
 
             $this->load->view('templates/header', $data);
             $this->load->view('templates/navbar');
             $this->load->view('pages/products/empty_product', $data);
             $this->load->view('templates/footer', $data);
-
-        } else { 
+        } else {
+            //2. Kalo ada data
             $productTitle = $data['dataproduct']->row()->PRODUCT_NAME;
-            
-            // foreach ($dataproduct->result() as $key);
-            //  $productTitle = $key->PRODUCT_NAME;
+            $data['productName'] = (strlen($productTitle) > 20 ? ucwords(substr($productTitle, 0, 20)) : ucwords($productTitle));
 
-            //Product Name
-            if (strlen($productTitle) > 20) {
-                $data['productName'] = ucwords(substr($productTitle, 0, 20));
-            } else {
-                $data['productName'] = ucwords($productTitle);
-            }
-
-            //THERE IS A DATA FOR THIS PRODUCT
             $this->load->view('templates/header', $data);
             $this->load->view('templates/navbar');
             $this->load->view('pages/products/product_detail', $data);
             $this->load->view('templates/footer', $data);
+            //EoL 2
         }
+        //EoL 1
     }
 }
