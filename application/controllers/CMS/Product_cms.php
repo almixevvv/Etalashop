@@ -203,10 +203,10 @@ class Product_cms extends CI_Controller
 
             $imageData = array(
                 'PRODUCT_ID'        => $this->input->post('txtPRODID'),
-                'IMAGES1'           => base_url('assets/uploads/products/') . (isset($imageArr[0]['IMAGES']) ? $imageArr[0]['IMAGES'] : ''),
-                'IMAGES2'           => base_url('assets/uploads/products/') . (isset($imageArr[1]['IMAGES']) ? $imageArr[1]['IMAGES'] : ''),
-                'IMAGES3'           => base_url('assets/uploads/products/') . (isset($imageArr[2]['IMAGES']) ? $imageArr[2]['IMAGES'] : ''),
-                'IMAGES4'           => base_url('assets/uploads/products/') . (isset($imageArr[3]['IMAGES']) ? $imageArr[3]['IMAGES'] : ''),
+                'IMAGES1'           => (isset($imageArr[0]['IMAGES']) ? $imageArr[0]['IMAGES'] : ''),
+                'IMAGES2'           => (isset($imageArr[1]['IMAGES']) ? $imageArr[1]['IMAGES'] : ''),
+                'IMAGES3'           => (isset($imageArr[2]['IMAGES']) ? $imageArr[2]['IMAGES'] : ''),
+                'IMAGES4'           => (isset($imageArr[3]['IMAGES']) ? $imageArr[3]['IMAGES'] : ''),
                 'CREATED'           => date('Y-m-d h:i:s'),
             );
 
