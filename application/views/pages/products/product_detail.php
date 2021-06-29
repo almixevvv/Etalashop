@@ -87,8 +87,6 @@
       <div class="detail-border">
         <div class="d-flex justify-content-center">
           <img class="detail-main-images" alt="<?= $productName; ?>" src="<?= base_url('assets/uploads/products/') . $dataproduct->row()->IMAGES1; ?>" />
-          <!-- HIDDEN INPUT FOR SAVING IMAGE -->
-          <input type="hidden" name="hidden-images" value="<?= base_url('assets/uploads/products/') . $dataproduct->row()->IMAGES1; ?>">
         </div>
       </div>
     </div>
@@ -209,30 +207,14 @@
           </div>
 
           <?php
-          // $productID = array(
-          //   'type'  => 'hidden',
-          //   'name'  => 'product-id',
-          //   'id'    => 'hiddenID',
-          //   'value' => $dataproduct['productID']
-          // );
+          $productID = array(
+            'type'  => 'hidden',
+            'name'  => 'product-id',
+            'id'    => 'hiddenID',
+            'value' => $dataproduct->row()->PRODUCT_ID
+          );
 
-          // $productName = array(
-          //   'type'  => 'hidden',
-          //   'name'  => 'product-name',
-          //   'id'    => 'hiddenName',
-          //   'value' => $dataproduct['item']['TITLE']
-          // );
-
-          // $productPrice = array(
-          //   'type'  => 'hidden',
-          //   'name'  => 'product-price',
-          //   'id'    => 'hiddenPrice',
-          //   'value' => $dataproduct['startingPrice']
-          // );
-
-          // echo form_input($productName);
-          // echo form_input($productID);
-          // echo form_input($productPrice);
+          echo form_input($productID);
 
           ?>
 

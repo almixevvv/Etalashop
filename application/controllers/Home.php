@@ -1,5 +1,5 @@
 <?php if (!defined("BASEPATH")) exit("Hack Attempt");
-class Home extends CI_Controller 
+class Home extends CI_Controller
 {
 
 	public function __construct()
@@ -8,10 +8,6 @@ class Home extends CI_Controller
 		parent::__construct();
 
 		// $this->output->enable_profiler(TRUE);
-
-		$this->load->model('M_pages', 'pages');
-		$this->load->model('M_home', 'home');
-		$this->load->model('M_product', 'product');
 		date_default_timezone_set('Asia/Jakarta');
 	}
 
@@ -55,7 +51,7 @@ class Home extends CI_Controller
 		$marginParameter = $this->product->getMarginPrice();
 
 		//GET PARENT CATEGORY TITLE
-		$tmp['categories'] = $this->M_category->getParentCategory();
+		$tmp['categories'] = $this->category->getParentCategory();
 
 		$industryID = $this->input->get('id');
 
@@ -83,7 +79,7 @@ class Home extends CI_Controller
 
 		// //Get the category
 		$mainCategory = $this->input->get('category');
-		$subCategory = $this->input->get('id'); 
+		$subCategory = $this->input->get('id');
 
 		if ($mainCategory != null && $subCategory != null) {
 			$tmp['mainCategory'] 	= $this->home->getMainCategory($mainCategory);
@@ -148,7 +144,7 @@ class Home extends CI_Controller
 		$data['sectionName'] = 'Search Result for ' . ucwords($searchQuery);
 
 		//GET PARENT CATEGORY TITLE
-		$data['categories'] = $this->M_category->getParentCategory();
+		$data['categories'] = $this->category->getParentCategory();
 		$data['searchQuery'] = $searchQuery;
 
 		$this->load->view('templates/header', $data);

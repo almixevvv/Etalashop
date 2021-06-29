@@ -1,14 +1,11 @@
 <?php if (!defined("BASEPATH")) exit("Hack Attempt");
 
-class Login extends CI_Controller 
+class Login extends CI_Controller
 {
 
 	public function __construct()
 	{
 		parent::__construct();
-		require_once 'vendor/autoload.php';
-		// $this->output->enable_profiler(TRUE);
-		$this->load->model('M_user', 'user');
 
 		/* LOAD CUSTOM GOOGLE LIBRARY */
 		$this->load->library('incube');
@@ -34,7 +31,7 @@ class Login extends CI_Controller
 
 		$data['googleURL'] = $client->createAuthUrl();
 
-		if ($userData['EMAIL'] != null) {
+		if (isset($userData['EMAIL'])) {
 			redirect('home');
 		} else {
 			$this->load->view('templates/header', $data);

@@ -70,7 +70,7 @@
 			<div class="accordion" id="main-accordion">
 				<?php foreach ($categories->result() as $data) { ?>
 					<div class="card">
-						<div class="card-header" data-toggle="collapse" data-target="#collapse-<?php echo $data->ID; ?>" aria-expanded="false" aria-controls="collapse-<?php echo $data->ID; ?>" id="heading-<?php echo $data->ID; ?>" style="padding: 0!important;">
+						<div class="card-header" data-toggle="collapse" data-target="#collapse-<?= $data->ID; ?>" aria-expanded="false" aria-controls="collapse-<?php echo $data->ID; ?>" id="heading-<?= $data->ID; ?>" style="padding: 0!important;">
 							<p class=" categoryCardContainer">
 								<span class="categoryCardTitle">
 									<label style="font-size: 11px;"><?php echo $data->DESCRIPTION; ?></label>
@@ -80,14 +80,14 @@
 								</span>
 							</p>
 						</div>
-						<div id="collapse-<?php echo $data->ID; ?>" class="collapse" aria-labelledby="heading-<?php echo $data->ID; ?>" data-parent="#main-accordion">
+						<div id="collapse-<?php echo $data->ID; ?>" class="collapse" aria-labelledby="heading-<?= $data->ID; ?>" data-parent="#main-accordion">
 							<div class="card-body">
 								<ul>
-									<?php $categoryQuery = $this->M_category->getChildCategory($data->ID); ?>
+									<?php $categoryQuery = $this->category->getChildCategory($data->ID); ?>
 
 									<?php foreach ($categoryQuery->result() as $list) { ?>
 										<li class="category-list">
-											<a class="text-capitalize" href="<?php echo base_url('home?category=' . $data->ID . '&id=' . ucfirst(strtolower($list->LINK))); ?>">&nbsp;<?php echo ucfirst(strtolower($list->NAME)); ?></a>
+											<a class="text-capitalize" href="<?= base_url('home?category=' . $data->ID . '&id=' . ucfirst(strtolower($list->LINK))); ?>">&nbsp;<?= ucfirst(strtolower($list->NAME)); ?></a>
 										</li>
 									<?php } ?>
 								</ul>
@@ -98,7 +98,7 @@
 
 				<div class="card">
 					<span id="banner-sidebar">
-						<img alt="Side Banner" src="<?php echo base_url('assets/images/banner_bike.jpg'); ?>" style="width: 100%;" />
+						<img alt="Side Banner" src="<?= base_url('assets/images/banner_bike.jpg'); ?>" style="width: 100%;" />
 					</span>
 				</div>
 
