@@ -31,6 +31,17 @@ class API extends CI_Controller
         }
     }
 
+    public function generateMemberPassword()
+    {
+        $password = 'Abc123';
+
+        $salt = sha1($this->incube->generateID('10'));
+        $passHash = password_hash($password . $salt, PASSWORD_BCRYPT, array('cost' => 12));
+
+        echo $salt;
+        echo '      ' . $passHash;
+    }
+
     public function generatePID()
     {
         $apiKey = $this->input->get('key');
@@ -113,6 +124,13 @@ class API extends CI_Controller
         echo $tmpData;
     }
 
+    public function getMemberData()
+    {
+        $userData = $this->api->getGeneralData('g_member', 'EMAIL', $this->input->post('email'));
+
+        echo json_encode($userData->result());
+    }
+
     public function home()
     {
         $apiKey = $this->input->get('key');
@@ -172,110 +190,110 @@ class API extends CI_Controller
         echo json_encode($msg);
     }
 
-    public function product()
-    {
-        $apiKey = $this->input->get('key');
-        if (isset($apiKey)) {
-            if ($apiKey != API_KEY) {
-                $msg = array(
-                    'status'    => 'ok',
-                    'code'      => 204,
-                    'message'   => 'invalid api key',
-                );
-            } else {
+    // public function product()
+    // {
+    //     $apiKey = $this->input->get('key');
+    //     if (isset($apiKey)) {
+    //         if ($apiKey != API_KEY) {
+    //             $msg = array(
+    //                 'status'    => 'ok',
+    //                 'code'      => 204,
+    //                 'message'   => 'invalid api key',
+    //             );
+    //         } else {
 
-                $productID = $this->input->get('id');
+    //             $productID = $this->input->get('id');
 
-                if (isset($productID)) {
+    //             if (isset($productID)) {
 
-                    $queryProduct = $this->cms->getGeneralData('v_g_products', 'PRODUCT_ID', $productID);
+    //                 $queryProduct = $this->cms->getGeneralData('v_g_products', 'PRODUCT_ID', $productID);
 
-                    if ($queryProduct->num_rows() == 0) {
-                        $msg = array(
-                            'status'    => 'ok',
-                            'code'      => 204,
-                            'message'   => 'invalid product id'
-                        );
-                    } else {
+    //                 if ($queryProduct->num_rows() == 0) {
+    //                     $msg = array(
+    //                         'status'    => 'ok',
+    //                         'code'      => 204,
+    //                         'message'   => 'invalid product id'
+    //                     );
+    //                 } else {
 
-                        $productArr = array();
+    //                     $productArr = array();
 
-                        $productArr['TITLE']    = $queryProduct->row()->PRODUCT_NAME;
-                        $productArr['MATRIC']   = 'Pcs';
-                        $productArr['DETAILS']  = $queryProduct->row()->PRODUCT_DETAIL;
+    //                     $productArr['TITLE']    = $queryProduct->row()->PRODUCT_NAME;
+    //                     $productArr['MATRIC']   = 'Pcs';
+    //                     $productArr['DETAILS']  = $queryProduct->row()->PRODUCT_DETAIL;
 
-                        $counter = 0;
+    //                     $counter = 0;
 
-                        if ($queryProduct->num_rows() > 1) {
-                            foreach ($queryProduct->result() as $prices) {
-                                $productArr['PRICE'][$counter]['PRICE']             = ($prices->QUANTITY_PRICE == null ? 'Price Negotiable' : strval($prices->QUANTITY_PRICE));
-                                $productArr['PRICE'][$counter]['STARTING_QUANTITY'] = ($prices->QUANTITY_MIN == 0 ? 1 : $prices->QUANTITY_MIN);
-                                $productArr['PRICE'][$counter]['ENDING_QUANTITY']   = ($prices->QUANTITY_MAX == 999 ? 'Above ' . $prices->QUANTITY_MIN : $prices->QUANTITY_MAX);
-                                $productArr['PRICE'][$counter]['FLAG']              = ($queryProduct->num_rows() == 0 ? 'No EXW Price' : 'EXW Price Exist');
+    //                     if ($queryProduct->num_rows() > 1) {
+    //                         foreach ($queryProduct->result() as $prices) {
+    //                             $productArr['PRICE'][$counter]['PRICE']             = ($prices->QUANTITY_PRICE == null ? 'Price Negotiable' : strval($prices->QUANTITY_PRICE));
+    //                             $productArr['PRICE'][$counter]['STARTING_QUANTITY'] = ($prices->QUANTITY_MIN == 0 ? 1 : $prices->QUANTITY_MIN);
+    //                             $productArr['PRICE'][$counter]['ENDING_QUANTITY']   = ($prices->QUANTITY_MAX == 999 ? 'Above ' . $prices->QUANTITY_MIN : $prices->QUANTITY_MAX);
+    //                             $productArr['PRICE'][$counter]['FLAG']              = ($queryProduct->num_rows() == 0 ? 'No EXW Price' : 'EXW Price Exist');
 
-                                $counter++;
-                            }
-                        } else {
-                            $productArr['PRICE'][$counter]['PRICE']             = ($queryProduct->row()->QUANTITY_PRICE == null ? 'Price Negotiable' : $queryProduct->row()->QUANTITY_PRICE);
-                            $productArr['PRICE'][$counter]['STARTING_QUANTITY'] = ($queryProduct->row()->QUANTITY_MIN == 0 ? 1 : $queryProduct->row()->QUANTITY_MIN);
-                            $productArr['PRICE'][$counter]['ENDING_QUANTITY']   = ($queryProduct->row()->QUANTITY_MAX == 999 ? 'Above ' . $queryProduct->row()->QUANTITY_MIN + 1 : $queryProduct->row()->QUANTITY_MAX);
-                            $productArr['PRICE'][$counter]['FLAG']              = ($queryProduct->num_rows() == 1 ? 'No EXW Price' : 'EXW Price Exist');
-                        }
-
-
-                        $productArr['PICTURE_LIST'][]['PICTURE'] = $queryProduct->row()->IMAGES1;
-                        $productArr['PICTURE_LIST'][]['PICTURE'] = $queryProduct->row()->IMAGES2;
-                        $productArr['PICTURE_LIST'][]['PICTURE'] = $queryProduct->row()->IMAGES3;
-                        $productArr['PICTURE_LIST'][]['PICTURE'] = $queryProduct->row()->IMAGES3;
-
-                        if ($queryProduct->row()->IMAGES1 != null) {
-                            $productArr['MAIN_PICTURE'] = $queryProduct->row()->IMAGES1;
-                        } else if ($queryProduct->row()->IMAGES2 != null) {
-                            $productArr['MAIN_PICTURE'] = $queryProduct->row()->IMAGES2;
-                        } else if ($queryProduct->row()->IMAGES3 != null) {
-                            $productArr['MAIN_PICTURE'] = $queryProduct->row()->IMAGES3;
-                        } else if ($queryProduct->row()->IMAGES4 != null) {
-                            $productArr['MAIN_PICTURE'] = $queryProduct->row()->IMAGES4;
-                        }
-
-                        $msg = array(
-                            'status'            => 'ok',
-                            'code'              => 200,
-                            'productID'         => $productID,
-                            'minimumOrder'      => ($queryProduct->row()->QUANTITY_MIN == 0 ? 1 : $queryProduct->row()->QUANTITY_MIN),
-                            'startingPrice'     => ($queryProduct->row()->QUANTITY_PRICE == null ? 'Price Negotiable' : $queryProduct->row()->QUANTITY_PRICE),
-                            'matrics'           => 'Pcs',
-                            'estimated_weight'  => '10 Kg',
-                            'item'              => $productArr,
-                            'query'             => $this->db->last_query()
-                        );
-
-                        // $productForApp['PRICE'][$counter]['PRICE'] = 'Price Negotiable';
-                        // $productForApp['PRICE'][$counter]['STARTING_QUANTITY'] = '1';
-                        // $productForApp['PRICE'][$counter]['ENDING_QUANTITY'] = '';
-                        // $productForApp['PRICE'][$counter]['FLAG'] = 'No EXW Price';
-
-                        // $productForApp['PICTURE_LIST'][]['PICTURE'] = $newPath . $obj['detail']['productForApp']['picture'];
-                        // $productForApp['MAIN_PICTURE'] = $newPath . $obj['detail']['productForApp']['picture'];
+    //                             $counter++;
+    //                         }
+    //                     } else {
+    //                         $productArr['PRICE'][$counter]['PRICE']             = ($queryProduct->row()->QUANTITY_PRICE == null ? 'Price Negotiable' : $queryProduct->row()->QUANTITY_PRICE);
+    //                         $productArr['PRICE'][$counter]['STARTING_QUANTITY'] = ($queryProduct->row()->QUANTITY_MIN == 0 ? 1 : $queryProduct->row()->QUANTITY_MIN);
+    //                         $productArr['PRICE'][$counter]['ENDING_QUANTITY']   = ($queryProduct->row()->QUANTITY_MAX == 999 ? 'Above ' . $queryProduct->row()->QUANTITY_MIN + 1 : $queryProduct->row()->QUANTITY_MAX);
+    //                         $productArr['PRICE'][$counter]['FLAG']              = ($queryProduct->num_rows() == 1 ? 'No EXW Price' : 'EXW Price Exist');
+    //                     }
 
 
-                    }
-                } else {
-                    $msg = array(
-                        'status'    => 'ok',
-                        'code'      => 204,
-                        'message'   => 'incomplete parameter, id is missing'
-                    );
-                }
-            }
-        } else {
-            $msg = array(
-                'status'    => 'ok',
-                'code'      => 204,
-                'message'   => 'incomplete api parameter'
-            );
-        }
+    //                     $productArr['PICTURE_LIST'][]['PICTURE'] = $queryProduct->row()->IMAGES1;
+    //                     $productArr['PICTURE_LIST'][]['PICTURE'] = $queryProduct->row()->IMAGES2;
+    //                     $productArr['PICTURE_LIST'][]['PICTURE'] = $queryProduct->row()->IMAGES3;
+    //                     $productArr['PICTURE_LIST'][]['PICTURE'] = $queryProduct->row()->IMAGES3;
 
-        echo json_encode($msg);
-    }
+    //                     if ($queryProduct->row()->IMAGES1 != null) {
+    //                         $productArr['MAIN_PICTURE'] = $queryProduct->row()->IMAGES1;
+    //                     } else if ($queryProduct->row()->IMAGES2 != null) {
+    //                         $productArr['MAIN_PICTURE'] = $queryProduct->row()->IMAGES2;
+    //                     } else if ($queryProduct->row()->IMAGES3 != null) {
+    //                         $productArr['MAIN_PICTURE'] = $queryProduct->row()->IMAGES3;
+    //                     } else if ($queryProduct->row()->IMAGES4 != null) {
+    //                         $productArr['MAIN_PICTURE'] = $queryProduct->row()->IMAGES4;
+    //                     }
+
+    //                     $msg = array(
+    //                         'status'            => 'ok',
+    //                         'code'              => 200,
+    //                         'productID'         => $productID,
+    //                         'minimumOrder'      => ($queryProduct->row()->QUANTITY_MIN == 0 ? 1 : $queryProduct->row()->QUANTITY_MIN),
+    //                         'startingPrice'     => ($queryProduct->row()->QUANTITY_PRICE == null ? 'Price Negotiable' : $queryProduct->row()->QUANTITY_PRICE),
+    //                         'matrics'           => 'Pcs',
+    //                         'estimated_weight'  => '10 Kg',
+    //                         'item'              => $productArr,
+    //                         'query'             => $this->db->last_query()
+    //                     );
+
+    //                     // $productForApp['PRICE'][$counter]['PRICE'] = 'Price Negotiable';
+    //                     // $productForApp['PRICE'][$counter]['STARTING_QUANTITY'] = '1';
+    //                     // $productForApp['PRICE'][$counter]['ENDING_QUANTITY'] = '';
+    //                     // $productForApp['PRICE'][$counter]['FLAG'] = 'No EXW Price';
+
+    //                     // $productForApp['PICTURE_LIST'][]['PICTURE'] = $newPath . $obj['detail']['productForApp']['picture'];
+    //                     // $productForApp['MAIN_PICTURE'] = $newPath . $obj['detail']['productForApp']['picture'];
+
+
+    //                 }
+    //             } else {
+    //                 $msg = array(
+    //                     'status'    => 'ok',
+    //                     'code'      => 204,
+    //                     'message'   => 'incomplete parameter, id is missing'
+    //                 );
+    //             }
+    //         }
+    //     } else {
+    //         $msg = array(
+    //             'status'    => 'ok',
+    //             'code'      => 204,
+    //             'message'   => 'incomplete api parameter'
+    //         );
+    //     }
+
+    //     echo json_encode($msg);
+    // }
 }
