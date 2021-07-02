@@ -9,7 +9,7 @@ class Product_detail extends CI_Controller
 
     public function view()
     {
-        $data['dataproduct'] = $this->cms->getGeneralData('v_g_products', 'PRODUCT_ID', $this->input->get('id'));
+        $data['dataproduct'] = $this->api->getGeneralData('v_g_products', 'PRODUCT_ID', $this->input->get('id'));
 
         //1. Kalo ga ada data
         if ($data['dataproduct']->num_rows() == 0) {

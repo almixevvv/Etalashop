@@ -7,11 +7,7 @@ class Checkout extends CI_Controller
 	{
 
 		parent::__construct();
-
-		$this->load->model('M_product', 'product');
-		$this->load->model('M_profile', 'profiles');
-		$this->load->model('M_cart', 'carts');
-		$this->output->enable_profiler(TRUE);
+		// $this->output->enable_profiler(TRUE);
 	}
 
 	public function index()

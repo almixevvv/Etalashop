@@ -1,14 +1,14 @@
-<!-- CUSTOM DATE PICKER JAVASCRIPT -->  
+<!-- CUSTOM DATE PICKER JAVASCRIPT -->
 <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
 <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
 
 <div class="registration-container">
 
-	<form action="<?php echo base_url('General/Register/input'); ?>" method="POST" class="needs-validation" novalidate>
- 
+	<form action="<?= base_url('General/Register/input'); ?>" method="POST" class="needs-validation" novalidate>
+
 		<div id="registration-inner-container">
 
-			<div class="row"> 
+			<div class="row">
 				<div class="col-12">
 					<div class="row pb-md-2 pb-lg-2 pb-xl-2 pt-md-1 pt-lg-1 pt-xl-1">
 						<div class="col-12 pt-3 pb-3 pt-md-0 pt-lg-0 pt-xl-0 pb-md-0 pb-lg-0 pb-xl-0">
@@ -213,13 +213,16 @@
 	</form>
 </div>
 
-<script type="text/javascript">
-	<?php if ($this->session->has_userdata('google_id')) { ?>
+<?php if ($this->session->has_userdata('google_id')) { ?>
+	<script>
 		swal.fire({
 			text: 'To start shopping, please complete your registration process',
 			showCancelButton: false,
 		});
-	<?php } ?>
+	</script>
+<?php } ?>
+
+<script type="text/javascript">
 	$('#datepicker').datepicker({
 		uiLibrary: 'bootstrap4'
 	});
@@ -255,18 +258,13 @@
 
 			$("#uEmail").removeClass("is-invalid").addClass("is-valid");
 
-			$.ajax({
-				url: "<?php echo base_url('Register/checkExistingEmail'); ?>",
-				type: "GET",
-				data: {
-					email: email
-				},
-				success: function(result) {
-					if (result === 'existing') {
-						$('#uEmail').removeClass("is-valid").addClass("is-invalid");
-					} else {
-						$("#uEmail").removeClass("is-invalid").addClass("is-valid");
-					}
+			$.get(baseUrl + 'Register/checkExistingEmail', {
+				email: email
+			}, function(resp) {
+				if (result === 'existing') {
+					$('#uEmail').removeClass("is-valid").addClass("is-invalid");
+				} else {
+					$("#uEmail").removeClass("is-invalid").addClass("is-valid");
 				}
 			});
 

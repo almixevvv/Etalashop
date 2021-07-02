@@ -1,4 +1,4 @@
-<?php if (!defined("BASEPATH")) exit("Hack Attempt");   
+<?php if (!defined("BASEPATH")) exit("Hack Attempt");
 class Register extends CI_Controller
 {
 
@@ -6,19 +6,13 @@ class Register extends CI_Controller
 	{
 
 		parent::__construct();
- 
+
 		date_default_timezone_set('Asia/Jakarta');
-
-		$this->load->model('M_user', 'user');
-		$this->load->helper('form');
-		$this->load->library('email');
-
 		$this->output->enable_profiler(TRUE);
 	}
 
 	public function index()
 	{
-
 		$data['sectionName'] = 'Register';
 
 		if ($this->input->get('rid') != null) {
@@ -74,19 +68,6 @@ class Register extends CI_Controller
 
 	public function input()
 	{
-		$userImage 	= $this->input->post('uImage');
-		$fName 		= $this->input->post('uFirstName');
-		$lName 		= $this->input->post('uLastName');
-		$phone 		= $this->input->post('uPhone');
-		$email 		= $this->input->post('uEmail');
-		$country 	= $this->input->post('uCountry');
-		$address1 	= $this->input->post('uAddress1');
-		$address2 	= $this->input->post('uAddress2');
-		$password 	= $this->input->post('uPass');
-		$state 		= $this->input->post('uProvince');
-		$zip 		= $this->input->post('uZip');
-		$date 		= $this->input->post('uBirthdate');
-
 		$googleData = $this->session->userdata();
 		$this->session->unset_userdata($googleData);
 
@@ -104,59 +85,38 @@ class Register extends CI_Controller
 			$memberType = 0;
 		}
 
-		$hashPassword = sha1($password);
+		$email = $this->input->post('uEmail');
+		$password = $this->input->post('uPass');
+
 		$hashEmail = sha1($email);
 
-		$formatDate = strtotime($date);
+		$salt = sha1($this->incube->generateID('10'));
+		$passHash = password_hash($password . $salt, PASSWORD_BCRYPT, array('cost' => 12));
+
+
 
 		$data = array(
-			'FIRST_NAME' 	=> $fName,
-			'LAST_NAME' 	=> $lName,
+			'REC_ID'		=> $this->incube->generateID('10'),
 			'MEMBER_TYPE'	=> $memberType,
-			'JOIN_DATE' 	=> date("Y/m/d h:i:s"),
-			'BIRTH_DATE' 	=> date('Y-m-d', $formatDate),
-			'PHONE' 		=> $phone,
-			'ADDRESS' 		=> $address1,
-			'ADDRESS_2' 	=> $address2,
-			'COUNTRY' 		=> $country,
-			'PROVINCE' 		=> $state,
-			'ZIP' 			=> $zip,
-			'EMAIL' 		=> $email,
-			'PASSWORD' 		=> $hashPassword,
+			'FIRST_NAME' 	=> $this->input->post('uFirstName'),
+			'LAST_NAME' 	=> $this->input->post('uLastName'),
+			'JOIN_DATE' 	=> date("Y-m-d h:i:s"),
+			'BIRTH_DATE' 	=> date('y-m-d', strtotime($this->input->post('uBirthdate'))),
+			'PHONE' 		=> $this->input->post('uPhone'),
+			'ADDRESS' 		=> $this->input->post('uAddress1'),
+			'ADDRESS_2' 	=> $this->input->post('uAddress2'),
+			'COUNTRY' 		=> $this->input->post('uCountry'),
+			'PROVINCE' 		=> $this->input->post('uProvince'),
+			'ZIP' 			=> $this->input->post('uZip'),
+			'EMAIL' 		=> $this->input->post('uEmail'),
+			'PASSWORD' 		=> $passHash,
+			'SALT'			=> $salt,
 			'STATUS' 		=> 'PENDING',
 			'HASH' 			=> $hashEmail,
 			'IMAGE'			=> $saveDirectory
 		);
 
-		$query = $this->user->registration($data); 
-
-		// Verifikasi Email dengan Localhost
-
-		// function verify($verificationText=NULL){  
-		// 	$noRecords = $this->HomeModel->verifyEmailAddress($verificationText);  
-		//   	if ($noRecords > 0){
-		//    		$error = array( 'success' => "Email Verified Successfully!"); 
-		//   	}
-		//   	else{
-		//    		$error = array( 'error' => "Sorry Unable to Verify Your Email!"); 
-		//   	}
-		//   	$data['errormsg'] = $error; 
-		//   	$this->load->view('home.php', $data);   
-		// }
-
-		// function sendVerificationEmail(){  
-		//   	$this->EmailModel->sendVerificatinEmail("admin@etalashop.com","rV#qMNCdt,W!");
-		// 	$this->load->view('home.php', $data);   
-		// } 
-
-		// $this->load->library('email', $config);
-		// $this->email->set_newline("\r\n");
-		// $this->email->from('admin@yourdomain.com', "Admin Team");
-		// $this->email->to($email);  
-		// $this->email->subject("Email Verification");
-		// $this->email->message("Dear User,\nPlease click on below URL or paste into your browser to verify your Email Address\n\n http://www.yourdomain.com/verify/".$verificationText."\n"."\n\nThanks\nAdmin Team");
-		// $this->email->send();
-
+		$query = $this->api->insertGeneralData('g_member', $data);
 
 		if ($query) {
 			$data['email'] = $email;
@@ -189,8 +149,7 @@ class Register extends CI_Controller
 		} else {
 			$this->session->set_flashdata('verification', 'error');
 			redirect(base_url('home'));
-		}  
-		redirect(base_url('home'));
+		}
 	}
 
 	public function verification()

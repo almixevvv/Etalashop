@@ -6,9 +6,7 @@ class Login extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-
-		/* LOAD CUSTOM GOOGLE LIBRARY */
-		$this->load->library('incube');
+		// $this->output->enable_profiler(TRUE);
 	}
 
 	public function index()
@@ -83,16 +81,12 @@ class Login extends CI_Controller
 
 	public function login_user()
 	{
-
 		$email = $this->input->post('txt-email');
 		$password = $this->input->post('txt-password');
 
-		$hashPassword = sha1($password);
+		$queryEmail = $this->api->getGeneralData('g_member', 'EMAIL', $email);
 
-		$checkEmail = $this->user->checkExistingEmail($email);
-
-		//Check if email exists
-		if ($checkEmail->num_rows() == 0) {
+		if ($queryEmail->num_rows() == 0) {
 			$this->session->set_flashdata('no_email', true);
 
 			if ($this->input->get('refer') != null) {
@@ -102,59 +96,66 @@ class Login extends CI_Controller
 			}
 		} else {
 
-			//Check if password is correct
-			$checkPassword = $this->user->checkPassword($email, $hashPassword);
+			//1. Ambil salt dari DB untuk di compare sama password input
+			$userSalt = $queryEmail->row()->SALT;
+			$checkPassword  = password_verify($password . $userSalt, $queryEmail->row()->PASSWORD);
+			//EoL 1
 
-			if ($checkPassword->num_rows() < 1) {
-				$this->session->set_flashdata('wrong_pass', true);
-				$this->session->set_flashdata('email', $email);
+			//2. Cek passwordnya bener atau salah
+			if ($checkPassword) {
+				//2.1 Kalo passwordnya bener, masuk kesini 
 
-				if ($this->input->get('refer') != null) {
-					redirect(site_url('login?refer=' . $this->input->get('refer')));
-				} else {
-					redirect(site_url('login'));
-				}
-			} else if ($checkPassword->num_rows() >= 1) {
-				//Check if account already verified
-				$checkVerified = $this->user->checkVerified($email);
+				if ($queryEmail->row()->STATUS == 'ACTIVE') {
+					//2.1.1 Kalau emailnya udah di verified, masuk kesini
+					$dataSess = array(
+						'FIRST_NAME' 	=> $queryEmail->row()->FIRST_NAME,
+						'LAST_NAME' 	=> $queryEmail->row()->LAST_NAME,
+						'PHONE' 		=> $queryEmail->row()->PHONE,
+						'EMAIL' 		=> $queryEmail->row()->EMAIL,
+						'ADDRESS' 		=> $queryEmail->row()->ADDRESS,
+						'COUNTRY' 		=> $queryEmail->row()->COUNTRY,
+						'PROVINCE' 		=> $queryEmail->row()->PROVINCE,
+						'USERID' 		=> $queryEmail->row()->ID,
+						'ZIP' 			=> $queryEmail->row()->ZIP,
+						'IMAGE'			=> $queryEmail->row()->IMAGE,
+						'LOGGED_IN'		=> TRUE
+					);
 
-				if ($checkVerified->num_rows() < 1) {
-					$this->session->set_flashdata('not_active', true);
+					$this->session->set_userdata('user_data', $dataSess);
 
 					if ($this->input->get('refer') != null) {
 						redirect(site_url('login?refer=' . $this->input->get('refer')));
 					} else {
 						redirect(site_url('login'));
 					}
+					//EoL 2.1.1
 				} else {
-
-					foreach ($checkPassword->result() as $data) {
-
-						$dataSess = array(
-							'FIRST_NAME' 	=> $data->FIRST_NAME,
-							'LAST_NAME' 	=> $data->LAST_NAME,
-							'PHONE' 		=> $data->PHONE,
-							'EMAIL' 		=> $data->EMAIL,
-							'ADDRESS' 		=> $data->ADDRESS,
-							'COUNTRY' 		=> $data->COUNTRY,
-							'PROVINCE' 		=> $data->PROVINCE,
-							'USERID' 		=> $data->ID,
-							'ZIP' 			=> $data->ZIP,
-							'IMAGE'			=> $data->IMAGE,
-							'LOGGED_IN'		=> TRUE
-						);
-					}
-
-					$this->session->set_userdata('user_data', $dataSess);
-
-					//CHECK USER PREVIOUS PAGE
+					//2.1.2 Kalo emailnya belom di verified, masuk kesini
+					$this->session->set_flashdata('not_active', true);
 					if ($this->input->get('refer') != null) {
-						redirect(site_url($this->input->get('refer')));
+						redirect(site_url('login?refer=' . $this->input->get('refer')));
 					} else {
-						redirect(base_url('home'));
+						redirect(site_url('login'));
 					}
+					//EoL 2.1.2
 				}
+				//EoL 2.1.1
+
+				//EoL 2.1
+			} else {
+				//2.2 Kalo passwordnya salah, masuk kesini
+				echo 'kesini 2.2';
+				$this->session->set_flashdata('wrong_pass', true);
+				$this->session->set_flashdata('email', $email);
+
+				if ($this->input->get('refer') != null) {
+					// redirect(site_url('login?refer=' . $this->input->get('refer')));
+				} else {
+					// redirect(site_url('login'));
+				}
+				//EoL 2.2
 			}
+			//EoL 2
 		}
 	}
 

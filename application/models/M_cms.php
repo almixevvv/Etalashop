@@ -1,99 +1,5 @@
 <?php class M_cms extends CI_Model
 {
-    //General Function
-    public function getGeneralListOrderedLimit($table, $field, $query, $limit)
-    {
-        $this->db->select('*');
-        $this->db->from($table);
-        $this->db->order_by($field, $query);
-        $this->db->limit($limit);
-        $query = $this->db->get();
-
-        return $query;
-    }
-
-    public function getGeneralListGroup($table, $group)
-    {
-        $this->db->select('*');
-        $this->db->from($table);
-        $this->db->group_by($group);
-
-        $query = $this->db->get();
-
-        return $query;
-    }
-
-    public function getSpecificListGroup($table, $field, $query, $group)
-    {
-        $this->db->select('*');
-        $this->db->from($table);
-        $this->db->where($field, $query);
-        $this->db->group_by($group);
-
-        $query = $this->db->get();
-
-        return $query;
-    }
-
-    public function getGeneralListOrdered($table, $field, $query)
-    {
-        $this->db->select('*');
-        $this->db->from($table);
-        $this->db->order_by($field, $query);
-
-        $query = $this->db->get();
-
-        return $query;
-    }
-
-    public function getGeneralData($table, $field, $query)
-    {
-        $this->db->select('*');
-        $this->db->from($table);
-        $this->db->where($field, $query);
-
-        $query = $this->db->get();
-
-        return $query;
-    }
-
-    public function getSpecificData($table, $field, $query, $field2, $query2)
-    {
-        $this->db->select('*');
-        $this->db->from($table);
-        $this->db->where($field, $query);
-        $this->db->where($field2, $query2);
-
-        $query = $this->db->get();
-
-        return $query;
-    }
-
-    public function deleteGeneralData($table, $field, $query)
-    {
-        $this->db->where($field, $query);
-        $query = $this->db->delete($table);
-
-        return $query;
-    }
-
-    public function updateGeneralData($table, $field, $query, $data)
-    {
-        $this->db->where($field, $query);
-        $query = $this->db->update($table, $data);
-
-        return $query;
-    }
-
-    function insertGeneralData($table, $data)
-    {
-        $query = $this->db->insert($table, $data);
-
-        return $query;
-    }
-    //End of General Function
-
-
     //------------------------------------------------------------------------------------------------------------------- LOGIN CMS
     function cms_login($email, $password)
     {
@@ -118,18 +24,6 @@
         $query = $this->db->get();
 
         return $query;
-    }
-
-    function generateID()
-    {
-        $ads_id = $this->getiklanid();
-        if ($ads_id == '0') {
-            $last_ads_id = 1;
-        } else {
-            $last_ads_id = intval(substr($ads_id, -6)) + 1;
-        }
-        $new_ads_id = "DSH" . date("ym") . str_pad(strval($last_ads_id), 6, "0", STR_PAD_LEFT);
-        return $new_ads_id;
     }
 
     public function changePassword($id, $hashPassword)
@@ -291,45 +185,7 @@
 
         return $query;
     }
-    function select_banner_detail($id)
-    {
-        $this->db->where('REC_ID', $id);
-        $this->db->where('TYPE', $type);
-        $this->db->where('LINK_TYPE', $link_type);
-        $this->db->where('LINKTO', $linkto);
-        $this->db->where('BANNER_IMAGE', $banner_img);
-        $this->db->where('ORDER_NO', $order_no);
-        $this->db->where('FLAG', $flag);
-        $this->db->where('DESCRIPTION', $description);
-        $this->db->where('CREATED', $created);
-        $this->db->where('UPDATED', $updated);
-        $this->db->where('USER_ID', $user_id);
-        return $this->db->get('g_banner');
-    }
-    function update_banner($banner)
-    {
 
-
-        $data = array(
-            'CONTENT' => $banner,
-            'UPDATED'  => date('Y-m-d h:i:s')
-
-        );
-
-        $this->db->replace('g_about', $data);
-        $data = array('TYPE' => $type);
-        $data = array('LINK_TYPE' => $link_type);
-        $data = array('LINKTO' => $linkto);
-        $data = array('BANNER_IMAGE' => $banner_img);
-        $data = array('ORDER_NO' => $order_no);
-        $data = array('FLAG' => $flag);
-        $data = array('DESCRIPTION' => $description);
-        $data = array('CREATED' => $created);
-        $data = array('UPDATED' => $updated);
-        $data = array('USER_ID' => $user_id);
-
-        $this->db->where('REC_ID', $id);
-    }
     //-------------------------------------------------------------------------------------------------------------------  BANNER
 
     //-------------------------------------------------------------------------------------------------------------------  ABOUT

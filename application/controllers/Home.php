@@ -7,41 +7,8 @@ class Home extends CI_Controller
 
 		parent::__construct();
 
-		// $this->output->enable_profiler(TRUE);
+		$this->output->enable_profiler(TRUE);
 		date_default_timezone_set('Asia/Jakarta');
-	}
-
-	public function tmp()
-	{
-		$curl = curl_init();
-
-		$data = array(
-			'cpage'	=> mt_rand(1, 100)
-		);
-
-		$urlEndpoint = 'http://app.yiwugo.com/product/2016product/onetest.htm?password=wien.suh@gmail.com';
-		$params = array(
-			'key'	=> $data
-		);
-
-		$finalUrl = $urlEndpoint . '&' . http_build_query($params);
-
-		echo $finalUrl;
-
-		curl_setopt_array($curl, array(
-			CURLOPT_URL => $finalUrl,
-			CURLOPT_RETURNTRANSFER => true,
-			CURLOPT_ENCODING => '',
-			CURLOPT_MAXREDIRS => 10,
-			CURLOPT_TIMEOUT => 0,
-			CURLOPT_FOLLOWLOCATION => true,
-			CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-			CURLOPT_CUSTOMREQUEST => 'GET',
-		));
-
-		$response = curl_exec($curl);
-
-		curl_close($curl);
 	}
 
 	public function index()
@@ -77,7 +44,7 @@ class Home extends CI_Controller
 			);
 		}
 
-		// //Get the category
+		//Get the category
 		$mainCategory = $this->input->get('category');
 		$subCategory = $this->input->get('id');
 

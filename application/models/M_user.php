@@ -1,4 +1,4 @@
-<?php class M_user extends CI_Model   
+<?php class M_user extends CI_Model
 {
 
 	function checkExistingEmail($email)
@@ -79,16 +79,6 @@
 		$query = $this->db->get();
 
 		return $query;
-	}
-
-	function registration($data)
-	{
-
-		if ($this->db->insert('g_member', $data)) {
-			return true;
-		} else {
-			return false;
-		}
 	}
 
 	function verifyAccount($hash)

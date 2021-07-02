@@ -89,6 +89,13 @@
 		return $query;
 	}
 
+	public function insertGeneralData($table, $data)
+	{
+		$query = $this->db->insert($table, $data);
+
+		return $query;
+	}
+
 	//INSERT MEMBER DATA
 	function insertMember($data)
 	{

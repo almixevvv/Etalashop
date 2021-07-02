@@ -13,6 +13,24 @@ class API extends CI_Controller
         date_default_timezone_set('Asia/Jakarta');
     }
 
+    //Only Run if member table is broken
+    public function generateMemberRECID()
+    {
+        $queryMember = $this->api->getGeneralList('g_member');
+
+        foreach ($queryMember->result() as $members) {
+
+            $randomSalt = md5(uniqid(rand(), true));
+            $salt = substr($randomSalt, 0, 10);
+
+            $queryUpdate = array(
+                'REC_ID'    => $salt
+            );
+
+            $queryUpdateMember = $this->api->updateGeneralData('g_member', 'ID', $members->ID, $queryUpdate);
+        }
+    }
+
     public function generatePID()
     {
         $apiKey = $this->input->get('key');

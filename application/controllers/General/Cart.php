@@ -5,7 +5,6 @@ class Cart extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->library('incube');
 		//$this->output->enable_profiler(TRUE);
 	}
 
@@ -16,7 +15,6 @@ class Cart extends CI_Controller
 
 		$hashEmail  = sha1($this->session->EMAIL);
 
-		// $data['recomended'] 	 = $obj;
 		$data['productName'] 	 = 'Shopping Cart';
 		$userData 				 = $this->session->user_data;
 
@@ -25,11 +23,6 @@ class Cart extends CI_Controller
 		$data['marginParameter'] = $this->product->getMarginPrice();
 		$data['convertRate'] 	 = $this->product->getConvertRate();
 		$data['items']		 	 = $this->carts->displayCart($hashEmail);
-
-		if ($data['items']->num_rows() > 0) {
-			foreach ($data['items']->result() as $cartItems) {
-			}
-		}
 
 		if ($userData['EMAIL'] != null) {
 			$this->load->view('templates/header', $data);
@@ -44,7 +37,6 @@ class Cart extends CI_Controller
 
 	public function addtocart()
 	{
-
 		$userData 	= $this->session->user_data;
 		// $dataProduct=$this->cms->getGeneralData('v_g_products', 'PRODUCT_ID', $this->input->post('product-id'));
 		// foreach ($dataProduct->result() as $key);
@@ -56,6 +48,7 @@ class Cart extends CI_Controller
 		// 	echo"<br>";
 		// $qty=$this->input->post('quantity');
 		// $price=0;
+
 		//1. Kalo ga ada user yang login
 
 		// $id=$this->input->post('product-id');
@@ -145,8 +138,8 @@ class Cart extends CI_Controller
 	public function removeCartItem()
 	{
 
-		 $getRowID = $this->input->get('rowid');
-		 $getBuyer = $this->input->get('buyer');
+		$getRowID = $this->input->get('rowid');
+		$getBuyer = $this->input->get('buyer');
 
 		if ($this->carts->deleteItem($getRowID, $getBuyer)) {
 			return true;

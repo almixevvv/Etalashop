@@ -1,9 +1,11 @@
 <?php
 
-Class M_product extends CI_Model {
+class M_product extends CI_Model
+{
 
   //GENERATE RANDOM PRODUCT LINK
-  function generateLink(){
+  function generateLink()
+  {
     $this->db->select('LINK');
     $this->db->from('m_category');
     $this->db->where('LINK IS NOT NULL');
@@ -13,10 +15,11 @@ Class M_product extends CI_Model {
     $query = $this->db->get();
 
     return $query->result();
-	}
+  }
 
   //GET MARGIN PARAMETER FOR PRICING
-  function getMarginPrice() {
+  function getMarginPrice()
+  {
 
     $this->db->select('*');
     $this->db->from('g_convert');
@@ -25,11 +28,11 @@ Class M_product extends CI_Model {
     $query = $this->db->get()->row()->VALUE;
 
     return $query;
-
   }
 
   //GET CONVERT PRICE
-  function getConvertRate() {
+  function getConvertRate()
+  {
 
     $this->db->select('*');
     $this->db->from('g_rate');
@@ -41,7 +44,8 @@ Class M_product extends CI_Model {
   }
 
   //GET V_G_PRODUCT
-  function getProductDetail(){
+  function getProductDetail()
+  {
     $this->db->select('*');
     $this->db->from('v_g_products');
     $this->db->where('');
@@ -49,5 +53,4 @@ Class M_product extends CI_Model {
     $query  = $this->db->get()->row()->VALUE;
     return $query;
   }
-
 }

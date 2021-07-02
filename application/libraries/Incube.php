@@ -10,6 +10,14 @@ class Incube
 		$this->CI->load->model('M_product', 'product');
 	}
 
+	public function generateID($length)
+	{
+		$randomSalt = md5(uniqid(rand(), true));
+		$salt = substr($randomSalt, 0, $length);
+
+		return $salt;
+	}
+
 	public function replaceLink($url)
 	{
 
