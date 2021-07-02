@@ -111,11 +111,21 @@
                 <div class="col-6 col-md-12 col-lg-6 col-xl-6" style="padding-right: 0!important;">
                   <label class="detail-txt-color detail-exw-size font-weight-bold">
                     <?= $qty->QUANTITY_MIN; ?> ~ <?= $qty->QUANTITY_MAX; ?>
+
                   </label>
                 </div>
                 <div class="col-6 col-md-12 col-lg-6 col-xl-6">
                   <label class="detail-txt-color detail-exw-size font-weight-bold">
-                    <span class="detail-exw-color">IDR <?php echo number_format($qty->QUANTITY_PRICE, 2, '.', ','); ?></span>/Pcs
+                    <span class="detail-exw-color">IDR <?php
+                      if($qty->QUANTITY_PRICE>0){
+                           echo number_format($qty->QUANTITY_PRICE, 2, '.', ','); 
+                      }
+                      else{
+                           echo number_format(0, 2, '.', ','); 
+
+                      }
+
+                       ?></span>/Pcs
                   </label>
                 </div>
               </div>
@@ -149,7 +159,7 @@
           <div class="row mt-2">
             <div class="col-12 col-md-5 col-lg-5 col-xl-5">
               <label class="detail-label">Description :</label>
-            </div>
+            </div>;
             <div class="col-12 col-md-9 col-lg-9 col-xl-11" style="overflow:scroll; ">
               <span class="detail-txt-color">
                 <?php if (strlen($dataproduct->row()->PRODUCT_DETAIL) == 0) { ?>

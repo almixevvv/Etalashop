@@ -13,6 +13,12 @@
         return $new_ads_id;
     }
 
+    // function countEstimatedPrice($id){
+    //     $this->db->form('g_product_quantity');
+    //     $this->db->order_by('QUANTITY_MIN', 'QUANTITY_MAX');
+    //     $this->db->where('PRODUCT_ID', $id)
+    // }
+
     function getiklanid()
     {
         $this->db->from('g_order_master');
@@ -34,7 +40,7 @@
     {
 
         $this->db->select('*');
-        $this->db->from('g_cart');
+        $this->db->from('V_G_CART');
         $this->db->where('CART_ID', $email);
         $this->db->where('CART_FLAG', '0');
         $this->db->order_by('REC_ID', 'ASC');

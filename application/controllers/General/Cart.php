@@ -6,7 +6,7 @@ class Cart extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->library('incube');
-		$this->output->enable_profiler(TRUE);
+		//$this->output->enable_profiler(TRUE);
 	}
 
 	public function mycart()
@@ -31,28 +31,37 @@ class Cart extends CI_Controller
 			}
 		}
 
-
-
-		// if ($userData['EMAIL'] != null) {
-		// 	$this->load->view('templates/header', $data);
-		// 	$this->load->view('templates/navbar');
-		// 	$this->load->view('pages/cart/mycart', $data);
-		// 	$this->load->view('templates/footer');
-		// } else {
-		// 	$this->session->set_flashdata('cart', 'no_user');
-		// 	redirect(base_url('login?refer=mycart'));
-		// }
+		if ($userData['EMAIL'] != null) {
+			$this->load->view('templates/header', $data);
+			$this->load->view('templates/navbar');
+			$this->load->view('pages/cart/mycart', $data);
+			$this->load->view('templates/footer');
+		} else {
+			$this->session->set_flashdata('cart', 'no_user');
+			redirect(base_url('login?refer=mycart'));
+		}
 	}
 
 	public function addtocart()
 	{
 
 		$userData 	= $this->session->user_data;
-
+		// $dataProduct=$this->cms->getGeneralData('v_g_products', 'PRODUCT_ID', $this->input->post('product-id'));
+		// foreach ($dataProduct->result() as $key);
+		// echo $this->input->post('product-id');
+		// echo"<br>";
+		// echo $key->QUANTITY_MIN;
+		// echo"<br>";
+		// echo $key->QUANTITY_MAX;
+		// 	echo"<br>";
+		// $qty=$this->input->post('quantity');
+		// $price=0;
 		//1. Kalo ga ada user yang login
-		if (!isset($userData['EMAIL'])) {
-			echo 'ga ada isi';
 
+		// $id=$this->input->post('product-id');
+		// $data=$this->cart->countEstimatedPrice($id);
+
+		if (!isset($userData['EMAIL'])) {
 			//1.1 Simpen dulu datanya sementara di database, terus redirect ke halaman login
 			$itemArray = array(
 				'prod_id' 		=> $this->input->post('product-id'),
@@ -136,14 +145,15 @@ class Cart extends CI_Controller
 	public function removeCartItem()
 	{
 
-		$getRowID = $this->input->get('rowid');
-		$getBuyer = $this->input->get('buyer');
+		 $getRowID = $this->input->get('rowid');
+		 $getBuyer = $this->input->get('buyer');
 
 		if ($this->carts->deleteItem($getRowID, $getBuyer)) {
 			return true;
 		} else {
 			return false;
 		}
+		//exit;
 	}
 
 	public function sendOrderDetails()
