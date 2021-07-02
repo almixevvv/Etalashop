@@ -31,6 +31,7 @@
 	</div>
 
 	<!-- TITLE MY CART -->
+
 	<div class="row">
 		<div class="col-md-7">
 			<div class="">
@@ -54,6 +55,9 @@
 			<!-- END OF TITLE MY CART -->
 
 			<!-- LOOPING PRODUCT IN MYCART -->
+			<form method="POST" action="<?= base_url('General/Checkout/checkoutProcess') ?>">
+				
+			
 			<?php 
 				$i=0;
 				if($row>0){
@@ -72,17 +76,20 @@
 										<a href="<?php echo base_url('product_detail?id=' . $key->PRODUCT_ID) ?>">
 											<img class="img-list-order" src="<?php echo base_url()."assets/uploads/products/".$key->IMAGES1; ?>" style="width: 100px;"/>
 										</a>
+
 									</div>
 
 									<div class="col-8 pl-0">
 										<div class="d-flex flex-column">
 											<div class="mb-1 text-capitalize" >
 												<!-- <span class="font-weight-bold" style="font-size: 15px;">Product Name:</span> <br> -->
-												<a href="<?php echo base_url('product_detail?id=' . $key->PRODUCT_ID); ?>" style="color: #212529; font-size: 15px;"><?php echo "$key->PRODUCT_NAME"; ?></a>
+												<a href="<?php echo base_url('product_detail?id=' . $key->PRODUCT_ID); ?>" style="color: #212529; font-size: 15px;"><?php echo $key->PRODUCT_NAME; ?></a>
+												<input type="hidden" name="txt-name" value="<?php echo  $key->PRODUCT_NAME?>">
 											</div>
 											<div class="text-capitalize">
 												<!-- <span class="font-weight-bold">Inquiry:</span> -->
 												<textarea class="form-control mt-2" name="customer-notes-<?php echo $i; ?>" style="background-color: #eee; width: 100%; height:50px; font-size: 12px;"><?php echo $key->PRODUCT_NOTES; ?></textarea>
+												<input type="hidden" name="txt-name" value="<?php echo  $key->PRODUCT_NOTES;?>">
 											</div>
 										</div>
 									</div>
@@ -96,7 +103,7 @@
 									<div class="col-12">
 
 										<!-- IF THE PRICE IS NEGOTIABLE -->
-										<?php if ($this->incube->priceEmpty($key->PRODUCT_PRICE)) { ?>
+										<?php if ($key->PRODUCT_PRICE<=0) { ?>
 											<div class="d-flex justify-content-center">
 												<span>Price Negotiable</span>
 											</div>
@@ -252,6 +259,7 @@
 									</div>
 									<div class="row mt-2">
 										<div class="col-12">
+
 											<?php if ($price == 0) : ?>
 												<span>Price Negotiable</span>
 											<?php else : ?>
@@ -389,14 +397,14 @@
 
 			  	<div class="row pl-3 mt-3 mb-3">
 			  		<div class="col-6">
-			  			<a href="<?php echo base_url(); ?>">
-							<button type="button" class="btn btn-info" title="Continue Shoping" style="color: white;"><i class="fa fa-angle-left"></i>&nbsp; SHOPPING</button>
+			  			<a href="<?php echo base_url(); ?>" class="btn btn-info" title="Shoping" style="color: white;">
+							<i class="fa fa-angle-left"></i>&nbsp; SHOPPING
 						</a>
 			  		</div>
 			  		<div class="col-6">
-			  			<a href="<?= base_url('General/Checkout/checkoutProcess') ?>">
-			  				<button type="submit" class="btn btn-success text-cart-button" id="btnCheckOut" title="Submit Inquiry">SUBMIT INQUIRY&nbsp;<i class="fa fa-angle-right"></i></button>	
-			  			</a>
+			  			
+		  				<button type="submit" class="btn btn-success text-cart-button" id="btnCheckOut" title="Submit Inquiry">SUBMIT INQUIRY&nbsp;<i class="fa fa-angle-right"></i></button>	
+			  			
 			  		</div>
 			  	</div>
 			 
@@ -405,6 +413,7 @@
 	</div>
 	
 	<!-- END LOOPING PRODUCT IN MYCART -->
+	</form>
 
 </div>
 
