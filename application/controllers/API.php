@@ -40,6 +40,8 @@ class API extends CI_Controller
 
         echo $salt;
         echo '      ' . $passHash;
+
+        echo ' ' .  sha1('hamzahaji1999@gmail.com');
     }
 
     public function generatePID()

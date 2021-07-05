@@ -144,14 +144,13 @@ class Login extends CI_Controller
 				//EoL 2.1
 			} else {
 				//2.2 Kalo passwordnya salah, masuk kesini
-				echo 'kesini 2.2';
 				$this->session->set_flashdata('wrong_pass', true);
 				$this->session->set_flashdata('email', $email);
 
 				if ($this->input->get('refer') != null) {
-					// redirect(site_url('login?refer=' . $this->input->get('refer')));
+					redirect(site_url('login?refer=' . $this->input->get('refer')));
 				} else {
-					// redirect(site_url('login'));
+					redirect(site_url('login'));
 				}
 				//EoL 2.2
 			}
