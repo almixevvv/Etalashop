@@ -2,8 +2,6 @@
 	//INITIAL COUNTER  
 	$subtotal 	= 0;
 	$subqty 	= 0;
-	$weightTotal= 0;
-	$subWeight =0;
 ?>
 
 <div class="cart-container">
@@ -65,7 +63,6 @@
 				if($row>0){
 					foreach ($items->result() as $key) {
 						$price=$key->PRODUCT_PRICE;
-						$weight = $key->WEIGHT;
 			?>
 
 				<!-- ISI LOOPING IN MYCART -->
@@ -283,17 +280,6 @@
 					$subqty   = $subqty + $key->PRODUCT_QUANTITY;
 					$i++;
 
-					// WEIGHT CALCULATION
-					$subWeight	 = $subWeight + $weight;
-					$weightTotal = $subWeight * $key->PRODUCT_QUANTITY; 
-
-					$priceWeight = 9000;
-					$priceWeightTotal = $priceWeight * $weightTotal;
-
-					$totalPrice = $priceWeightTotal + $subtotal;
-
-
-
 				}
 				?>
 				<!-- END ISI LOOPING IN MYCART -->
@@ -318,44 +304,19 @@
 			  		 <h5 class="mt-3 mb-3">Shopping Summary</h5> 
 			  	</div>
 			  	<div class="row">
-			  		<div class="col-md-6" style="padding-left: 30px;">
-			  		 <span style="font-size: 12pt;">Total Items </span> 
+			  		<div class="col-md-7" style="padding-left: 30px;">
+			  		 <span style="font-size: 12pt;">Estimated Price</span> 
 				  	</div>
-				  	<div class="col-md-6" style="text-align: right;padding-right:10%; ">
-				  		<?php echo $subqty; ?>
-				  	</div>
-			  	</div>
-			  	<div class="row">
-			  		<div class="col-md-6" style="padding-left: 30px;">
-			  		 <span style="font-size: 12pt;">Total Price Items</span> 
-				  	</div>
-				  	<div class="col-md-6" style="text-align: right;padding-right:10%; ">
+				  	<div class="col-md-5" style="text-align: right;padding-right:10%; ">
 				  		  IDR <?php echo number_format($subtotal, 2, ",", "."); ?>
 				  	</div>
 			  	</div>
 			  	<div class="row">
-			  		<div class="col-md-6" style="padding-left: 30px;">
-			  		 <span style="font-size: 12pt;">Total Weight</span> 
+			  		<div class="col-md-7" style="padding-left: 30px;">
+			  		 <span style="font-size: 12pt;">Total Items </span> 
 				  	</div>
-				  	<div class="col-md-6" style="text-align: right;padding-right:10%; ">
-				  		 <?php echo number_format($weightTotal, 2, ",", "."); ?> Kg
-				  	</div>
-			  	</div>
-			  	<div class="row">
-			  		<div class="col-md-6" style="padding-left: 30px;">
-			  		 <span style="font-size: 12pt;">Total Price Weight</span> 
-				  	</div>
-				  	<div class="col-md-6" style="text-align: right;padding-right:10%; ">
-				  		 IDR <?php echo number_format($priceWeightTotal, 2, ",", "."); ?>
-				  	</div>
-			  	</div>
-			  	<hr style="width: 95%; margin: 10px auto;">
-			  	<div class="row">
-			  		<div class="col-md-6" style="padding-left: 30px;">
-			  		 <span style="font-size: 12pt; font-weight: bold">TOTAL</span> 
-				  	</div>
-				  	<div class="col-md-6" style="text-align: right;padding-right:10%; font-weight: bold">
-				  		 IDR <?php echo number_format($totalPrice, 2, ",", "."); ?>
+				  	<div class="col-md-5" style="text-align: right;padding-right:10%; ">
+				  		<?php echo $subqty; ?>
 				  	</div>
 			  	</div>
 
@@ -365,9 +326,9 @@
 							<i class="fa fa-angle-left"></i>&nbsp; SHOPPING
 						</a>
 			  		</div>
-			  		<div class="col-6" style="text-align: right">
+			  		<div class="col-6">
 			  			
-		  				<button type="submit" class="btn text-cart-button mr-4" id="btnCheckOut" title="Submit Inquiry" style="background-color: #69c2ac; color:#fff">CHECKOUT&nbsp;<i class="fa fa-angle-right"></i></button>	
+		  				<button type="submit" class="btn btn-success text-cart-button" id="btnCheckOut" title="Submit Inquiry">SUBMIT INQUIRY&nbsp;<i class="fa fa-angle-right"></i></button>	
 			  			
 			  		</div>
 			  	</div>

@@ -125,7 +125,7 @@
 
                       }
 
-                       ?></span>/Pcs
+                       ?></span> / Pcs
                   </label>
                 </div>
               </div>
