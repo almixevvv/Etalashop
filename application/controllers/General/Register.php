@@ -93,8 +93,6 @@ class Register extends CI_Controller
 		$salt = sha1($this->incube->generateID('10'));
 		$passHash = password_hash($password . $salt, PASSWORD_BCRYPT, array('cost' => 12));
 
-
-
 		$data = array(
 			'REC_ID'		=> $this->incube->generateID('10'),
 			'MEMBER_TYPE'	=> $memberType,
