@@ -1,19 +1,19 @@
 <?php
-	//INITIAL COUNTER  
-	$subtotal 	= 0;
-	$subqty 	= 0;
-	$weightTotal= 0;
-	$subWeight =0;
+	//INITIAL COUNTER   
+	$subtotal 		= 0;
+	$subqty 		= 0;
+	$weightTotal 	= 0;
+	$subWeight 		= 0;
 ?>
 
 <div class="cart-container">
-	<div class="row d-none d-md-block d-lg-block d-xl-block">
+	<div class="row  d-md-block d-lg-block d-xl-block">
 		<!-- CART BREADCRUMB -->
-		<div class="col-12 col-md-12 col-lg-12 col-xl-12">
+		<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
 			<div class="mb-0 mb-md-3 mb-lg-3 mb-xl-3 pt-0 pt-md-2 pt-lg-2 pt-xl-2 pl-0 pl-md-1 pl-lg-4 pl-xl-4" style="text-align: left;">
 				<span style="color: #333;">
 					<a href="<?php echo base_url(); ?>" style="color: black;">
-						<span class="fa fa-home"></span> Home
+						<span class="fa fa-home mr-1"></span> Home
 					</a>
 				</span>
 				<span style="color: #333;"> -
@@ -26,40 +26,35 @@
 
 	<div class="row pl-3 pl-md-0 pl-lg-0 pl-xl-0 pr-3 pr-md-0 pr-lg-0 pr-xl-0">
 		<!-- TOTAL CART -->
-		<div class="col-12 col-12 pl-0 pl-md-4 pl-lg-4 pl-xl-4" id="cart-label-separator">
+		<div class="col-12 pl-0 pl-md-4 pl-lg-4 pl-xl-4" id="cart-label-separator">
 			<label class="cart-header-label pl-0 pl-md-0 pl-lg-4 pl-xl-4"><?php echo $row = $items->num_rows(); ?> Item(s) in the Cart</label>
 		</div>
 		<!-- END OF TOTAL CART -->
 	</div>
 
-	<!-- TITLE MY CART -->
-
+	<!-- DEKSTOP -->
 	<div class="row">
-		<div class="col-md-7">
-			<div class="">
-				<div class="row d-none d-md-block d-lg-block d-xl-block">
-					<div class="col-md-12 col-lg-12 col-xl-12">
-						<div class="row" id="cart-header-border">
-							<div class="col-6 col-md-6">
-								<div class="d-flex justify-content-center">Product Detail</div>
-							</div>
-							<div class="col-3 col-md-3">
-								<div class="d-flex justify-content-center">Estimated Price</div>
-							</div>
-							<div class="col-1 col-md-1">
-								<div class="d-flex justify-content-center">Qty</div>
-							</div> 
+		<div class="col-md-7 col-sm-12"> 
+			<!-- TITLE MY CART -->
+			<div class="row d-none d-md-block d-lg-block d-xl-block">
+				<div class="col-md-12 col-lg-12 col-sm-12 col-xl-12">
+					<div class="row" id="cart-header-border">
+						<div class="col-6 col-md-6 col-sm-6">
+							<div class="d-flex justify-content-center">Product Detail</div>
 						</div>
+						<div class="col-3 col-md-3 col-sm-3">
+							<div class="d-flex justify-content-center">Estimated Price</div>
+						</div>
+						<div class="col-1 col-md-1 col-sm-1">
+							<div class="d-flex justify-content-center">Qty</div>
+						</div> 
 					</div>
-
-				</div>
+				</div> 
 			</div>
-			<!-- END OF TITLE MY CART -->
+			<!-- END TITLE MY CART -->
 
 			<!-- LOOPING PRODUCT IN MYCART -->
 			<form method="POST" action="<?= base_url('General/Checkout/checkoutProcess') ?>">
-				
-			
 			<?php 
 				$i=0;
 				if($row>0){
@@ -68,31 +63,46 @@
 						$weight = $key->WEIGHT;
 			?>
 
-				<!-- ISI LOOPING IN MYCART -->
-				<div class="row d-none d-md-block d-lg-block d-xl-block" id="rowcart_<?php echo $key->PRODUCT_ID; ?>">
-					<div class="col-12 mt-4  mt-lg-4 mt-xl-4 mb-4 mb-md-4 mb-lg-4 mb-xl-4">
+				<!-- ITEMS LOOPING IN MYCART -->
+				<div class="row" id="rowcart_<?php echo $key->PRODUCT_ID; ?>">
+					<div class="col-md-12 mt-4  mt-lg-4 mt-xl-4 mb-4 mb-md-4 mb-lg-4 mb-xl-4">
 						<div class="row pb-4 cart-product-separator">
 							<!-- PRODUCT DETAIL PART -->
-							<div class="col-6 col-md-6">
+							<div class="col-md-6 col-sm-6">
 								<div class="row">
 									<div class="col-4">
 										<a href="<?php echo base_url('product_detail?id=' . $key->PRODUCT_ID) ?>">
-											<img class="img-list-order" src="<?php echo base_url()."assets/uploads/products/".$key->IMAGES1; ?>" style="width: 100px;"/>
+											<img class="img-list-order" src="<?php echo base_url()."assets/uploads/products/".$key->IMAGES1; ?>" style="width: 100%;"/>
 										</a>
-
 									</div>
-
 									<div class="col-8 pl-0">
 										<div class="d-flex flex-column">
 											<div class="mb-1 text-capitalize" >
 												<!-- <span class="font-weight-bold" style="font-size: 15px;">Product Name:</span> <br> -->
-												<a href="<?php echo base_url('product_detail?id=' . $key->PRODUCT_ID); ?>" style="color: #212529; font-size: 15px;"><?php echo $key->PRODUCT_NAME; ?></a>
-												<input type="hidden" name="txt-name" value="<?php echo  $key->PRODUCT_NAME?>">
+												<a href="<?php echo base_url('product_detail?id=' . $key->PRODUCT_ID); ?>" style="color: #212529; font-size: 15px;"><?php echo $key->PRODUCT_NAME; ?></a> 
 											</div>
-											<div class="text-capitalize">
+											<!-- Kalo Mobile Tampil -->
+											<div class="col-sm-12 pl-0 d-md-none" >
+												<span style="font-size: 0.8em; font-weight: bold">
+													<?php  
+														$pricing['price']=$key->PRODUCT_PRICE;
+														$pricing['startingQuantity']=$key->PRODUCT_QUANTITY;
+														$pricing['endingQUantity']=$key->PRODUCT_QUANTITY;
+													?>
+													IDR <?php echo number_format($pricing['price'], 2, ',', '.'); ?> / 
+													<?php echo number_format($key->PRODUCT_QUANTITY); ?> pcs
+												</span>
+											</div>  
+											<!-- End Kalo Mobile Tampil -->
+											<div class="text-capitalize mb-2">
 												<!-- <span class="font-weight-bold">Inquiry:</span> -->
 												<textarea class="form-control mt-2" name="customer-notes-<?php echo $i; ?>" style="background-color: #eee; width: 100%; height:50px; font-size: 12px;"><?php echo $key->PRODUCT_NOTES; ?></textarea>
 												<input type="hidden" name="txt-name" value="<?php echo  $key->PRODUCT_NOTES;?>">
+											</div> 
+											<div class="col-sm-6 d-md-none text-right">
+												<button type="button" class="btn btn-danger delete-item ml-5" style="height: 2.5em; width: 2.5em" title="Remove Item" data-id="<?php echo $key->PRODUCT_ID; ?>" data-buyer="<?php echo $key->PRODUCT_BUYER; ?>">
+													<i class="fa fa-trash"></i>
+												</button>
 											</div>
 										</div>
 									</div>
@@ -101,10 +111,9 @@
 							<!-- END OF PRODUCT DETAIL PART -->
 
 							<!-- ESTIMATED PRICE SECTION -->
-							<div class="col-3 col-md-3">
+							<div class="col-3 col-md-3 col-sm-3">
 								<div class="row">
-									<div class="col-12">
-
+									<div class="col-12 d-none d-md-flex">
 										<!-- IF THE PRICE IS NEGOTIABLE -->
 										<?php if ($key->PRODUCT_PRICE<=0) { ?>
 											<div class="d-flex justify-content-center">
@@ -113,17 +122,14 @@
 											<?php $currentPrice['price'] = 0; ?>
 
 											<!-- CHECK IF THE SDIPRICELIST IS EMPTY -->
-										<?php } else {
-											// $pricingUrl = 'http://kikikuku.com/API/pricing?key=c549303dcef12a687e9077a21e1a51fb67851efb&id=' . $key->PRODUCT_ID . '&quantity=' . $key->PRODUCT_QUANTITY;
-											// $json 		= file_get_contents($pricingUrl);
-											// $pricing 	= json_decode($json, true);
+										<?php } else { 
 											$pricing['price']=$key->PRODUCT_PRICE;
 											$pricing['startingQuantity']=$key->PRODUCT_QUANTITY;
 											$pricing['endingQUantity']=$key->PRODUCT_QUANTITY;
 										?>
 
-											<div class="d-flex justify-content-center">
-												<span>IDR <?php echo number_format($pricing['price'], 2, '.', ','); ?></span>
+											<div class="justify-content-center">
+												<span>IDR <?php echo number_format($pricing['price'], 2, ',', '.'); ?></span>
 											</div>
 
 											<?php if ($pricing['endingQUantity'] != 'none') { ?> 
@@ -137,145 +143,24 @@
 							<!-- END OF ESTIMATED PRICE SECTION -->
 
 							<!-- QUANTITY SECTION -->
-							<div class="col-1 col-md-1">
+							<div class="col-md-1 d-none d-md-flex">
 								<div class="d-flex justify-content-center">
 									<span><?php echo number_format($key->PRODUCT_QUANTITY); ?></span>
 								</div>
 							</div>
-							<!-- END OF QUANTITY SECTION -->
+							<!-- END OF QUANTITY SECTION -->  
 
-							<!-- PRODUCT PRICE SECTION -->
-							<div class="col-2 col-md-3 col-lg-2 pr-0 pl-0">
-								<!-- SHOW ON ALL DEVICE -->
-								<!-- <p>test</p> -->
-								<div class="d-md-none d-lg-block d-xl-block">
-									<div class="row">
-										<div class="col-lg-12 col-xl-12">
-											<div class="d-flex justify-content-center">
+							<div class="col-1 col-sm-12col-md-3 col-lg-2 pr-0 pl-0 d-none d-md-flex">  
+							<button type="button" class="btn btn-danger delete-item ml-5" style="height: 2.5em; width: 2.5em" title="Remove Item" data-id="<?php echo $key->PRODUCT_ID; ?>" data-buyer="<?php echo $key->PRODUCT_BUYER; ?>">
+								<i class="fa fa-trash"></i>
+							</button> 
+							</div>  
 
-												<!-- <?php if ($price == 0) : ?>
-													<!-- ONLY SHOW IF THE PRICE IS NEGOTIABLE -->
-													<!-- <span class="font-weight-bold">Price Negotiable</span>
-												<?php else : ?>
-													<span class="font-weight-bold">IDR <?php echo number_format($price, 2, ',', '.'); ?></span>
-												<?php endif; ?> -->
-											</div>
-										</div>
-									</div>
-								</div>
-
-								<!-- SHOW ONLY ON TABLET -->
-								<div class="d-md-block d-lg-none d-xl-none">
-									<div class="row">
-										<div class="col-12">
-											<div class="d-flex justify-content-center">
-												<!-- ONLY SHOW IF THE PRICE IS NEGOTIABLE -->
-												<?php if ($price == 0) : ?>
-													<span class="font-weight-bold">Price Negotiable</span>
-												<?php else : ?>
-													<span class="font-weight-bold">IDR <?php echo number_format($price, 2, ',', '.'); ?></span>
-												<?php endif; ?>
-											</div>
-										</div>
-									</div>
-
-									<div class="row">
-										<div class="col-md-12 pt-md-2">
-											<div class="d-flex justify-content-center">
-												<button type="button" class="btn btn-danger delete-item" title="Remove Item" data-id="<?php echo $key->PRODUCT_ID; ?>" data-buyer="<?php echo $key->PRODUCT_BUYER; ?>">
-													<i class="fa fa-trash"></i>
-												</button>
-											</div>
-										</div>
-									</div>
-								</div>
-								<!-- <p>test</p> -->
-								<!-- <div class="col-lg-1 col-xl-2"> -->
-								<button type="button" class="btn btn-danger delete-item ml-5" title="Remove Item" data-id="<?php echo $key->PRODUCT_ID; ?>" data-buyer="<?php echo $key->PRODUCT_BUYER; ?>">
-									<i class="fa fa-trash"></i>
-								</button>
-							<!-- </div> -->
-							</div>
-							<!-- END OF PRODUCT PRICE SECTION -->
-					
+							<!-- Kalo Mobile Tampil -->
+							
+							<!-- End Kalo Mobile Tampil -->
 				</div>
-					<!-- MOBILE SHOPPING CART -->
-					<div class="row d-block d-md-none d-lg-none d-xl-none mt-1 mb-3 pl-2 pr-2">
-						<div class="col-12 cart-product-separator pb-4">
-
-							<div class="row">
-								<div class="col-4">
-									<a href="<?php echo base_url('product_detail?id=' . $key->PRODUCT_ID) ?>">
-										<img class="img-list-order" src="<?php echo $key->PRODUCT_IMAGES; ?>" />
-									</a>
-								</div>
-								<div class="col-8">
-									<div class="row">
-										<div class="col-12">
-											<span class="font-weight-bold">Product Title</span>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-12">
-											<span><?php echo $key->PRODUCT_NAME; ?></span>
-										</div>
-									</div>
-								</div>
-							</div>
-
-							<div class="row">
-								<div class="col-12">
-									<div class="row">
-										<div class="col-12">
-											<span class="font-weight-bold">Product Price</span>
-										</div>
-									</div>
-									<div class="row mt-2">
-										<div class="col-12">
-
-											<?php if ($price == 0) : ?>
-												<span>Price Negotiable</span>
-											<?php else : ?>
-												<span>IDR <?php echo number_format($price, 2, ',', '.'); ?></span>
-											<?php endif; ?>
-										</div>
-									</div>
-								</div>
-							</div>
-
-							<div class="row">
-								<div class="col-3">
-									<div class="row">
-										<div class="col-12">
-											<span class="font-weight-bold">Quantity</span>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-12">
-											<span><?php echo $key->PRODUCT_QUANTITY; ?></span>
-										</div>
-									</div>
-								</div>
-								<div class="col-2 offset-1 pr-0">
-									<button type="button" class="btn btn-danger delete-item mt-3 mt-md-0 mt-lg-0 mt-xl-0" title="Remove Item" data-id="<?php echo $items->PRODUCT_ID; ?>" data-buyer="<?php echo $key->PRODUCT_BUYER; ?>">
-										<i class="fas fa-trash-alt"></i>
-									</button>
-								</div>
-							</div>
-
-							<!-- INQUIRY SECTION -->
-							<!-- <div class="row mt-2">
-								<div class="col-12">
-									<div class="form-group">
-										<label class="font-weight-bold" for="text-input-<?php echo $i; ?>">Inquiry</label>
-										<textarea class="form-control" id="text-input-<?php echo $i; ?>" type="text" name="customer-notes-<?php echo $i; ?>" style="background-color: #eee; width: 100%; height: auto;"><?php echo $key->PRODUCT_NOTES; ?></textarea>
-									</div>
-								</div>
-							</div> -->
-
-						</div>
-					</div>
-					<!-- END OF MOBILE SHOPPING CART -->
+			</div></div>
 
 					<?php
 					//SHOPPING CART PRICE CALCULATION
@@ -318,56 +203,115 @@
 			  		 <h5 class="mt-3 mb-3">Shopping Summary</h5> 
 			  	</div>
 			  	<div class="row">
-			  		<div class="col-md-6" style="padding-left: 30px;">
+			  		<div class="col-6 col-md-6 col-sm-6" style="padding-left: 30px;">
 			  		 <span style="font-size: 12pt;">Total Items </span> 
 				  	</div>
-				  	<div class="col-md-6" style="text-align: right;padding-right:10%; ">
+				  	<?php  
+				  	if ($subqty == 0) {
+				  	?>
+				  	<div class="col-6 col-md-6 col-sm-6" style="text-align: right;padding-right:10%; ">
+				  		0
+				  	</div>
+				  	<?php
+				  	} else {
+				  	?>
+				  	<div class="col-6 col-md-6 col-sm-6" style="text-align: right;padding-right:10%; ">
 				  		<?php echo $subqty; ?>
 				  	</div>
+				  	<?php  
+				  	}
+				  	?>
 			  	</div>
 			  	<div class="row">
-			  		<div class="col-md-6" style="padding-left: 30px;">
+			  		<div class="col-6 col-md-6 col-sm-6" style="padding-left: 30px;">
 			  		 <span style="font-size: 12pt;">Total Price Items</span> 
 				  	</div>
-				  	<div class="col-md-6" style="text-align: right;padding-right:10%; ">
+				  	<?php  
+				  	if ($subtotal == 0) {
+				  	?>
+				  	<div class="col-6 col-md-6 col-sm-6" style="text-align: right;padding-right:10%; ">
+				  		  IDR 0.00
+				  	</div>
+				  	<?php  
+				  	} else {
+				  	?>
+				  	<div class="col-6 col-md-6 col-sm-6" style="text-align: right;padding-right:10%; ">
 				  		  IDR <?php echo number_format($subtotal, 2, ",", "."); ?>
 				  	</div>
+				  	<?php  
+				  	}
+				  	?>
 			  	</div>
 			  	<div class="row">
-			  		<div class="col-md-6" style="padding-left: 30px;">
+			  		<div class="col-6 col-md-6 col-sm-6" style="padding-left: 30px;">
 			  		 <span style="font-size: 12pt;">Total Weight</span> 
 				  	</div>
-				  	<div class="col-md-6" style="text-align: right;padding-right:10%; ">
+				  	<?php  
+				  	if ($weightTotal == 0) {
+				  	?>
+				  	<div class="col-6 col-md-6 col-sm-6" style="text-align: right;padding-right:10%; ">
+				  		 0.00 Kg
+				  	</div>
+				  	<?php
+				  	} else {
+				  	?>
+				  	<div class="col-6 col-md-6 col-sm-6" style="text-align: right;padding-right:10%; ">
 				  		 <?php echo number_format($weightTotal, 2, ",", "."); ?> Kg
 				  	</div>
+				  	<?php  
+				  	}
+				  	?>
 			  	</div>
 			  	<div class="row">
-			  		<div class="col-md-6" style="padding-left: 30px;">
+			  		<div class="col-6 col-md-6 col-sm-6" style="padding-left: 30px;">
 			  		 <span style="font-size: 12pt;">Total Price Weight</span> 
 				  	</div>
-				  	<div class="col-md-6" style="text-align: right;padding-right:10%; ">
+				  	<?php  
+				  	if ($priceWeightTotal == 0) {
+				  	?>
+				  	<div class="col-6 col-md-6 col-sm-6" style="text-align: right;padding-right:10%; ">
+				  		 IDR 0.00
+				  	</div>
+				  	<?php
+				  	} else{
+				  	?>
+				  	<div class="col-6 col-md-6 col-sm-6" style="text-align: right;padding-right:10%; ">
 				  		 IDR <?php echo number_format($priceWeightTotal, 2, ",", "."); ?>
 				  	</div>
+				  	<?php  
+				  	}
+				  	?>
 			  	</div>
 			  	<hr style="width: 95%; margin: 10px auto;">
 			  	<div class="row">
-			  		<div class="col-md-6" style="padding-left: 30px;">
+			  		<div class="col-6 col-md-6 col-sm-6" style="padding-left: 30px;">
 			  		 <span style="font-size: 12pt; font-weight: bold">TOTAL</span> 
 				  	</div>
-				  	<div class="col-md-6" style="text-align: right;padding-right:10%; font-weight: bold">
+				  	<?php  
+				  	if ($totalPrice == 0) {
+				  	?>
+				  	<div class="col-6 col-md-6 col-sm-6" style="text-align: right;padding-right:10%; font-weight: bold">
+				  		 IDR 0.00
+				  	</div>
+				  	<?php
+				  	} else{
+				  	?>
+				  	<div class="col-6 col-md-6 col-sm-6" style="text-align: right;padding-right:10%; font-weight: bold">
 				  		 IDR <?php echo number_format($totalPrice, 2, ",", "."); ?>
 				  	</div>
+				  	<?php  
+				  	}
+				  	?>
 			  	</div>
 
 			  	<div class="row pl-3 mt-3 mb-3">
 			  		<div class="col-6">
-			  			<a href="<?php echo base_url(); ?>" class="btn btn-info" title="Shoping" style="color: white;">
+			  			<a href="<?php echo base_url(); ?>" class="btn btn-info" title="Shoping" style="color: white; font-size: 1em">
 							<i class="fa fa-angle-left"></i>&nbsp; SHOPPING
 						</a>
 			  		</div>
 			  		<div class="col-6" style="text-align: right">
-			  			
-		  				<button type="submit" class="btn text-cart-button mr-4" id="btnCheckOut" title="Submit Inquiry" style="background-color: #69c2ac; color:#fff">CHECKOUT&nbsp;<i class="fa fa-angle-right"></i></button>	
+		  				<button type="submit" class="btn text-cart-button mr-4" id="btnCheckOut" title="Submit Inquiry" style="background-color: #69c2ac; color:#fff; font-size: 1em">CHECKOUT&nbsp;<i class="fa fa-angle-right"></i></button>	
 			  			
 			  		</div>
 			  	</div>
