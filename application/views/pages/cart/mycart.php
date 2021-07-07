@@ -242,67 +242,55 @@
 			</div>
 		</div>
 
-		<!-- END LOOPING PRODUCT IN MYCART -->
 	</form>
 
 </div>
 
 <script type="text/javascript">
-	$(document).ready(function() {
+	$('.delete-item').on('click', function() {
 
-		const swalWithBootstrapButtons = Swal.mixin({
-			customClass: {
-				confirmButton: 'btn btn-success',
-				cancelButton: 'btn btn-danger'
-			},
-			buttonsStyling: false,
-		});
+		var id = $(this).attr("data-id");
+		var email = $(this).attr('data-buyer');
 
-		$('.delete-item').on('click', function() {
+		swal.fire({
+			title: "Remove Product",
+			text: "Are you sure you want to remove this product from your cart?",
+			type: "warning",
+			showCancelButton: true,
+			cancelButtonColor: '#d33',
+			confirmButtonText: "Confirm",
+			confirmButtonColor: '#3085d6'
+		}).then((result) => {
+			if (result.value) {
 
-			var id = $(this).attr("data-id");
-			var email = $(this).attr('data-buyer');
 
-			swal.fire({
-				title: "Remove Product",
-				text: "Are you sure you want to remove this product from your cart?",
-				type: "warning",
-				showCancelButton: true,
-				cancelButtonColor: '#d33',
-				confirmButtonText: "Confirm",
-				confirmButtonColor: '#3085d6'
-			}).then((result) => {
-				if (result.value) {
-
-					$.ajax({
-						type: "GET",
-						url: "<?php echo base_url('General/Cart/removeCartItem'); ?>",
-						data: {
-							rowid: id,
-							buyer: email
-						},
-						success: function(data) {
-							var divID = '#rowcart_' + id;
-							$("#rowcart_" + id).animate({
-								left: '+=100em',
-								opacity: '0.5'
-							}, 1000, function() {
-								$("#rowcart_" + id).remove();
-							});
-						}
+				$.get(baseUrl + 'General/Cart/removeCartItem', {
+					rowid: id,
+					buyer: email
+				}, function(resp) {
+					var divID = '#rowcart_' + id;
+					$("#rowcart_" + id).animate({
+						left: '+=100em',
+						opacity: '0.5'
+					}, 1000, function() {
+						$("#rowcart_" + id).remove();
 					});
 
-					swalWithBootstrapButtons.fire(
-						'Deleted!',
-						'Selected product has been removed.',
-						'success'
-					).then((result) => {
+					swal.fire({
+						title: 'Deleted!',
+						text: "Selected product has been removed",
+						type: "success",
+						showCancelButton: true,
+						cancelButtonColor: '#d33',
+						confirmButtonText: "Confirm",
+						confirmButtonColor: '#3085d6'
+					}).then((result) => {
 						if (result.value) {
 							location.reload();
 						}
 					});
-				}
-			});
+				});
+			}
 		});
 	});
 </script>
