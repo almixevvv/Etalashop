@@ -1,17 +1,10 @@
 <?php if (!defined("BASEPATH")) exit("Hack Attempt");
 class Profile extends CI_Controller
 {
-
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->library('session');
-		$this->load->helper('form');
-		$this->load->model('M_profile', 'profile');
-		$this->load->model('M_user', 'user');
-
-		$this->output->enable_profiler(TRUE);
-		date_default_timezone_set('Asia/Jakarta');
+		// $this->output->enable_profiler(TRUE);
 	}
 
 	public function transaction()

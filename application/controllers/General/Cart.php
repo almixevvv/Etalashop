@@ -23,6 +23,11 @@ class Cart extends CI_Controller
 		$data['marginParameter'] = $this->product->getMarginPrice();
 		$data['convertRate'] 	 = $this->product->getConvertRate();
 		$data['items']		 	 = $this->carts->displayCart($hashEmail);
+		$data['row']			 = $data['items']->num_rows();
+		$data['i']				 = 0;
+		$data['subtotal']		 = 0;
+		$data['subqty']		 	 = 0;
+		$data['subWeight']		 = 0;
 
 		if ($userData['EMAIL'] != null) {
 			$this->load->view('templates/header', $data);
