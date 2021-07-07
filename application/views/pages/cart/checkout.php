@@ -34,7 +34,7 @@
     </div>
   </div>
 
-  <form id="add-inquiry-form" action="<?php echo base_url('Checkout/checkoutProcess'); ?>" method="POST" class="needs-validation" novalidate>
+  <form id="add-inquiry-form" action="<?= base_url('General/Checkout/checkoutProcess'); ?>" method="POST" class="needs-validation" novalidate>
 
     <!-- LOAD USER DATA -->
     <div id="checkout-inner-container">

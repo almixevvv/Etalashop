@@ -1,6 +1,6 @@
 <div class="cart-container">
 
-	<form method="POST" action="<?= base_url('General/Checkout/checkoutProcess') ?>">
+	<form method="POST" action="<?= base_url('cart/checkout') ?>">
 		<div class="row  d-md-block d-lg-block d-xl-block">
 			<!-- CART BREADCRUMB -->
 			<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">

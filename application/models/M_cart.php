@@ -118,22 +118,6 @@
         return $query;
     }
 
-    function insertMasterData($data)
-    {
-
-        $query = $this->db->insert('g_order_master', $data);
-
-        return $query;
-    }
-
-    function insertOrderDetail($data)
-    {
-
-        $query =  $this->db->insert('g_order_detail', $data);
-
-        return $query;
-    }
-
     function insertPO($data)
     {
         $this->db->set('ORDER_DATE', 'NOW()', FALSE);
