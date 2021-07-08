@@ -91,3 +91,4 @@ defined('PASSWORD_MAX_LENGTH') or define('PASSWORD_MAX_LENGTH', 10);
 defined('PAYMENT_KEY_LENGTH')  or define('PAYMENT_KEY_LENGTH', 5);
 defined('SNAP_CLIENT_KEY')     or define('SNAP_CLIENT_KEY', 'SB-Mid-client-vspx1jtt782dSdFs');
 defined('API_KEY')             or define('API_KEY', 'c549303dcef12a687e9077a21e1a51fb67851efb');
+defined('WEIGHT_PRICE')        or define('WEIGHT_PRICE', 9000);

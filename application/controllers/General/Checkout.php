@@ -34,87 +34,113 @@ class Checkout extends CI_Controller
 
 	public function checkoutProcess()
 	{
-		// if ($this->input->post('save-info') == 'on') {
-		// 	$saveFlag = 1;
-		// } else {
-		// 	$saveFlag = 0;
-		// }
+		$userData 		= $this->session->user_data;
+		$memberID      	= $userData['USERID'];
+		$hashEmail		= sha1($userData['EMAIL']);
+		$genID          = $this->carts->generateID();
 
-		// $userData 		= $this->session->user_data;
-		// $memberID      	= $userData['USERID'];
-		// $hashEmail		= sha1($userData['EMAIL']);
-		// $genID          = $this->carts->generateID();
+		$subtotal 		= 0;
+		$curPrice 		= 0;
+		$curWeight      = 0;
+		$totalWeight    = 0;
 
-		// $subqty 		    = 0;
-		// $subtotal 		= 0;
-		// $curPrice 		= 0;
+		if ($this->input->post('save-info') == 'on') {
+			$saveFlag = 1;
+		} else {
+			$saveFlag = 0;
+		}
 
-		// //Calculate Total Item Price
-		// $carts  = $this->carts->displayCart($hashEmail);
+		//Calculate Total Item Price
+		$carts  = $this->carts->displayCart($hashEmail);
 
-		// foreach ($carts->result() as $items) {
+		//1. Calculate the price for all items
+		foreach ($carts->result() as $items) {
 
-		// 	$curPrice 	= $items->PRODUCT_QUANTITY * $items->PRODUCT_PRICE;
-		// 	$subqty 	= $subqty + $items->PRODUCT_QUANTITY;
-		// 	$subtotal 	= $subtotal + $curPrice;
-		// }
+			//1.1. Calculate the item price
+			$curPrice 	= $items->PRODUCT_QUANTITY * ($items->PRODUCT_PRICE == null ? 0 : $items->PRODUCT_PRICE);
+			$subtotal 	= $subtotal + $curPrice;
+			//EoL 1.1
+		}
+		//EoL 1
 
-		// $data = array(
-		// 	'ORDER_NO'     => $genID,
-		// 	'ORDER_DATE'   => date('Y-m-d h:i:s'),
-		// 	'MEMBER_ID'    => $memberID,
-		// 	'MEMBER_NAME'  => $this->input->post('txt-name'),
-		// 	'MEMBER_PHONE' => $this->input->post('txt-phone'),
-		// 	'MEMBER_EMAIL' => $this->input->post('txt-email'),
-		// 	'TOTAL_ORDER'  => $subtotal,
-		// 	'STATUS'       => 'NEW ORDER',
-		// 	'UPDATED'	   => date('Y-m-d h:i:s'),
-		// 	'ADDRESS_1'    => $this->input->post('txt-address-1'),
-		// 	'ADDRESS_2'    => $this->input->post('txt-address-2'),
-		// 	'COUNTRY'      => $this->input->post('txt-country'),
-		// 	'ZIP'          => $this->input->post('txt-zip'),
-		// 	'STATE'        => $this->input->post('txt-state'),
-		// 	'SAVE_FLAG'	   => $saveFlag
-		// );
+		//2. Insert transaction to database
+		$this->db->trans_start();
 
-		// $this->carts->insertMasterData($data);
+		$data = array(
+			'ORDER_NO'     => $genID,
+			'ORDER_DATE'   => date('Y-m-d h:i:s'),
+			'MEMBER_ID'    => $memberID,
+			'MEMBER_NAME'  => $this->input->post('txt-name'),
+			'MEMBER_PHONE' => $this->input->post('txt-phone'),
+			'MEMBER_EMAIL' => $this->input->post('txt-email'),
+			'TOTAL_ORDER'  => $subtotal,
+			'STATUS'       => 'NEW ORDER',
+			'ADDRESS_1'    => $this->input->post('txt-address-1'),
+			'ADDRESS_2'    => $this->input->post('txt-address-2'),
+			'COUNTRY'      => $this->input->post('txt-country'),
+			'ZIP'          => $this->input->post('txt-zip'),
+			'STATE'        => $this->input->post('txt-state'),
+			'SAVE_FLAG'	   => $saveFlag
+		);
 
-		// foreach ($carts->result() as $carts) {
+		$this->api->insertGeneralData('g_order_master', $data);
 
-		// 	if (substr($carts->PRODUCT_ID, 1, 1) != 'P') {
-		// 		$flag = '1';
-		// 	} else {
-		// 		$flag = '2';
-		// 	}
+		//2.1 Loop data for inserting to order detail
+		foreach ($carts->result() as $carts) {
+			if (substr($carts->PRODUCT_ID, 1, 1) != 'P') {
+				$flag = '1';
+			} else {
+				$flag = '2';
+			}
 
-		// 	$details = array(
-		// 		'FLAG'            => $flag,
-		// 		'ORDER_NO'        => $genID,
-		// 		'PROD_ID'         => $carts->PRODUCT_ID,
-		// 		'PROD_IMAGE'	  => $carts->PRODUCT_IMAGES,
-		// 		'PROD_NAME'		  => $carts->PRODUCT_NAME,
-		// 		'QUANTITY'        => $carts->PRODUCT_QUANTITY,
-		// 		'WEIGHT'          => '0',
-		// 		'PRICE'           => $carts->PRODUCT_PRICE,
-		// 		'FINAL_PRICE'     => $carts->PRODUCT_PRICE,
-		// 		'POSTAGE'         => 0.00,
-		// 		'NOTES'           => $carts->PRODUCT_NOTES
-		// 	);
+			//2.1.1 Calculate the item weight
+			$curWeight   = $items->WEIGHT * $items->PRODUCT_QUANTITY;
+			$totalWeight = $totalWeight + $curWeight;
+			//EoL 2.1.1
 
-		// 	$this->carts->insertOrderDetail($details);
+			//2.1.2 Calculate the weight cost 
+			$weightPrice = $totalWeight * WEIGHT_PRICE;
+			//EoL 2.1.2
 
-		// 	//DELETE THE ITEM FROM THE CART
-		// 	// $deleteCart = $this->carts->deleteCarts($carts->REC_ID);
-		// 	$deleteCart = $this->carts->updateCartFlag($carts->PRODUCT_ID, $carts->REC_ID);
-		// }
+			//2.1.3 Get items detail
+			$queryProduct = $this->api->getGeneralData('v_g_products', 'PRODUCT_ID', $carts->PRODUCT_ID);
+			//EoL 2.1.3
 
-		// if ($deleteCart) {
-		// 	$this->session->set_flashdata('inquiry', 'created');
-		// 	redirect(base_url());
-		// } else {
-		// 	$this->session->set_flashdata('inquiry', 'failed');
-		// 	redirect(base_url());
-		// }
+			$details = array(
+				'FLAG'            => $flag,
+				'ORDER_NO'        => $genID,
+				'PROD_ID'         => $carts->PRODUCT_ID,
+				'PROD_IMAGE'	  => $queryProduct->row()->IMAGES1,
+				'PROD_NAME'		  => $queryProduct->row()->PRODUCT_NAME,
+				'QUANTITY'        => $carts->PRODUCT_QUANTITY,
+				'WEIGHT'          => $carts->WEIGHT,
+				'PRICE'           => ($carts->PRODUCT_PRICE == null ? 0 : $carts->PRODUCT_PRICE),
+				'FINAL_PRICE'     => ($carts->PRODUCT_PRICE == null ? 0 : $carts->PRODUCT_PRICE),
+				'POSTAGE'         => $weightPrice,
+				'NOTES'           => $carts->PRODUCT_NOTES
+			);
+
+			$this->api->insertGeneralData('g_order_detail', $details);
+
+			//2.1.3 Delete the items from cart 
+			$this->carts->updateCartFlag($carts->PRODUCT_ID, $carts->REC_ID);
+			//EoL 2.1.3
+		}
+		//EoL 2.1
+		$this->db->trans_complete();
+		//EoL 2
+
+		//3. Validate the data
+		if ($this->db->trans_status() === FALSE) {
+			$this->db->trans_rollback();
+			$this->session->set_flashdata('inquiry', 'failed');
+			redirect(base_url());
+		} else {
+			$this->db->trans_commit();
+			$this->session->set_flashdata('inquiry', 'created');
+			redirect(base_url());
+		}
+		//EoL 3
 	}
 
 	public function postPaymentProcess()

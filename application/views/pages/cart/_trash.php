@@ -370,7 +370,7 @@ $subqty     = 0;
 
 
     <!-- RECOMENDATION PRODUCT PART -->
-<!--    <div class="row mt-3 mt-md-4 mt-lg-4 mt-xl-4">
+    <!--    <div class="row mt-3 mt-md-4 mt-lg-4 mt-xl-4">
 
         <div class="col-12 col-md-6 col-lg-6 col-xl-6">
             <span class="detail-txt-color">
