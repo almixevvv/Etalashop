@@ -123,7 +123,7 @@ class Checkout extends CI_Controller
 			$this->api->insertGeneralData('g_order_detail', $details);
 
 			//2.1.3 Delete the items from cart 
-			$this->carts->updateCartFlag($carts->PRODUCT_ID, $carts->REC_ID);
+			$this->carts->updateCartFlag($hashEmail);
 			//EoL 2.1.3
 		}
 		//EoL 2.1

@@ -28,6 +28,9 @@ class Cart extends CI_Controller
 		$data['subtotal']		 = 0;
 		$data['subqty']		 	 = 0;
 		$data['subWeight']		 = 0;
+		$data['totalWeight']	 = 0;
+		$data['totalPrice']	 = 0;
+		$data['weightPrice']	 = 0;
 
 		if ($userData['EMAIL'] != null) {
 			$this->load->view('templates/header', $data);
