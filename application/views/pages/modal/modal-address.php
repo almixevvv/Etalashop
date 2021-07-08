@@ -52,9 +52,11 @@
     <div class="col-lg-4">
       <input name="country" class="form-control" style="width: 90%; margin-left: 1.5em;" value="<?php echo $data->COUNTRY;?>">
     </div>
+
     <div class="col-lg-4">
       <input name="province" class="form-control" style="width: 90%; margin-left: 0.6em;" value="<?php echo $data->PROVINCE;?>">
     </div>
+
     <div class="col-lg-4">
       <input name="zip" class="form-control" style="width: 90%; margin-left: -0.5em;" value="<?php echo $data->ZIP;?>">
     </div>

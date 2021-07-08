@@ -4,7 +4,7 @@
 <!-- HEADER -->
 <div class="modal-header" style="background-color: #2dd6a7  ;padding: 0.01rem;">
   <p style="color: white;margin-top: 0.5em; margin-left: 7em; font-size: 20px; font-weight: bold;"><i class="fas fa-phone"></i></i> Edit Phone Number</p>
-  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+  <button type="button" class="close mr-1 mt-0.5" data-dismiss="modal" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>

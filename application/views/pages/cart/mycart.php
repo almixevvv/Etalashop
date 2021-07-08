@@ -1,9 +1,14 @@
 <?php
-	//INITIAL COUNTER   
+	//INITIAL COUNTER    
 	$subtotal 		= 0;
 	$subqty 		= 0;
 	$weightTotal 	= 0;
 	$subWeight 		= 0;
+	
+	$weightTotalAkhir = 0;
+	$priceWeightAkhir = 0;
+	$priceWeightTotal = 0;
+	$totalPrice = 0;
 ?>
 
 <div class="cart-container">
@@ -56,7 +61,7 @@
 			<!-- LOOPING PRODUCT IN MYCART -->
 			<form method="POST" action="<?= base_url('General/Checkout/checkoutProcess') ?>">
 			<?php 
-				$i=0;
+				$i=0; 
 				if($row>0){
 					foreach ($items->result() as $key) {
 						$price=$key->PRODUCT_PRICE;
@@ -98,6 +103,7 @@
 												<!-- <span class="font-weight-bold">Inquiry:</span> -->
 												<textarea class="form-control mt-2" name="customer-notes-<?php echo $i; ?>" style="background-color: #eee; width: 100%; height:50px; font-size: 12px;"><?php echo $key->PRODUCT_NOTES; ?></textarea>
 												<input type="hidden" name="txt-name" value="<?php echo  $key->PRODUCT_NOTES;?>">
+												 
 											</div> 
 											<div class="col-sm-6 d-md-none text-right">
 												<button type="button" class="btn btn-danger delete-item ml-5" style="height: 2.5em; width: 2.5em" title="Remove Item" data-id="<?php echo $key->PRODUCT_ID; ?>" data-buyer="<?php echo $key->PRODUCT_BUYER; ?>">
@@ -170,17 +176,21 @@
 
 					// WEIGHT CALCULATION
 					$subWeight	 = $subWeight + $weight;
-					$weightTotal = $subWeight * $key->PRODUCT_QUANTITY; 
+					$weightTotal = $weightTotal+($weight*$key->PRODUCT_QUANTITY);
+					
+				
+					// $priceWeight = 9000;
+					// $priceWeightTotal = $priceWeight * $weightTotal;
 
-					$priceWeight = 9000;
-					$priceWeightTotal = $priceWeight * $weightTotal;
-
-					$totalPrice = $priceWeightTotal + $subtotal;
-
-
-
+					// $totalPrice = $priceWeightAkhir + $subtotal;
 				}
+				//echo $weightTotal;	
+				$priceWeight = 9000;	
+				$priceWeightTotal = $priceWeight * $weightTotal;	
+				$totalPrice = $priceWeightTotal + $subtotal;
+
 				?>
+
 				<!-- END ISI LOOPING IN MYCART -->
 
 				 
@@ -196,6 +206,8 @@
 				}
 			?>
 		</div>
+ 
+
 		<div class="col-md-5" style="padding-left:5%; ">
 			<div class="card" >
 			  
@@ -206,102 +218,50 @@
 			  		<div class="col-6 col-md-6 col-sm-6" style="padding-left: 30px;">
 			  		 <span style="font-size: 12pt;">Total Items </span> 
 				  	</div>
-				  	<?php  
-				  	if ($subqty == 0) {
-				  	?>
-				  	<div class="col-6 col-md-6 col-sm-6" style="text-align: right;padding-right:10%; ">
-				  		0
-				  	</div>
-				  	<?php
-				  	} else {
-				  	?>
 				  	<div class="col-6 col-md-6 col-sm-6" style="text-align: right;padding-right:10%; ">
 				  		<?php echo $subqty; ?>
-				  	</div>
-				  	<?php  
-				  	}
-				  	?>
+				  	</div> 
 			  	</div>
 			  	<div class="row">
 			  		<div class="col-6 col-md-6 col-sm-6" style="padding-left: 30px;">
 			  		 <span style="font-size: 12pt;">Total Price Items</span> 
 				  	</div>
-				  	<?php  
-				  	if ($subtotal == 0) {
-				  	?>
-				  	<div class="col-6 col-md-6 col-sm-6" style="text-align: right;padding-right:10%; ">
-				  		  IDR 0.00
-				  	</div>
-				  	<?php  
-				  	} else {
-				  	?>
+				  	
 				  	<div class="col-6 col-md-6 col-sm-6" style="text-align: right;padding-right:10%; ">
 				  		  IDR <?php echo number_format($subtotal, 2, ",", "."); ?>
 				  	</div>
-				  	<?php  
-				  	}
-				  	?>
+				  	
 			  	</div>
 			  	<div class="row">
 			  		<div class="col-6 col-md-6 col-sm-6" style="padding-left: 30px;">
 			  		 <span style="font-size: 12pt;">Total Weight</span> 
 				  	</div>
-				  	<?php  
-				  	if ($weightTotal == 0) {
-				  	?>
-				  	<div class="col-6 col-md-6 col-sm-6" style="text-align: right;padding-right:10%; ">
-				  		 0.00 Kg
-				  	</div>
-				  	<?php
-				  	} else {
-				  	?>
+				  	
 				  	<div class="col-6 col-md-6 col-sm-6" style="text-align: right;padding-right:10%; ">
 				  		 <?php echo number_format($weightTotal, 2, ",", "."); ?> Kg
 				  	</div>
-				  	<?php  
-				  	}
-				  	?>
+				  	
 			  	</div>
 			  	<div class="row">
 			  		<div class="col-6 col-md-6 col-sm-6" style="padding-left: 30px;">
 			  		 <span style="font-size: 12pt;">Total Price Weight</span> 
 				  	</div>
-				  	<?php  
-				  	if ($priceWeightTotal == 0) {
-				  	?>
-				  	<div class="col-6 col-md-6 col-sm-6" style="text-align: right;padding-right:10%; ">
-				  		 IDR 0.00
-				  	</div>
-				  	<?php
-				  	} else{
-				  	?>
+				  	
 				  	<div class="col-6 col-md-6 col-sm-6" style="text-align: right;padding-right:10%; ">
 				  		 IDR <?php echo number_format($priceWeightTotal, 2, ",", "."); ?>
 				  	</div>
-				  	<?php  
-				  	}
-				  	?>
+				  	
 			  	</div>
 			  	<hr style="width: 95%; margin: 10px auto;">
 			  	<div class="row">
 			  		<div class="col-6 col-md-6 col-sm-6" style="padding-left: 30px;">
 			  		 <span style="font-size: 12pt; font-weight: bold">TOTAL</span> 
 				  	</div>
-				  	<?php  
-				  	if ($totalPrice == 0) {
-				  	?>
-				  	<div class="col-6 col-md-6 col-sm-6" style="text-align: right;padding-right:10%; font-weight: bold">
-				  		 IDR 0.00
-				  	</div>
-				  	<?php
-				  	} else{
-				  	?>
+				  	
 				  	<div class="col-6 col-md-6 col-sm-6" style="text-align: right;padding-right:10%; font-weight: bold">
 				  		 IDR <?php echo number_format($totalPrice, 2, ",", "."); ?>
 				  	</div>
-				  	<?php  
-				  	}
-				  	?>
+				  
 			  	</div>
 
 			  	<div class="row pl-3 mt-3 mb-3">

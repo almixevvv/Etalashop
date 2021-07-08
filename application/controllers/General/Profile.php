@@ -1,17 +1,10 @@
 <?php if (!defined("BASEPATH")) exit("Hack Attempt");
 class Profile extends CI_Controller
 {
-
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->library('session');
-		$this->load->helper('form');
-		$this->load->model('M_profile', 'profile');
-		$this->load->model('M_user', 'user');
-
-		$this->output->enable_profiler(TRUE);
-		date_default_timezone_set('Asia/Jakarta');
+		// $this->output->enable_profiler(TRUE);
 	}
 
 	public function transaction()
@@ -81,23 +74,29 @@ class Profile extends CI_Controller
 	public function changePassword()
 	{
 
-		$id = $this->input->get('id');
+		$userData = $this->session->userdata('user_data'); 
 
-		$userData 	 = $this->session->user_data;
+		$data['memberDetails'] = $this->api->getGeneralData('g_member', 'EMAIL', $userData['EMAIL']);
 
-		$data['memberDetails'] = $this->profile->getMemberDetails($userEmail);
-
-		$this->load->view('pages/modal/modal-password', $data);
+		if(isset($userData)) {
+			$this->load->view('pages/modal/modal-password', $data);
+		} else {
+			$this->load->view('pages/home');
+		} 
 	}
 
 	public function changePhone()
 	{
 
-		$id = $this->input->get('id');
+		$userData = $this->session->userdata('user_data'); 
 
-		$data['memberDetails'] = $this->profile->getMemberDetails($userEmail);
+		$data['memberDetails'] = $this->api->getGeneralData('g_member', 'EMAIL', $userData['EMAIL']);
 
-		$this->load->view('pages/modal/modal-phone', $data);
+		if(isset($userData)) {
+			$this->load->view('pages/modal/modal-phone', $data);
+		} else {
+			$this->load->view('pages/home');
+		} 
 	}
 
 	public function updatePhone()
@@ -112,15 +111,21 @@ class Profile extends CI_Controller
 		$query = $this->profile->updatePhone($id, $data);
 
 		if ($query) {
-			redirect('profile/myprofile');
-		}
+			redirect('pages/profile/profile');
+		} 
 	}
 
 	public function changePhoto()
 	{
-		$data['memberID'] = $this->input->get('id');
+		$userData = $this->session->userdata('user_data'); 
 
-		$this->load->view('pages/modal/modal-photo', $data);
+		$data['memberDetails'] = $this->api->getGeneralData('g_member', 'EMAIL', $userData['EMAIL']);
+
+		if(isset($userData)) {
+			$this->load->view('pages/modal/modal-photo', $data);
+		} else {
+			$this->load->view('pages/home');
+		} 
 	}
 
 	public function updatePhoto()
@@ -152,19 +157,16 @@ class Profile extends CI_Controller
 
 	public function changeAddress()
 	{
+		$userData = $this->session->userdata('user_data'); 
 
-		$id = $this->input->get('id');
+		$data['memberDetails'] = $this->api->getGeneralData('g_member', 'EMAIL', $userData['EMAIL']);
 
-		$loginStatus = $this->session->userdata('LOGGED_IN');
-		$userEmail   = $this->session->userdata('EMAIL');
-
-		if ($loginStatus == false) {
-			redirect(base_url('login?error=4'));
-		}
-
-		$data['memberDetails'] = $this->profile->getMemberDetails($userEmail);
-
-		$this->load->view('pages/modal/modal-address', $data);
+		if(isset($userData)) {
+			$this->load->view('pages/modal/modal-address', $data);
+		} else {
+			$this->load->view('pages/home');
+		} 
+		
 	}
 
 	public function updateAddress()
@@ -175,7 +177,7 @@ class Profile extends CI_Controller
 		$data = array(
 			'ADDRESS' 		=> $this->input->post('add1'),
 			'ADDRESS_2'  	=> $this->input->post('add2'),
-			'COUNTRY' 		=> $this->input->post('country'),
+			'COUNTRY' 		=> $this->input->post('country'), 
 			'PROVINCE' 		=> $this->input->post('province'),
 			'ZIP' 			=> $this->input->post('zip'),
 		);

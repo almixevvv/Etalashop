@@ -240,12 +240,26 @@
 <script src="<?php echo base_url('assets/bootstrap-4/js/bootstrap.js'); ?>"></script>
 
 <script type="text/javascript">
+  $('#photoModal').on('show.bs.modal', function(event) {
+    var button = $(event.relatedTarget);
+    var id = button.data('id');
+
+    // console.log('Button Position ' + orderno);
+    var changePassword = '<?php echo base_url('General/Profile/changePhoto?id='); ?>';
+
+    $('.modal-body').load(changePassword + id, function() {
+      $('#photoModal').modal({
+        show: true
+      });
+    });
+  });
+
   $('#passwordModal').on('show.bs.modal', function(event) {
     var button = $(event.relatedTarget);
     var id = button.data('id');
 
     // console.log('Button Position ' + orderno);
-    var changePassword = '<?php echo base_url('Profile/changePassword?id='); ?>';
+    var changePassword = '<?php echo base_url('General/Profile/changePassword?id='); ?>';
 
     $('.modal-body').load(changePassword + id, function() {
       $('#passwordModal').modal({
@@ -259,7 +273,7 @@
     var id = button.data('id');
 
     // console.log('Button Position ' + orderno);
-    var changeAddress = '<?php echo base_url('Profile/changeAddress?id='); ?>';
+    var changeAddress = '<?php echo base_url('General/Profile/changeAddress?id='); ?>';
 
     $('.modal-body').load(changeAddress + id, function() {
       $('#addressModal').modal({
@@ -273,7 +287,7 @@
     var id = button.data('id');
 
     // console.log('Button Position ' + orderno);
-    var changePhone = '<?php echo base_url('Profile/changePhone?id='); ?>';
+    var changePhone = '<?php echo base_url('General/Profile/changePhone?id='); ?>';
 
     $('.modal-body').load(changePhone + id, function() {
       $('#phoneModal').modal({

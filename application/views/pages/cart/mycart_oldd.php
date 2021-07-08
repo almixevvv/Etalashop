@@ -1,5 +1,5 @@
 <?php
-	//INITIAL COUNTER  
+	//INITIAL COUNTER   
 	$subtotal 		= 0;
 	$subqty 		= 0;
 	$weightTotal 	= 0;

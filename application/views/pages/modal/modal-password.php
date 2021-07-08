@@ -1,7 +1,7 @@
 <!-- HEADER -->
 <div class="modal-header" style="background-color: #2dd6a7  ;padding: 0.01rem;">
   <p style="color: white;margin-top: 0.5em; margin-left: 8em; font-size: 20px; font-weight: bold;"><i class="fas fa-key"></i> Change Password</p>
-  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+  <button type="button" class="close mr-1 mt-0.5" data-dismiss="modal" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
@@ -18,8 +18,8 @@
     <div class="col-lg-12">
       <input name="old_password" class="form-control" style="width: 90%; margin-left: 2em;">
     </div>
-    <div class="col-lg-12">
-      <label style="margin-left: 2em; color: grey;">Insert Your KIKIKUKU password, not password from another application account (Google).</label>
+    <div class="col-lg-12 pl-4">
+      <label style="margin-left: 2em; color: grey;">Insert Your Etalashop password, not password from another application account (Google).</label>
     </div>
     <div class="col-lg-12">
       <a href="#" >
@@ -38,7 +38,7 @@
     <div class="col-lg-12">
       <input name="new_password" class="form-control" style="width: 90%; margin-left: 2em;">
     </div>
-    <div class="col-lg-12">
+    <div class="col-lg-12 pl-4">
       <label style="margin-left: 2em; color: grey;">Your password must include a capital letter and a number. </label>
     </div>
   </div>
