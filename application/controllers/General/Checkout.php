@@ -43,7 +43,12 @@ class Checkout extends CI_Controller
 		$curPrice 		= 0;
 		$curWeight      = 0;
 		$totalWeight    = 0;
-		$weightPrice	= 0;
+
+		if ($this->input->post('save-info') == 'on') {
+			$saveFlag = 1;
+		} else {
+			$saveFlag = 0;
+		}
 
 		//Calculate Total Item Price
 		$carts  = $this->carts->displayCart($hashEmail);
@@ -52,17 +57,9 @@ class Checkout extends CI_Controller
 		foreach ($carts->result() as $items) {
 
 			//1.1. Calculate the item price
-			$subtotal 	= $subtotal + ($items->PRODUCT_PRICE == null ? 0 : $items->PRODUCT_PRICE);
+			$curPrice 	= $items->PRODUCT_QUANTITY * ($items->PRODUCT_PRICE == null ? 0 : $items->PRODUCT_PRICE);
+			$subtotal 	= $subtotal + $curPrice;
 			//EoL 1.1
-
-			//1.1.1 Calculate the item weight
-			$curWeight   = $items->WEIGHT * $items->PRODUCT_QUANTITY;
-			$totalWeight = $totalWeight + $curWeight;
-			//EoL 1.1.1
-
-			//1.1.2 Calculate the weight cost 
-			$weightPrice = $totalWeight * WEIGHT_PRICE;
-			//EoL 1.1.2
 		}
 		//EoL 1
 
@@ -70,40 +67,47 @@ class Checkout extends CI_Controller
 		$this->db->trans_start();
 
 		$data = array(
-			'ORDER_NO'     	=> $genID,
-			'ORDER_DATE'   	=> date('Y-m-d h:i:s'),
-			'MEMBER_ID'    	=> $memberID,
-			'MEMBER_NAME'  	=> $this->input->post('txt-name'),
-			'MEMBER_PHONE' 	=> $this->input->post('txt-phone'),
-			'MEMBER_EMAIL' 	=> $this->input->post('txt-email'),
-			'TOTAL_ORDER'  	=> $subtotal,
-			'TOTAL_POSTAGE'	=> $weightPrice,
-			'STATUS'       	=> 'NEW ORDER',
-			'ADDRESS_1'    	=> $this->input->post('txt-address-1'),
-			'ADDRESS_2'    	=> $this->input->post('txt-address-2'),
-			'COUNTRY'      	=> $this->input->post('txt-country'),
-			'ZIP'          	=> $this->input->post('txt-zip'),
-			'STATE'        	=> $this->input->post('txt-state'),
-			'SAVE_FLAG'	   	=> ($this->input->post('save-info') == 'on' ? 1 : 0)
+			'ORDER_NO'     => $genID,
+			'ORDER_DATE'   => date('Y-m-d h:i:s'),
+			'MEMBER_ID'    => $memberID,
+			'MEMBER_NAME'  => $this->input->post('txt-name'),
+			'MEMBER_PHONE' => $this->input->post('txt-phone'),
+			'MEMBER_EMAIL' => $this->input->post('txt-email'),
+			'TOTAL_ORDER'  => $subtotal,
+			'STATUS'       => 'NEW ORDER',
+			'ADDRESS_1'    => $this->input->post('txt-address-1'),
+			'ADDRESS_2'    => $this->input->post('txt-address-2'),
+			'COUNTRY'      => $this->input->post('txt-country'),
+			'ZIP'          => $this->input->post('txt-zip'),
+			'STATE'        => $this->input->post('txt-state'),
+			'SAVE_FLAG'	   => $saveFlag
 		);
 
 		$this->api->insertGeneralData('g_order_master', $data);
 
 		//2.1 Loop data for inserting to order detail
 		foreach ($carts->result() as $carts) {
-			//2.1.1 Get items detail
-			$queryProduct = $this->api->getGeneralData('v_g_products', 'PRODUCT_ID', $carts->PRODUCT_ID);
+			if (substr($carts->PRODUCT_ID, 1, 1) != 'P') {
+				$flag = '1';
+			} else {
+				$flag = '2';
+			}
+
+			//2.1.1 Calculate the item weight
+			$curWeight   = $items->WEIGHT * $items->PRODUCT_QUANTITY;
+			$totalWeight = $totalWeight + $curWeight;
 			//EoL 2.1.1
 
-			//2.1.2 Calculate the item weight & price
-			$curWeight   = $items->WEIGHT * $items->PRODUCT_QUANTITY;
-			$curPrice    = $curWeight * WEIGHT_PRICE;
+			//2.1.2 Calculate the weight cost 
+			$weightPrice = $totalWeight * WEIGHT_PRICE;
 			//EoL 2.1.2
 
-			$finalPrice = ($carts->PRODUCT_PRICE == null ? 0 : $carts->PRODUCT_PRICE) + $curPrice;
+			//2.1.3 Get items detail
+			$queryProduct = $this->api->getGeneralData('v_g_products', 'PRODUCT_ID', $carts->PRODUCT_ID);
+			//EoL 2.1.3
 
 			$details = array(
-				'FLAG'            => (substr($carts->PRODUCT_ID, 1, 1) != 'P' ? '1' : '2'),
+				'FLAG'            => $flag,
 				'ORDER_NO'        => $genID,
 				'PROD_ID'         => $carts->PRODUCT_ID,
 				'PROD_IMAGE'	  => $queryProduct->row()->IMAGES1,
@@ -111,15 +115,15 @@ class Checkout extends CI_Controller
 				'QUANTITY'        => $carts->PRODUCT_QUANTITY,
 				'WEIGHT'          => $carts->WEIGHT,
 				'PRICE'           => ($carts->PRODUCT_PRICE == null ? 0 : $carts->PRODUCT_PRICE),
-				'FINAL_PRICE'     => $finalPrice,
-				'POSTAGE'         => $curPrice,
+				'FINAL_PRICE'     => ($carts->PRODUCT_PRICE == null ? 0 : $carts->PRODUCT_PRICE),
+				'POSTAGE'         => $weightPrice,
 				'NOTES'           => $carts->PRODUCT_NOTES
 			);
 
 			$this->api->insertGeneralData('g_order_detail', $details);
 
 			//2.1.3 Delete the items from cart 
-			$this->carts->updateCartFlag($hashEmail);
+			$this->carts->updateCartFlag($carts->PRODUCT_ID, $carts->REC_ID);
 			//EoL 2.1.3
 		}
 		//EoL 2.1

@@ -96,6 +96,8 @@ class Login extends CI_Controller
 			}
 		} else {
 
+
+
 			//1. Ambil salt dari DB untuk di compare sama password input
 			$userSalt = $queryEmail->row()->SALT;
 			$checkPassword  = password_verify($password . $userSalt, $queryEmail->row()->PASSWORD);

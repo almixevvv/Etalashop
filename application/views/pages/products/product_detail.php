@@ -4,7 +4,7 @@
 
     <!-- PRODUCT LEFT PART -->
     <div class="col-1 col-md-1 col-lg-1 col-xl-1 order-0 order-md-1 order-lg-1 order-xl-1 d-none d-md-block d-lg-block d-xl-block">
-      <?= form_open('General/Cart/addtoCart'); ?>
+      <?php echo form_open('General/Cart/addtoCart'); ?>
 
       <?php if (isset($dataproduct->row()->IMAGES1) && strlen($dataproduct->row()->IMAGES1) > 1) { ?>
         <div class="detail-border">
@@ -116,7 +116,16 @@
                 </div>
                 <div class="col-6 col-md-12 col-lg-6 col-xl-6">
                   <label class="detail-txt-color detail-exw-size font-weight-bold">
-                    <span class="detail-exw-color">IDR <?= ($qty->QUANTITY_PRICE > 0 ? number_format($qty->QUANTITY_PRICE, 2, '.', ',') : number_format(0, 2, '.', ',')); ?></span> / Pcs
+                    <span class="detail-exw-color">IDR <?php
+                      if($qty->QUANTITY_PRICE>0){
+                           echo number_format($qty->QUANTITY_PRICE, 2, '.', ','); 
+                      }
+                      else{
+                           echo number_format(0, 2, '.', ','); 
+
+                      }
+
+                       ?></span> / Pcs
                   </label>
                 </div>
               </div>
@@ -130,7 +139,7 @@
                 <span class="detail-exw-color detail-label">Price Negotiable</span>
               <?php } else { ?>
                 <span class="detail-exw-color detail-label font-weight-bold">
-                  IDR <span id="estimated-price"><?= number_format($dataproduct->row()->QUANTITY_PRICE, 2, '.', ','); ?></span>
+                  IDR <span id="estimated-price"><?php echo number_format($dataproduct->row()->QUANTITY_PRICE, 2, '.', ','); ?></span>
                 </span>
               <?php } ?>
             </div>
@@ -141,7 +150,7 @@
                 <?php if (is_numeric($dataproduct->row()->WEIGHT)) { ?>
                   <?= number_format($dataproduct->row()->WEIGHT, 2, '.', ','); ?> Kg
                 <?php } else { ?>
-                  <?= ('-'); ?>
+                  <?php echo ('-'); ?>
                 <?php } ?>
               </span>
             </div>
@@ -157,7 +166,7 @@
                   <label>No Product Description</label>
                 <?php } else { ?>
                   <label>
-                    <?= $dataproduct->row()->PRODUCT_DETAIL; ?>
+                    <?php echo $dataproduct->row()->PRODUCT_DETAIL; ?>
                   </label>
                 <?php } ?>
               </span>
@@ -207,10 +216,19 @@
 
           </div>
 
-          <input type="hidden" name="product-id" value="<?= $dataproduct->row()->PRODUCT_ID; ?>">
-          <input type="hidden" name="product-name" value="<?= $productName; ?>">
+          <?php
+          $productID = array(
+            'type'  => 'hidden',
+            'name'  => 'product-id',
+            'id'    => 'hiddenID',
+            'value' => $dataproduct->row()->PRODUCT_ID
+          );
 
-          <?= form_close(); ?>
+          echo form_input($productID);
+
+          ?>
+
+          <?php echo form_close(); ?>
 
         </div>
       </div>
@@ -261,9 +279,9 @@
 
 </div>
 
-<script type="text/javascript" src="<?= base_url('assets/zoom-master/jquery.zoom.min.js'); ?>"></script>
-<script type="text/javascript" src="<?= base_url('assets/number-format/jquery.number.min.js'); ?>"></script>
-<script type="text/javascript" src="<?= base_url('assets/incube-assets/product-detail.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo base_url('assets/zoom-master/jquery.zoom.min.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo base_url('assets/number-format/jquery.number.min.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo base_url('assets/incube-assets/product-detail.js'); ?>"></script>
 <script type="text/javascript">
   $(document).keypress(
     function(event) {

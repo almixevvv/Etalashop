@@ -1,4 +1,4 @@
-<?php if (!defined("BASEPATH")) exit("Hack Attempt");
+<?php if (!defined("BASEPATH")) exit("Hack Attempt"); 
 class Register extends CI_Controller
 {
 

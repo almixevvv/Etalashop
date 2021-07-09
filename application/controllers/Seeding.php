@@ -22,78 +22,81 @@ class Seeding extends CI_Controller
         $faker = Faker\Factory::create('en_US');
         $faker->addProvider(new \Mmo\Faker\PicsumProvider($faker));
 
-        $this->db->trans_start();
+        try {
+            $this->db->trans_start();
 
-        for ($i = 0; $i < 10; $i++) {
+            for ($i = 0; $i < 10; $i++) {
 
-            $rowID = $faker->md5;
+                echo $i;
 
-            $injectMaster = array(
-                'PRODUCT_ID'        => substr($rowID, 0, 10),
-                'PRODUCT_NAME'      => ucwords($faker->bs),
-                'SKU'               => $faker->numerify('SKU-#####-####-##'),
-                'CATEGORY'          => (string) $this->seedCategory(),
-                'WEIGHT'            => (float)rand() / (float)getrandmax(),
-                'CREATED'           => date('Y-m-d h:i:s'),
-                'STATUS'            => 'ACTIVE',
-                'USER_ID'           => 'ADMIN',
-                'PRODUCT_DETAIL'    => '<p>' . $faker->realText(190, 2) . '</p>'
-            );
+                // $rowID = $faker->md5;
 
-            $injectImage = array(
-                'PRODUCT_ID'        => substr($rowID, 0, 10),
-                'IMAGES1'           => substr($faker->picsum('./assets/uploads/products', 400, 400, true), 26),
-                'IMAGES2'           => substr($faker->picsum('./assets/uploads/products', 400, 400, true), 26),
-                'IMAGES3'           => substr($faker->picsum('./assets/uploads/products', 400, 400, true), 26),
-                'IMAGES4'           => substr($faker->picsum('./assets/uploads/products', 400, 400, true), 26),
-                'CREATED'           => date('Y-m-d h:i:s')
-            );
 
-            var_dump($injectImage);
+                // $injectMaster = array(
+                //     'PRODUCT_ID'        => substr($rowID, 0, 10),
+                //     'PRODUCT_NAME'      => ucwords($faker->bs),
+                //     'SKU'               => $faker->numerify('SKU-#####-####-##'),
+                //     'CATEGORY'          => (string) $this->seedCategory(),
+                //     'CREATED'           => date('Y-m-d h:i:s'),
+                //     'STATUS'            => 'ACTIVE',
+                //     'USER_ID'           => 'ADMIN',
+                //     'PRODUCT_DETAIL'    => '<p>' . $faker->realText(190, 2) . '</p>'
+                // );
 
-            $this->api->insertGeneralData('g_product_master', $injectMaster);
-            $this->api->insertGeneralData('g_product_images', $injectImage);
+                // $injectImage = array(
+                //     'PRODUCT_ID'        => substr($rowID, 0, 10),
+                //     'IMAGES1'           => substr($faker->picsum('./assets/uploads/products', 400, 400, true), 26),
+                //     'IMAGES2'           => substr($faker->picsum('./assets/uploads/products', 400, 400, true), 26),
+                //     'IMAGES3'           => substr($faker->picsum('./assets/uploads/products', 400, 400, true), 26),
+                //     'IMAGES4'           => substr($faker->picsum('./assets/uploads/products', 400, 400, true), 26),
+                //     'CREATED'           => date('Y-m-d h:i:s')
+                // );
 
-            $qtyAmmount = rand(2, 5);
+                // $this->cms->insertGeneralData('g_product_master', $injectMaster);
+                // $this->cms->insertGeneralData('g_product_images', $injectImage);
 
-            for ($j = 0; $j < $qtyAmmount; $j++) {
+                // $qtyAmmount = rand(2, 5);
 
-                $qtyMin = rand(1, 100);
-                $qtyMax = rand(1, 100);
+                // for ($j = 0; $j < $qtyAmmount; $j++) {
 
-                if ($qtyMin > $qtyMax) {
-                    $tmpQty = $qtyMin;
+                //     $qtyMin = rand(1, 100);
+                //     $qtyMax = rand(1, 100);
 
-                    $qtyMin = $qtyMax;
-                    $qtyMin = $tmpQty;
-                }
+                //     if ($qtyMin > $qtyMax) {
+                //         $tmpQty = $qtyMin;
 
-                $injectQuantity = array(
-                    'PRODUCT_ID'        => substr($rowID, 0, 10),
-                    'QUANTITY_MIN'      => $qtyMin,
-                    'QUANTITY_MAX'      => $qtyMax,
-                    'QUANTITY_PRICE'    => $faker->randomNumber('4', true),
-                    'CREATED'           => date('Y-m-d h:i:s')
-                );
+                //         $qtyMin = $qtyMax;
+                //         $qtyMin = $tmpQty;
+                //     }
 
-                var_dump($injectQuantity);
+                //     $injectQuantity = array(
+                //         'PRODUCT_ID'        => substr($rowID, 0, 10),
+                //         'QUANTITY_MIN'      => $qtyMin,
+                //         'QUANTITY_MAX'      => $qtyMax,
+                //         'QUANTITY_PRICE'    => $faker->randomNumber('4', true),
+                //         'CREATED'           => date('Y-m-d h:i:s')
+                //     );
 
-                $this->api->insertGeneralData('g_product_quantity', $injectQuantity);
+                //     $this->cms->insertGeneralData('g_product_quantity', $injectQuantity);
+                // }
+
+                // $this->db->trans_complete();
+
+                // if ($this->db->trans_status() === FALSE) {
+                //     $this->db->trans_rollback();
+                //     throw new Exception('Insert error.');
+                // } else {
+                //     $this->db->trans_commit();
+
+                //     echo json_encode(array(
+                //         'total_data'    => $i,
+                //         'status'        => 200,
+                //         'message'       => 'finish process'
+                //     ));
+                // }
             }
-
-            $this->db->trans_complete();
-
-            if ($this->db->trans_status() === FALSE) {
-                $this->db->trans_rollback();
-            } else {
-                $this->db->trans_commit();
-
-                echo json_encode(array(
-                    'total_data'    => $i,
-                    'status'        => 200,
-                    'message'       => 'finish process'
-                ));
-            }
+        } catch (Exception $ex) {
+            var_dump($ex);
         }
 
         // use the factory to create a Faker\Generator instance

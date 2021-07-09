@@ -62,10 +62,12 @@
         return $query;
     }
 
-    function updateCartFlag($productBuyer)
+    function updateCartFlag($productID, $productBuyer)
     {
+
         $this->db->set('CART_FLAG', '1');
         $this->db->where('CART_ID', $productBuyer);
+        $this->db->where('PRODUCT_ID', $productID);
 
         $query = $this->db->update('g_cart');
 
@@ -90,7 +92,6 @@
         $this->db->from('g_cart');
         $this->db->where('PRODUCT_ID', $prodID);
         $this->db->where('PRODUCT_BUYER', $buyerEmail);
-        $this->db->where('CART_FLAG', 0);
 
         $query = $this->db->get();
 
