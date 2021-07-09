@@ -5,7 +5,7 @@ class Cart extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		$this->output->enable_profiler(TRUE);
+		// $this->output->enable_profiler(TRUE);
 	}
 
 	public function mycart()
@@ -29,7 +29,7 @@ class Cart extends CI_Controller
 		$data['subqty']		 	 = 0;
 		$data['subWeight']		 = 0;
 		$data['totalWeight']	 = 0;
-		$data['totalPrice']	 = 0;
+		$data['totalPrice']	 	 = 0;
 		$data['weightPrice']	 = 0;
 
 		if ($userData['EMAIL'] != null) {

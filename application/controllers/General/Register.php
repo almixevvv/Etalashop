@@ -1,4 +1,4 @@
-<?php if (!defined("BASEPATH")) exit("Hack Attempt"); 
+<?php if (!defined("BASEPATH")) exit("Hack Attempt");
 class Register extends CI_Controller
 {
 
@@ -6,9 +6,7 @@ class Register extends CI_Controller
 	{
 
 		parent::__construct();
-
-		date_default_timezone_set('Asia/Jakarta');
-		$this->output->enable_profiler(TRUE);
+		// $this->output->enable_profiler(TRUE);
 	}
 
 	public function index()

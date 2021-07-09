@@ -1,34 +1,25 @@
 <?php if (!defined("BASEPATH")) exit("Hack Attempt");
 
 class Orders_cms extends CI_Controller
-
 {
 
 	public function __construct()
-
 	{
-
 		parent::__construct();
-		$this->load->model('M_cms', 'cms');
-		$this->load->model('M_profile', 'profile');
-		$this->load->helper('form');
 		// $this->output->enable_profiler(TRUE);
-
 	}
-
-
 
 	public function index()
 	{
-		$page = 'order_management';
+		$data['page'] 				= 'Order Management';
+		$data['sess_data'] 			= $this->session->userdata('cms_sess');
 
-		$data['page'] = 'Order Management';
-		$data['content'] = $this->cms->select_order();
-		$data['new_order'] = $this->cms->select_order_new();
-		$data['updated_order'] = $this->cms->select_order_updated();
-		$data['confirmed_order'] = $this->cms->select_order_confirmed();
-		$data['paid_order'] = $this->cms->select_order_paid();
-		$data['unview_order'] = $this->cms->select_order_unview();
+		$data['content'] 			= $this->cms->select_order();
+		$data['new_order'] 			= $this->cms->select_order_new();
+		$data['updated_order'] 		= $this->cms->select_order_updated();
+		$data['confirmed_order'] 	= $this->cms->select_order_confirmed();
+		$data['paid_order'] 		= $this->cms->select_order_paid();
+		$data['unview_order'] 		= $this->cms->select_order_unview();
 
 		$this->load->view('templates-cms/header', $data);
 		$this->load->view('templates-cms/navbar');

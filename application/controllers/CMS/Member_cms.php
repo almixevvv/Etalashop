@@ -1,28 +1,30 @@
-<?php if(!defined("BASEPATH")) exit("Hack Attempt");
-class Member_cms extends CI_Controller {
-	public function index(){
-		$page = 'member';
-		if ( ! file_exists(APPPATH.'/views/pages-cms/'.$page.'.php')){ show_404(); }
-
-		$data['title'] = 'Member List';
-
-		$this->load->model('M_cms', 'cms');
-		$this->load->helper('form');
-		
-		$data['content'] = $this->cms->select_member();
-		$data['page'] = 'Member List';
-
-		$data['new_order'] = $this->cms->select_order_new();
-		$data['unview_order'] = $this->cms->select_order_unview();
-
-        $this->load->view('templates-cms/header', $data);
-        $this->load->view('templates-cms/navbar');
-        $this->load->view('pages-cms/member');
-        $this->load->view('templates-cms/footer');
+<?php if (!defined("BASEPATH")) exit("Hack Attempt");
+class Member_cms extends CI_Controller
+{
+	public function __construct()
+	{
+		parent::__construct();
+		// $this->output->enable_profiler(TRUE);
 	}
 
-	public function getMember() {
+	public function index()
+	{
+		$data['title'] 		= 'Member List';
+		$data['content'] 	= $this->api->getGeneralList('g_member');
+		$data['page'] 		= 'Member List';
+		$data['sess_data'] 	= $this->session->userdata('cms_sess');
 
+		$data['new_order'] 		= $this->cms->select_order_new();
+		$data['unview_order'] 	= $this->cms->select_order_unview();
+
+		$this->load->view('templates-cms/header', $data);
+		$this->load->view('templates-cms/navbar');
+		$this->load->view('pages-cms/member');
+		$this->load->view('templates-cms/footer');
+	}
+
+	public function getMember()
+	{
 		// $this->output->enable_profiler(TRUE);
 		// echo 'masuk';
 		$this->load->helper('form');
@@ -33,10 +35,11 @@ class Member_cms extends CI_Controller {
 
 		$data['member'] = $this->cms->singleMember($id);
 
- 		$this->load->view('pages-cms/modal-member', $data);
+		$this->load->view('pages-cms/modal-member', $data);
 	}
 
-	public function updateMember(){
+	public function updateMember()
+	{
 
 		// $this->output->enable_profiler(TRUE);
 		// echo "masuk";
@@ -57,7 +60,8 @@ class Member_cms extends CI_Controller {
 		redirect('cms/member');
 	}
 
-	public function resetPassword(){
+	public function resetPassword()
+	{
 
 		//$this->output->enable_profiler(TRUE);
 		$this->load->model('M_cms', 'cms');
@@ -69,16 +73,16 @@ class Member_cms extends CI_Controller {
 		// redirect('cms/member');
 	}
 
-	public function deleteMember(){
+	public function deleteMember()
+	{
 
 		// $this->output->enable_profiler(TRUE);
 
 		$this->load->model('M_cms', 'cms');
-		
+
 		$id = $this->input->post('id');
 		$this->cms->delete_member($id, 'g_member');
 
 		// redirect('cms/member');
 	}
 }
-?>

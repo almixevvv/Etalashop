@@ -1,43 +1,5 @@
 <?php class M_cms extends CI_Model
 {
-    //------------------------------------------------------------------------------------------------------------------- LOGIN CMS
-    function cms_login($email, $password)
-    {
-
-        $this->db->select('*');
-        $this->db->from('s_user');
-        $this->db->where('ID', $email);
-        $this->db->where('PASS', $password);
-
-        $query = $this->db->get();
-
-        return $query;
-    }
-
-    function checkUsername($email)
-    {
-
-        $this->db->select('*');
-        $this->db->from('s_user');
-        $this->db->where('ID', $email);
-
-        $query = $this->db->get();
-
-        return $query;
-    }
-
-    public function changePassword($id, $hashPassword)
-    {
-
-        $data = array(
-            'PASS'  => $hashPassword
-        );
-
-        $this->db->where('ID', $id);
-        $this->db->update('s_user', $data);
-    }
-    //------------------------------------------------------------------------------------------------------------------- LOGIN CMS
-
     //------------------------------------------------------------------------------------------------------------------- USER
     public function select_user()
     {
@@ -90,8 +52,43 @@
 
 
     //------------------------------------------------------------------------------------------------------------------- USER
-
     //------------------------------------------------------------------------------------------------------------------- GROUP
+    public function getFramesideParent($groupID)
+    {
+        $this->db->distinct();
+        $this->db->select('s_appl_group.ID, s_appl_group.NAME, s_appl_group.DESCRIPTION as ICON, s_appl_group.ORDER_NO as ORDER');
+        $this->db->from('s_group_appl');
+        $this->db->join('s_appl', 's_group_appl.APPL_ID = s_appl.ID', 'inner');
+        $this->db->join('s_appl_group', 's_appl.APPL_GROUP_ID = s_appl_group.ID', 'inner');
+        $this->db->where('s_group_appl.GROUP_ID', $groupID);
+
+        $this->db->order_by('ORDER', 'ASC');
+
+        $query = $this->db->get();
+
+        return $query;
+    }
+
+    public function getFramesideChild($parentID, $groupID)
+    {
+        $this->db->distinct();
+        $this->db->select('*');
+        $this->db->from('s_group_appl a');
+        $this->db->join('s_appl b', 'a.APPL_ID = b.ID');
+        $this->db->where('a.GROUP_ID', $groupID);
+        $this->db->where('APPL_GROUP_ID', $parentID);
+        $this->db->where('b.LINK !=', 'null');
+
+        $this->db->order_by('ORDER_NO', 'ASC');
+
+        $query = $this->db->get();
+
+        return $query;
+    }
+
+
+
+
     public function select_group()
     {
         $this->db->select('*');
@@ -293,16 +290,6 @@
     //-------------------------------------------------------------------------------------------------------------------  PRIVACY
 
     //-------------------------------------------------------------------------------------------------------------------  MEMBER
-    function select_member()
-    {
-        $this->db->select('*');
-        $this->db->from('g_member');
-
-        $query = $this->db->get();
-
-        return $query;
-    }
-
     function singleMember($id)
     {
 

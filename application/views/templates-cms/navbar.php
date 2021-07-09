@@ -23,12 +23,6 @@
           </button>
           <label style="font-size: 12px;color: #6c757d;margin-right: 1em;">Incoming Order</label>
         </a>
-        <!-- <div class="dropdown-menu dropdown-menu-right" aria-labelledby="messagesDropdown">
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Something else here</a>
-        </div> -->
       </li>
       <li class="nav-item dropdown no-arrow">
         <a class="nav-link dropdown-toggle" href="#" data-toggle="modal" data-target="#changePass" data-id="<?php echo $this->session->userdata('id'); ?>">
@@ -40,12 +34,6 @@
         <a class="nav-link dropdown-toggle" href="#" id="buttonLogOut" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="fas fa-sign-out-alt" style="color: #2db4d6;font-size: 20px;margin-top: 0.38em;"></i>
         </a>
-        <!-- <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-          <a class="dropdown-item" href="#">Settings</a>
-          <a class="dropdown-item" href="#">Activity Log</a>
-          <div class="dropdown-divider"></div>
-          <a id="buttonLogOut" class="dropdown-item" href="#" >Logout</a>
-        </div> -->
       </li>
     </ul>
 

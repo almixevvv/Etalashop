@@ -1,4 +1,4 @@
-<style type="text/css"> 
+<style type="text/css">
   body {
     background-image: linear-gradient(to bottom, #ffffff 0%, #18b589 100%);
   }
@@ -11,18 +11,18 @@
       <div class="card-body">
         <?php echo form_open('CMS/CMS/login_process'); ?>
         <div class="d-flex justify-content-center">
-          <img src="<?php echo base_url('assets/images/logo.png'); ?>" alt="Kikikuku Logo" style="width: 100%;">
+          <img class="img-fluid" src="<?php echo base_url('assets/images/logo.png'); ?>" alt="Kikikuku Logo">
         </div>
         <div class="form-group" style="margin-top: 3em;">
           <div class="form-label-group">
-            <input type="text" id="inputEmail" name="txt-username" class="form-control" placeholder="Email address" required="required" autofocus="autofocus">
-            <label style="color: black;opacity: 0.3;" for="inputEmail">Username</label>
+            <input type="text" id="inputEmail" name="txt-username" class="form-control" placeholder="Email address" required autofocus>
+            <label class="text-secondary" for="inputEmail">Username</label>
           </div>
         </div>
         <div class="form-group">
           <div class="form-label-group">
-            <input type="password" id="inputPassword" name="txt-password" class="form-control" placeholder="Password" required="required">
-            <label style="color: black;opacity: 0.3;" for="inputPassword">Password</label>
+            <input type="password" id="inputPassword" name="txt-password" class="form-control" placeholder="Password" required>
+            <label class="text-secondary" for="inputPassword">Password</label>
           </div>
           <?php if ($this->session->has_userdata('no_password')) { ?>
             <div class="alert alert-danger alert-dismissible fade show mt-2">
@@ -38,7 +38,7 @@
         </div>
         <div class="form-group">
           <div class="checkbox">
-            <label style="color: white;">
+            <label class="text-white">
               <input type="checkbox" value="remember-me">
               Remember Password
             </label>

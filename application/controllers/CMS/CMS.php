@@ -5,14 +5,7 @@ class CMS extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-
-		$this->load->library('session');
-		$this->load->helper('url');
-		$this->load->helper('form');
-
-		$this->load->model('M_cms', 'cms');
-
-		$this->output->enable_profiler(TRUE);
+		// $this->output->enable_profiler(TRUE);
 	}
 
 	public function index()
@@ -43,44 +36,71 @@ class CMS extends CI_Controller
 	public function login_process()
 	{
 
-		$email = $this->input->post('txt-username');
-		$password = $this->input->post('txt-password');
+		$email 		= $this->input->post('txt-username');
+		$password 	= $this->input->post('txt-password');
 
-		$hashPassword = sha1($password);
+		//1. Cek ada user atau engga
 
-		$checkUsername = $this->cms->checkUsername($email);
+		$queryEmail = $this->api->getGeneralData('s_user', 'ID', $email);
 
-		//Check if username exist
-		if ($checkUsername->num_rows() > 0) {
-			//Check if password match
-			$query = $this->cms->cms_login($email, $hashPassword);
-			if ($query->num_rows() > 0) {
-				foreach ($query->result() as $data) {
-					$session = array(
-						'name' => $data->NAME,
-						'user_group' => $data->GROUP_ID
-					);
+		if ($queryEmail->num_rows() == 0) {
+			// $this->session->set_flashdata('no_email', true);
+			// redirect(site_url('cms/login'));
+		}
+		//EoL 1
 
-					$this->session->set_userdata($session);
-				}
-				redirect('cms/dashboard');
-			} else {
+		//2. Kalau ada, lanjut
+		else if ($queryEmail->num_rows() == 1) {
+
+
+			//2.1 Ambil salt user
+			$salt = $queryEmail->row()->SALT;
+			//EoL 2.1
+
+			//2.2 Cek passwordnya sama atau engga
+			$checkPassword  = password_verify($password . $salt, $queryEmail->row()->PASS);
+			//EoL 2.2
+
+			//2.3 Kalo passwordnya beda, tolak
+			if (!$checkPassword) {
 				$this->session->set_flashdata('no_password', true);
 				redirect(site_url('cms/login'));
 			}
-		} else {
-			$this->session->set_flashdata('no_email', true);
+			//EoL 2.3
+
+			//2.4 Kalo passwordnya sama, lanjut
+			else {
+				$session = array(
+					'user_name' 	=> $queryEmail->row()->NAME,
+					'user_id'		=> $queryEmail->row()->ID,
+					'user_group' 	=> $queryEmail->row()->GROUP_ID,
+					'status'		=> 'ACTIVE'
+				);
+
+				$this->session->set_userdata('cms_sess', $session);
+				redirect('cms/dashboard');
+			}
+			//EoL 2.4
+		}
+		//EoL 2
+
+		//3. Catch unknown error
+		else {
+			$this->session->set_flashdata('unknown_error', true);
 			redirect(site_url('cms/login'));
 		}
+		//EoL 3
 	}
 
 	public function dashboard()
 	{
-
 		$data['page'] = "Dashboard";
 
-		$data['new_order'] = $this->cms->select_order_new();
-		$data['unview_order'] = $this->cms->select_order_unview();
+
+		$data['sess_data'] 		= $this->session->userdata('cms_sess');
+		$data['new_order'] 		= $this->cms->select_order_new();
+		$data['unview_order'] 	= $this->cms->select_order_unview();
+		$data['order_status']	= $this->api->getGeneralList('v_g_order_status');
 
 		$this->load->view('templates-cms/header', $data);
 		$this->load->view('templates-cms/navbar');
