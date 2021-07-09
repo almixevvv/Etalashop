@@ -22,7 +22,7 @@ class Product_detail extends CI_Controller
         } else {
             //2. Kalo ada data
             $productTitle = $data['dataproduct']->row()->PRODUCT_NAME;
-            $data['productName'] = (strlen($productTitle) > 20 ? ucwords(substr($productTitle, 0, 20)) : ucwords($productTitle));
+            $data['productName'] =  ucwords($productTitle);
 
             $this->load->view('templates/header', $data);
             $this->load->view('templates/navbar');
