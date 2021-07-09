@@ -1,4 +1,4 @@
-<?php echo form_open('Profile/updateAddress');?>
+<?php echo form_open('General/Profile/updateAddress');?>
 <?php foreach($memberDetails->result() as $data): ?>
 
 <!-- HEADER -->

@@ -59,7 +59,7 @@
 			<!-- END TITLE MY CART -->
 
 			<!-- LOOPING PRODUCT IN MYCART -->
-			<form method="POST" action="<?= base_url('General/Checkout/checkoutProcess') ?>">
+			<form method="POST" action="<?= base_url('cart/checkout') ?>">
 			<?php 
 				$i=0; 
 				if($row>0){

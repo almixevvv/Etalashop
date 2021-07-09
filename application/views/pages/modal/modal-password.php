@@ -1,3 +1,5 @@
+<?php echo form_open('General/Profile/updatePassword');?>
+
 <!-- HEADER -->
 <div class="modal-header" style="background-color: #2dd6a7  ;padding: 0.01rem;">
   <p style="color: white;margin-top: 0.5em; margin-left: 8em; font-size: 20px; font-weight: bold;"><i class="fas fa-key"></i> Change Password</p>
@@ -5,7 +7,7 @@
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
-
+   
   <!-- Edit Margin -->
 <div class="modal-body" style="font-size: 14px;">
   <div class="row">
@@ -23,7 +25,7 @@
     </div>
     <div class="col-lg-12">
       <a href="#" >
-        <i style="margin-left: 2em;" class="main-color">Forgot Password?</i>
+        <i style="margin-left: 2em;" class="main-color pl-2">Forgot Password?</i>
       </a>
     </div>
   </div>
@@ -62,4 +64,6 @@
   <button type="submit" class="btn btn-default" style="background-color: #34ca9d;color: white;">Save</button>
   <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
 </div>
+
+<?php echo form_close();?>
 

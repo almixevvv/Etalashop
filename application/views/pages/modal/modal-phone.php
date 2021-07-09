@@ -1,4 +1,4 @@
-<?php echo form_open('Profile/updatePhone');?>
+<?php echo form_open('General/Profile/updatePhone');?>
 <?php foreach($memberDetails->result() as $data): ?>
 
 <!-- HEADER -->
@@ -10,7 +10,7 @@
 </div>
 
   <!-- Edit Margin -->
-<div class="modal-body" style="font-size: 14px;">
+<div class="modal-body" style="font-size: 14px;"> 
   <div class="row">
     <div class="col-lg-12">
     	<label style="margin-left: 2em;">Phone Number</label>

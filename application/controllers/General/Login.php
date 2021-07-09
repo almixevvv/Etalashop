@@ -112,7 +112,7 @@ class Login extends CI_Controller
 					$dataSess = array(
 						'FIRST_NAME' 	=> $queryEmail->row()->FIRST_NAME,
 						'LAST_NAME' 	=> $queryEmail->row()->LAST_NAME,
-						'PHONE' 		=> $queryEmail->row()->PHONE,
+						'PHONE' 		=> $queryEmail->row()->PHONE, 
 						'EMAIL' 		=> $queryEmail->row()->EMAIL,
 						'ADDRESS' 		=> $queryEmail->row()->ADDRESS,
 						'COUNTRY' 		=> $queryEmail->row()->COUNTRY,
