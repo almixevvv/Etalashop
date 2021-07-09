@@ -5,7 +5,7 @@ class Cart extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		//$this->output->enable_profiler(TRUE);
+		$this->output->enable_profiler(TRUE);
 	}
 
 	public function mycart()
@@ -28,6 +28,9 @@ class Cart extends CI_Controller
 		$data['subtotal']		 = 0;
 		$data['subqty']		 	 = 0;
 		$data['subWeight']		 = 0;
+		$data['totalWeight']	 = 0;
+		$data['totalPrice']	 = 0;
+		$data['weightPrice']	 = 0;
 
 		if ($userData['EMAIL'] != null) {
 			$this->load->view('templates/header', $data);
@@ -43,21 +46,6 @@ class Cart extends CI_Controller
 	public function addtocart()
 	{
 		$userData 	= $this->session->user_data;
-		// $dataProduct=$this->cms->getGeneralData('v_g_products', 'PRODUCT_ID', $this->input->post('product-id'));
-		// foreach ($dataProduct->result() as $key);
-		// echo $this->input->post('product-id');
-		// echo"<br>";
-		// echo $key->QUANTITY_MIN;
-		// echo"<br>";
-		// echo $key->QUANTITY_MAX;
-		// 	echo"<br>";
-		// $qty=$this->input->post('quantity');
-		// $price=0;
-
-		//1. Kalo ga ada user yang login
-
-		// $id=$this->input->post('product-id');
-		// $data=$this->cart->countEstimatedPrice($id);
 
 		if (!isset($userData['EMAIL'])) {
 			//1.1 Simpen dulu datanya sementara di database, terus redirect ke halaman login

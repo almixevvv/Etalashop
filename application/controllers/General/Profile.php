@@ -1,10 +1,10 @@
-<?php if (!defined("BASEPATH")) exit("Hack Attempt"); 
+<?php if (!defined("BASEPATH")) exit("Hack Attempt");
 class Profile extends CI_Controller
 {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->output->enable_profiler(TRUE);
+		// $this->output->enable_profiler(TRUE);
 	}
 
 	public function transaction()
@@ -22,14 +22,20 @@ class Profile extends CI_Controller
 		$data['productName'] 	 = 'Transaction History';
 
 		if ($this->input->get('transaction') == null) {
-			$data['masterData'] = $this->profile->getAllOrderMasterData($userEmail);
+			$data['masterData'] = $this->profiles->getAllOrderMasterData($userEmail);
 		} else {
 			$status = $this->input->get('transaction');
-			$data['masterData'] = $this->profile->getOrderMasterData($userEmail, $status);
+
+			if ($status == 'created') {
+				$status = 'NEW ORDER';
+			}
+
+			$data['masterData'] = $this->profiles->getOrderMasterData($userEmail, $status);
 		}
 
-		$data['userHistory'] = $this->profile->getOrderHistory($userEmail);
-		$data['userEmail'] = $this->session->userdata('EMAIL');
+		$data['userHistory'] = $this->profiles->getOrderHistory($userEmail);
+		$data['userEmail'] 	 = $this->session->userdata('EMAIL');
+		$data['counter']	 = 1;
 
 		$this->load->view('templates/header', $data);
 		$this->load->view('templates/navbar');
@@ -74,69 +80,29 @@ class Profile extends CI_Controller
 	public function changePassword()
 	{
 
-		$userData = $this->session->userdata('user_data'); 
+		$userData = $this->session->userdata('user_data');
 
 		$data['memberDetails'] = $this->api->getGeneralData('g_member', 'EMAIL', $userData['EMAIL']);
 
-		if(isset($userData)) {
+		if (isset($userData)) {
 			$this->load->view('pages/modal/modal-password', $data);
 		} else {
 			$this->load->view('pages/home');
-		} 
-	}
-
-	public function updatePassword()
-	{ 
-		$userData = $this->session->userdata('user_data'); 
-		$old_password		= $this->input->post('old_password');
-		$new_password 		= $this->input->post('new_password');
-		$confirm_password	= $this->input->post('confirm_password');
-
-		$queryEmail = $this->api->getGeneralData('g_member', 'EMAIL', $userData['EMAIL']);
-		$userSalt   = $queryEmail->row()->SALT;
-		$checkPassword  = password_verify($old_password . $userSalt, $queryEmail->row()->PASSWORD);
-		
-		var_dump($checkPassword);
-
-		if ($checkPassword) {
-			// echo "masuk1";
-			if ($new_password == $confirm_password) {
-				// echo "masuk2";
-				$salt = sha1($this->incube->generateID('10'));
-				$passHash = password_hash($new_password . $salt, PASSWORD_BCRYPT, array('cost' => 12));
-
-				$data = array(
-					'PASSWORD' 	=> $passHash,
-					'SALT' 		=> $salt
-				);
-
-				$query = $this->profiles->updatePassword($id, $data);
-
-				if ($query) {
-					redirect('profile/myprofile');
-				}  
-			} 
-			else{
-				Echo "Password Tidak Sama!";
-			} 
 		}
-		else{
-			echo "Password Salah!";
-		} 
 	}
 
 	public function changePhone()
 	{
 
-		$userData = $this->session->userdata('user_data'); 
+		$userData = $this->session->userdata('user_data');
 
 		$data['memberDetails'] = $this->api->getGeneralData('g_member', 'EMAIL', $userData['EMAIL']);
 
-		if(isset($userData)) {
+		if (isset($userData)) {
 			$this->load->view('pages/modal/modal-phone', $data);
 		} else {
 			$this->load->view('pages/home');
-		} 
+		}
 	}
 
 	public function updatePhone()
@@ -148,81 +114,79 @@ class Profile extends CI_Controller
 			'PHONE' => $this->input->post('phone'),
 		);
 
-		$query = $this->profiles->updatePhone($id, $data);
+		$query = $this->profile->updatePhone($id, $data);
 
 		if ($query) {
-			redirect('profile/myprofile');
-		} 
+			redirect('pages/profile/profile');
+		}
 	}
 
 	public function changePhoto()
 	{
-		$userData = $this->session->userdata('user_data'); 
+		$userData = $this->session->userdata('user_data');
 
 		$data['memberDetails'] = $this->api->getGeneralData('g_member', 'EMAIL', $userData['EMAIL']);
 
-		if(isset($userData)) {
+		if (isset($userData)) {
 			$this->load->view('pages/modal/modal-photo', $data);
 		} else {
 			$this->load->view('pages/home');
-		} 
+		}
 	}
 
 	public function updatePhoto()
 	{
-	 	$this->output->enable_profiler(TRUE);
-		$this->load->helper('form');
-		$this->load->library('upload');
+		// // $this->output->enable_profiler(TRUE);
+		// $this->load->helper('form');
+		// $this->load->library('upload');
 
-		$defaultPath = '/assets/images/member-img/' . $_FILES['file_name']['name'];
+		// $defaultPath = '/assets/images/member-img/' . $_FILES['file_name']['name'];
 
-		$id = $this->input->post('id');
-		$file  = $defaultPath;
+		// $id = $this->input->post('id');
+		// $file  = $defaultPath;
 
-		$this->profile->updatePhoto($id, $defaultPath);
+		// $this->profile->updatePhoto($id, $defaultPath);
 
-		$config['upload_path']   = './assets/images/member-img/';
-		$config['allowed_types'] = 'jpeg|jpg|png';
+		// $config['upload_path']   = './assets/images/member-img/';
+		// $config['allowed_types'] = 'jpeg|jpg|png';
 
-		$this->upload->initialize($config);
+		// $this->upload->initialize($config);
 
-		if (!$this->upload->do_upload('file_name')) {
-			echo $this->upload->display_errors();
-		} else {
-			$this->upload->data();
-			redirect('profile/myprofile');
-			// $this->set('showModal',true);
-		}
+		// if (!$this->upload->do_upload('file_name')) {
+		// 	echo $this->upload->display_errors();
+		// } else {
+		// 	$this->upload->data();
+		// 	redirect('profile/myprofile');
+		// 	// $this->set('showModal',true);
+		// }
 	}
 
 	public function changeAddress()
 	{
-		$userData = $this->session->userdata('user_data'); 
+		$userData = $this->session->userdata('user_data');
 
 		$data['memberDetails'] = $this->api->getGeneralData('g_member', 'EMAIL', $userData['EMAIL']);
 
-		if(isset($userData)) {
+		if (isset($userData)) {
 			$this->load->view('pages/modal/modal-address', $data);
 		} else {
 			$this->load->view('pages/home');
-		} 
-		
+		}
 	}
 
 	public function updateAddress()
 	{
-
 		$id	= $this->input->post('id');
 
 		$data = array(
 			'ADDRESS' 		=> $this->input->post('add1'),
 			'ADDRESS_2'  	=> $this->input->post('add2'),
-			'COUNTRY' 		=> $this->input->post('country'), 
+			'COUNTRY' 		=> $this->input->post('country'),
 			'PROVINCE' 		=> $this->input->post('province'),
 			'ZIP' 			=> $this->input->post('zip'),
 		);
 
-		$query = $this->profiles->updateAddress($id, $data);
+		$query = $this->profile->updateAddress($id, $data);
 
 		if ($query) {
 			redirect('profile/myprofile');

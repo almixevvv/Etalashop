@@ -1,4 +1,4 @@
-<style type="text/css"> 
+<style type="text/css">
   .profile-button {
     background: #ffffff;
     border: 1px solid #24ca9d;
@@ -202,17 +202,6 @@
 </div>
 
 <!-- MODAL PART -->
-<div id="photoModal" class="modal fade bd-example-modal-md" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-md">
-    <div class="modal-content">
-      <div class="modal-body" style="padding: 0!important;">
-        <!-- LOAD THE CONTENT -->
-      </div>
-    </div>
-
-  </div>
-</div>
-
 <div id="passwordModal" class="modal fade bd-example-modal-md" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-md">
     <div class="modal-content">
