@@ -4,7 +4,7 @@ class Profile extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		// $this->output->enable_profiler(TRUE);
+		$this->output->enable_profiler(TRUE);
 	}
 
 	public function transaction()
@@ -91,6 +91,92 @@ class Profile extends CI_Controller
 		}
 	}
 
+	public function updatePassword()
+	{
+		$userData 			= $this->session->userdata('user_data');
+		$old_password		= $this->input->post('old_password');
+		$new_password 		= $this->input->post('new_password');
+		$confirm_password	= $this->input->post('confirm_password');
+
+		// DATA BUAT DEBUG
+		// $old_password = 'Abc123';
+		// $new_password = 'nasipadanglovers';
+		// $confirm_password = 'nasipadanglovers';
+
+		$queryEmail = $this->api->getGeneralData('g_member', 'EMAIL', $userData['EMAIL']);
+
+		$userSalt   = $queryEmail->row()->SALT;
+		$checkPassword  = password_verify($old_password . $userSalt, $queryEmail->row()->PASSWORD);
+
+		//1. Cek password lama, sama atau engga
+		if (!$checkPassword) {
+
+			echo 'kesini 1';
+			//1.1 Password lama beda
+			// $this->session->set_flashdata('password', 'different');
+			// redirect('profile/myprofile');
+			//EoL 1.1
+		}
+		//EoL 1
+
+		//2. Kalo password sama confirm password, lanjutin prosesnya
+		else if ($new_password == $confirm_password) {
+
+			echo '2';
+
+			//3.1 Generate salt baru
+			$salt = sha1($this->incube->generateID('10'));
+			//EoL 3.1
+
+			//3.2 Encrypt password baru
+			$passHash = password_hash($new_password . $salt, PASSWORD_BCRYPT, array('cost' => 12));
+
+			$data = array(
+				'PASSWORD' 	=> $passHash,
+				'SALT' 		=> $salt
+			);
+			//EoL 3.2
+
+			//3.3 Save data baru ke database
+			$query = $this->api->updateGeneralData('g_member', 'REC_ID', $userData['REC_ID'], $data);
+
+			if ($query) {
+				// $this->session->set_flashdata('password', 'success');
+				// redirect('profile/myprofile');
+			} else {
+				// $this->session->set_flashdata('password', 'unknown_error');
+				// redirect('profile/myprofile');
+			}
+			//EoL 3.3
+
+		}
+		//EoL 2
+
+		//3. Kalo password lamanya bener, lanjut
+		else if ($old_password != $new_password) {
+
+			echo '3';
+			//3.1 Lempar error kalo passwordnya ga sama
+			// $this->session->set_flashdata('password', 'different');
+			// redirect('profile/myprofile');
+			//EoL 3.1
+
+		}
+		//EoL 3
+
+		//4. Kalo ada sesuatu yang salah
+		else {
+
+			echo '4';
+			//4.1 Lempar error message kalo ada error yang ga kita tahu
+			// $this->session->set_flashdata('password', 'unknown_error');
+			// redirect('profile/myprofile');
+			//EoL 4.1
+
+		}
+		//EoL 4
+	}
+
 	public function changePhone()
 	{
 
@@ -114,10 +200,10 @@ class Profile extends CI_Controller
 			'PHONE' => $this->input->post('phone'),
 		);
 
-		$query = $this->profile->updatePhone($id, $data);
+		$query = $this->profiles->updatePhone($id, $data);
 
 		if ($query) {
-			redirect('pages/profile/profile');
+			redirect('profile/myprofile');
 		}
 	}
 
@@ -136,29 +222,29 @@ class Profile extends CI_Controller
 
 	public function updatePhoto()
 	{
-		// // $this->output->enable_profiler(TRUE);
-		// $this->load->helper('form');
-		// $this->load->library('upload');
+		$this->output->enable_profiler(TRUE);
+		$this->load->helper('form');
+		$this->load->library('upload');
 
-		// $defaultPath = '/assets/images/member-img/' . $_FILES['file_name']['name'];
+		$defaultPath = '/assets/images/member-img/' . $_FILES['file_name']['name'];
 
-		// $id = $this->input->post('id');
-		// $file  = $defaultPath;
+		$id = $this->input->post('id');
+		$file  = $defaultPath;
 
-		// $this->profile->updatePhoto($id, $defaultPath);
+		$this->profile->updatePhoto($id, $defaultPath);
 
-		// $config['upload_path']   = './assets/images/member-img/';
-		// $config['allowed_types'] = 'jpeg|jpg|png';
+		$config['upload_path']   = './assets/images/member-img/';
+		$config['allowed_types'] = 'jpeg|jpg|png';
 
-		// $this->upload->initialize($config);
+		$this->upload->initialize($config);
 
-		// if (!$this->upload->do_upload('file_name')) {
-		// 	echo $this->upload->display_errors();
-		// } else {
-		// 	$this->upload->data();
-		// 	redirect('profile/myprofile');
-		// 	// $this->set('showModal',true);
-		// }
+		if (!$this->upload->do_upload('file_name')) {
+			echo $this->upload->display_errors();
+		} else {
+			$this->upload->data();
+			redirect('profile/myprofile');
+			// $this->set('showModal',true);
+		}
 	}
 
 	public function changeAddress()
@@ -176,6 +262,7 @@ class Profile extends CI_Controller
 
 	public function updateAddress()
 	{
+
 		$id	= $this->input->post('id');
 
 		$data = array(
@@ -186,7 +273,7 @@ class Profile extends CI_Controller
 			'ZIP' 			=> $this->input->post('zip'),
 		);
 
-		$query = $this->profile->updateAddress($id, $data);
+		$query = $this->profiles->updateAddress($id, $data);
 
 		if ($query) {
 			redirect('profile/myprofile');

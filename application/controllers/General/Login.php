@@ -110,9 +110,10 @@ class Login extends CI_Controller
 				if ($queryEmail->row()->STATUS == 'ACTIVE') {
 					//2.1.1 Kalau emailnya udah di verified, masuk kesini
 					$dataSess = array(
+						'REC_ID'		=> $queryEmail->row()->REC_ID,
 						'FIRST_NAME' 	=> $queryEmail->row()->FIRST_NAME,
 						'LAST_NAME' 	=> $queryEmail->row()->LAST_NAME,
-						'PHONE' 		=> $queryEmail->row()->PHONE, 
+						'PHONE' 		=> $queryEmail->row()->PHONE,
 						'EMAIL' 		=> $queryEmail->row()->EMAIL,
 						'ADDRESS' 		=> $queryEmail->row()->ADDRESS,
 						'COUNTRY' 		=> $queryEmail->row()->COUNTRY,

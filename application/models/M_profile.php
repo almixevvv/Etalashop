@@ -2,14 +2,14 @@
 class M_profile extends CI_Model
 {
 
-	function __construct() 
+	function __construct()
 	{
 		parent::__construct();
 	}
 
 	function getMemberDetails($email)
 	{
- 
+
 		$this->db->select('*');
 		$this->db->from('g_order_master');
 		$this->db->where('MEMBER_EMAIL', $email);
@@ -43,15 +43,6 @@ class M_profile extends CI_Model
 	}
 
 	function updateAddress($id, $data)
-	{
-
-		$this->db->where('ID', $id);
-		$this->db->update('g_member', $data);
-
-		return true;
-	}
-
-	function updatePassword($id, $data)
 	{
 
 		$this->db->where('ID', $id);

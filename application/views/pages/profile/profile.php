@@ -202,6 +202,17 @@
 </div>
 
 <!-- MODAL PART -->
+<div id="photoModal" class="modal fade bd-example-modal-md" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-body" style="padding: 0!important;">
+        <!-- LOAD THE CONTENT -->
+      </div>
+    </div>
+
+  </div>
+</div>
+
 <div id="passwordModal" class="modal fade bd-example-modal-md" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-md">
     <div class="modal-content">
@@ -238,6 +249,20 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="<?php echo base_url('assets/bootstrap-4/js/bootstrap.js'); ?>"></script>
+
+<?php if ($this->session->userdata('password') == 'different') { ?>
+  <script>
+    swal.fire({
+      text: "Incorrect password, please try enter your old password",
+      type: "error",
+      showCancelButton: true,
+      cancelButtonColor: '#d33',
+      confirmButtonText: "Confirm",
+      confirmButtonColor: '#3085d6'
+    });
+  </script>
+<?php } ?>
+
 
 <script type="text/javascript">
   $('#photoModal').on('show.bs.modal', function(event) {

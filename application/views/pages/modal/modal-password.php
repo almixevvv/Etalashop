@@ -1,4 +1,4 @@
-<?php echo form_open('General/Profile/updatePassword');?>
+<?php echo form_open('General/Profile/updatePassword'); ?>
 
 <!-- HEADER -->
 <div class="modal-header" style="background-color: #2dd6a7  ;padding: 0.01rem;">
@@ -7,12 +7,12 @@
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
-   
-  <!-- Edit Margin -->
+
+<!-- Edit Margin -->
 <div class="modal-body" style="font-size: 14px;">
   <div class="row">
     <div class="col-lg-12">
-    	<label style="margin-left: 2em;">Old Password</label>
+      <label style="margin-left: 2em;">Old Password</label>
     </div>
   </div>
 
@@ -24,7 +24,7 @@
       <label style="margin-left: 2em; color: grey;">Insert Your Etalashop password, not password from another application account (Google).</label>
     </div>
     <div class="col-lg-12">
-      <a href="#" >
+      <a href="#">
         <i style="margin-left: 2em;" class="main-color pl-2">Forgot Password?</i>
       </a>
     </div>
@@ -57,7 +57,7 @@
     </div>
   </div>
 
-  
+
 </div>
 
 <div class="modal-footer">
@@ -65,5 +65,4 @@
   <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
 </div>
 
-<?php echo form_close();?>
-
+<?php echo form_close(); ?>
