@@ -39,13 +39,27 @@ class CMS extends CI_Controller
 		$email 		= $this->input->post('txt-username');
 		$password 	= $this->input->post('txt-password');
 
-		//1. Cek ada user atau engga
 
+		// DEBUG PURPOSE ONLY
+		// $salt = sha1($this->incube->generateID('10'));
+		// $passHash = password_hash($password . $salt, PASSWORD_BCRYPT, array('cost' => 12));
+
+		// echo $salt;
+		// echo '</br>';
+		// echo $passHash;
+
+		// $checkPassword  = password_verify('Abc123cd0aa65e51bc50c47c26cfb2acc577c7e726125d', '$2y$12$Lqhj.ZejwOtdqnnDybKOpeGoKXzFoVlZMgJ69llW2Rrc8fBvMh5.u');
+
+		// echo '</br>';
+		// var_dump($checkPassword);
+		// EoL DEBUG PURPOSE ONLY
+
+		//1. Cek ada user atau engga
 		$queryEmail = $this->api->getGeneralData('s_user', 'ID', $email);
 
 		if ($queryEmail->num_rows() == 0) {
-			// $this->session->set_flashdata('no_email', true);
-			// redirect(site_url('cms/login'));
+			$this->session->set_flashdata('no_email', true);
+			redirect(site_url('cms/login'));
 		}
 		//EoL 1
 
@@ -60,6 +74,7 @@ class CMS extends CI_Controller
 			//2.2 Cek passwordnya sama atau engga
 			$checkPassword  = password_verify($password . $salt, $queryEmail->row()->PASS);
 			//EoL 2.2
+
 
 			//2.3 Kalo passwordnya beda, tolak
 			if (!$checkPassword) {

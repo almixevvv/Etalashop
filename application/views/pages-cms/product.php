@@ -578,32 +578,6 @@
   <i class="fas fa-angle-up"></i>
 </a>
 
-<!-- Bootstrap core JavaScript-->
-<script src="<?= base_url('assets/cms/jquery/jquery.min.js'); ?>"></script>
-<script src="<?= base_url('assets/bootstrap-4/js/bootstrap.bundle.min.js'); ?>"></script>
-
-<!-- Core plugin JavaScript-->
-<script src="<?= base_url('assets/cms/jquery-easing/jquery.easing.min.js'); ?>"></script>
-
-<!-- Page level plugin JavaScript-->
-<script src="<?= base_url('assets/cms/chart.js/Chart.min.js'); ?>"></script>
-<script src="<?= base_url('assets/cms/datatables/jquery.dataTables.js'); ?>"></script>
-<script src="<?= base_url('assets/cms/datatables/dataTables.bootstrap4.js'); ?>"></script>
-
-<!-- Custom scripts for all pages-->
-<script src="<?= base_url('assets/cms/js/sb-admin.min.js'); ?>"></script>
-
-<!-- Demo scripts for this page-->
-<script src="<?= base_url('assets/cms/js/demo/datatables-demo.js'); ?>"></script>
-<script src="<?= base_url('assets/cms/js/demo/chart-area-demo.js'); ?>"></script>
-
-
-<link rel="stylesheet" href="<?= base_url('assets/sweet-alert/sweetalert2.min.css'); ?>" />
-<script src="<?= base_url('assets/tinymce/tinymce.min.js'); ?>"></script>
-
-<script src="<?= base_url('assets/autocomplete/jquery.autocomplete.js'); ?>"></script>
-<link rel="stylesheet" href="<?= base_url('assets/autocomplete/autocomplete.css'); ?>">
-
 <script src="<?= base_url('assets/incube-assets/general.js?version=' . filemtime('./assets/incube-assets/general.js')); ?>"></script>
 <script src="<?= base_url('assets/incube-assets/productFunction.js?version=' . filemtime('./assets/incube-assets/productFunction.js')); ?>"></script>
 

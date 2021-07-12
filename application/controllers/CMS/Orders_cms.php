@@ -11,6 +11,12 @@ class Orders_cms extends CI_Controller
 
 	public function index()
 	{
+		$dataSess = $this->session->userdata('cms_sess');
+		if (!isset($dataSess)) {
+			redirect('cms');
+		}
+
+
 		$data['page'] 				= 'Order Management';
 		$data['sess_data'] 			= $this->session->userdata('cms_sess');
 
@@ -74,14 +80,15 @@ class Orders_cms extends CI_Controller
 
 		$data_update = array('VIEW_FLAG'  => '1');
 
-		$this->db->where('ORDER_NO',  $orderNo);
-		$this->db->update('g_order_master', $data_update);
+		// $this->db->where('ORDER_NO',  $orderNo);
+		// $this->db->update('g_order_master', $data_update);
 
 		$data['details'] = $this->cms->singleOrder($orderNo);
 		$data['internal'] = $this->cms->singleOrder($orderNo);
 		$data['messages'] = $this->cms->getOrderMessages($orderNo);
 
-		$this->load->view('pages-cms/modal-orders', $data);
+
+		// $this->load->view('pages-cms/modal-orders', $data);
 	}
 
 

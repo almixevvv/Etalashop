@@ -9,7 +9,7 @@
   <meta name="author" content="">
   <link rel="shortcut icon" href="<?= base_url('assets/images/logo2.png'); ?>">
 
-  <title>Kikikuku CMS - <?= $page; ?></title>
+  <title>Etalashop CMS - <?= $page; ?></title>
 
   <!-- Custom fonts for this template-->
   <link href="<?= base_url('assets/font-awesome-5/css/all.min.css'); ?>" rel="stylesheet" type="text/css">
@@ -39,9 +39,21 @@
 
   <!-- Custom scripts for all pages-->
   <script src="<?= base_url('assets/cms/js/sb-admin.min.js'); ?>"></script>
+  <script src="<?= base_url('assets/incube-assets/general.js?version=' . filemtime('./assets/incube-assets/general.js')); ?>"></script>
 
   <!-- Demo scripts for this page-->
   <script src="<?= base_url('assets/cms/js/demo/datatables-demo.js'); ?>"></script>
   <script src="<?= base_url('assets/cms/js/demo/chart-area-demo.js'); ?>"></script>
+
+  <style>
+    a {
+      text-decoration: none !important;
+    }
+
+    a:hover,
+    a:focus {
+      text-decoration: none !important;
+    }
+  </style>
 
 </head>

@@ -239,7 +239,6 @@
                                        </td>
 
                                        <td>
-
                                            <p style='line-height:20px;'>
                                                <b><?= $cus_name; ?></b><br><br>
                                                <?= $addresso1; ?><br>
