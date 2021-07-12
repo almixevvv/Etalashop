@@ -33,16 +33,22 @@
     font-size: 20px; 
     font-weight: bold;
   }
+
+  .modal-title{
+    color: #fff;
+    font-weight: bold;
+    font-size: 20px;
+  }
 </style>
 
 <?php foreach ($memberDetails->result() as $data) : ?> 
 
   <!-- HEADER -->
-  <div class="modal-header" style="background-color: #2dd6a7  ;padding: 0.01rem;">
-    <p class="title"><i class="fas fa-map-marker-alt"></i> Change Address</p>
-    <button type="button" class="close mr-1 mt-0.5" data-dismiss="modal" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
+  <div class="modal-header">
+    <p class="modal-title" style="text-align: left"><i class="fas fa-map-marker-alt"></i> Change Address </p>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true" style="text-align: right">&times;</span>
+    </button> 
   </div>
 
   <!-- Edit Margin -->

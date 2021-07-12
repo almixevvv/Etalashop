@@ -157,28 +157,27 @@
               </div>
 
               <div class="col-12 col-md-4 col-lg-4 col-xl-4 mt-2 mt-md-2 mt-lg-2 mt-xl-2 container-border-order-last">
-                <div class="trans-filter-button">
-                  <?php ?>
-                  <a href="<?php echo base_url('#'); ?>" data-id="<?php echo $master->ID; ?>" data-toggle="modal" data-target="#photoModal">
+                <a href="<?php echo base_url('#'); ?>" data-id="<?php echo $master->ID; ?>" data-toggle="modal" data-target="#photoModal">
+                <div class="trans-filter-button"> 
                     <span class="text-uppercase main-color"><i class="fas fa-image"></i> Change Photo</span>
-                  </a>
                 </div>
+                 </a>
               </div>
 
               <div class="col-12 col-md-4 col-lg-4 col-xl-4 mt-2 mt-md-2 mt-lg-2 mt-xl-2 container-border-order-last">
+                <a href="<?php echo base_url('#'); ?>" data-id="<?php echo $master->ID; ?>" data-toggle="modal" data-target="#passwordModal">
                 <div class="trans-filter-button">
-                  <a href="<?php echo base_url('#'); ?>" data-id="<?php echo $master->ID; ?>" data-toggle="modal" data-target="#passwordModal">
                     <span class="text-uppercase main-color"><i class="fas fa-key"></i> Change Password</span>
-                  </a>
                 </div>
+                </a>
               </div>
 
               <div class="col-12 col-md-4 col-lg-4 col-xl-4 mt-2 mt-md-2 mt-lg-2 mt-xl-2 container-border-order-last">
+                <a href="<?php echo base_url('#'); ?>" data-id="<?php echo $master->ID; ?>" data-toggle="modal" data-target="#addressModal">
                 <div class="trans-filter-button">
-                  <a href="<?php echo base_url('#'); ?>" data-id="<?php echo $master->ID; ?>" data-toggle="modal" data-target="#addressModal">
                     <span class="text-uppercase main-color"><i class="fas fa-map-marker-alt"></i> Change Address</span>
-                  </a>
                 </div>
+                </a>
               </div>
 
             </div>
@@ -220,7 +219,7 @@
 </div>
 
 <div id="addressModal" class="modal fade bd-example-modal-md" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-md">
+  <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-body" style="padding: 0!important;">
         <!-- LOAD THE CONTENT -->
@@ -231,7 +230,7 @@
 </div>
 
 <div id="phoneModal" class="modal fade bd-example-modal-md" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-md">
+  <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-body" style="padding: 0!important;">
         <!-- LOAD THE CONTENT -->

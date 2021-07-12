@@ -32,12 +32,22 @@
     font-size: 20px; 
     font-weight: bold;
   }
+
+  .modal-title{
+    color: #fff;
+    font-weight: bold;
+    font-size: 20px;
+  }
+
+  .sub-title{
+    font-size: 12px;
+  }
 </style>
 
 <!-- HEADER -->
 <div class="modal-header">
-  <p class="title"><i class="fas fa-key"></i> Change Password</p>
-  <button type="button" class="close mr-1 mt-0.5" data-dismiss="modal" aria-label="Close">
+  <p class="modal-title"><i class="fas fa-key"></i> Change Password</p>
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
@@ -55,11 +65,11 @@
       <input type="password" name="old_password" class="form-control form-input-modal">
     </div>
     <div class="col-lg-12 pl-4">
-      <label class="label-alert pl-4">Insert Your Etalashop password, not password from another application account (Google).</label>
+      <label class="label-alert sub-title pl-4">Insert Your Etalashop password, not password from another application account (Google).</label>
     </div>
     <div class="col-lg-12">
       <a href="#">
-        <i class="label" class="main-color pl-1">Forgot Password?</i>
+        <i class="label" class="main-color pl-1 sub-title">Forgot Password?</i>
       </a>
     </div>
   </div>
@@ -75,7 +85,7 @@
       <input type="password" name="new_password" class="form-control" style="width: 90%; margin-left: 2em;">
     </div>
     <div class="col-lg-12 pl-4">
-      <label style="margin-left: 2em; color: grey;">Your password must include a capital letter and a number. </label>
+      <label class="sub-title" style="margin-left: 2em; color: grey;">Your password must include a capital letter and a number. </label>
     </div>
   </div>
 

@@ -29,14 +29,20 @@
     font-size: 20px; 
     font-weight: bold;
   }
+
+  .modal-title{
+    color: #fff;
+    font-weight: bold;
+    font-size: 20px;
+  }
 </style>
 
 <?php foreach ($memberDetails->result() as $data) : ?>
  
   <!-- HEADER -->
   <div class="modal-header p-0.01">
-    <p  class="title"><i class="fas fa-phone"></i></i> Edit Phone Number</p>
-    <button type="button" class="close mr-1 mt-0.5" data-dismiss="modal" aria-label="Close">
+    <p  class="modal-title"><i class="fas fa-phone"></i></i> Edit Phone Number</p>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
