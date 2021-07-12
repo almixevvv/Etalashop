@@ -21,6 +21,11 @@
   body.loading #paymentModal {
     display: block;
   }
+
+  .notes-text{
+    font-size: 14px;
+    color: #b8b7b4;
+  }
 </style>
 
 
@@ -300,9 +305,9 @@
                         <div class="row">
                           <div class="col-12">
                             <?php if ($history->PRODUCT_NOTES == null) { ?>
-                              <span class="main-color font-weight-bold"> - </span>
+                              <span class="main-color font-weight-bold notes-text"> - </span>
                             <?php } else { ?>
-                              <span class="main-color font-weight-bold"><?= $history->PRODUCT_NOTES; ?></span>
+                              <span class="main-color font-weight-bold notes-text"><?= $history->PRODUCT_NOTES; ?></span>
                             <?php } ?>
                           </div>
                         </div>

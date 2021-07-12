@@ -9,7 +9,7 @@
   <meta name="author" content="">
   <link rel="shortcut icon" href="<?= base_url('assets/images/logo2.png'); ?>">
 
-  <title>Kikikuku CMS - <?= $page; ?></title>
+  <title>Etalashop CMS - <?= $page; ?></title>
 
   <!-- Custom fonts for this template-->
   <link href="<?= base_url('assets/font-awesome-5/css/all.min.css'); ?>" rel="stylesheet" type="text/css">
