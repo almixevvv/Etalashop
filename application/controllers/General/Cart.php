@@ -121,7 +121,7 @@ class Cart extends CI_Controller
 				}
 				//EoL 2.2.1
 
-				redirect('mycart');
+				redirect('mycart'); 
 			}
 			//EoL 2.2
 		}
@@ -131,10 +131,10 @@ class Cart extends CI_Controller
 	public function removeCartItem()
 	{
 
-		$getRowID = $this->input->get('rowid');
-		$getBuyer = $this->input->get('buyer');
+		 $productID = $this->input->get('rowid');
+		 $productBuyer = $this->input->get('buyer');
 
-		if ($this->carts->deleteItem($getRowID, $getBuyer)) {
+		if ($this->carts->deleteItem($productID, $productBuyer)) {
 			return true;
 		} else {
 			return false;

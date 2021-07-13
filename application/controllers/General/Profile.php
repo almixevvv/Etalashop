@@ -1,5 +1,5 @@
 <?php if (!defined("BASEPATH")) exit("Hack Attempt");
-class Profile extends CI_Controller
+class Profile extends CI_Controller 
 {
 	public function __construct()
 	{
@@ -111,10 +111,10 @@ class Profile extends CI_Controller
 		//1. Cek password lama, sama atau engga
 		if (!$checkPassword) {
 
-			echo 'kesini 1';
+			// echo 'kesini 1';
 			//1.1 Password lama beda
-			// $this->session->set_flashdata('password', 'different');
-			// redirect('profile/myprofile');
+			$this->session->set_flashdata('password', 'different');
+			redirect('profile/myprofile');
 			//EoL 1.1
 		}
 		//EoL 1
@@ -122,7 +122,7 @@ class Profile extends CI_Controller
 		//2. Kalo password sama confirm password, lanjutin prosesnya
 		else if ($new_password == $confirm_password) {
 
-			echo '2';
+			// echo '2';
 
 			//3.1 Generate salt baru
 			$salt = sha1($this->incube->generateID('10'));
@@ -141,11 +141,11 @@ class Profile extends CI_Controller
 			$query = $this->api->updateGeneralData('g_member', 'REC_ID', $userData['REC_ID'], $data);
 
 			if ($query) {
-				// $this->session->set_flashdata('password', 'success');
-				// redirect('profile/myprofile');
+				$this->session->set_flashdata('password', 'success');
+				redirect('profile/myprofile');
 			} else {
-				// $this->session->set_flashdata('password', 'unknown_error');
-				// redirect('profile/myprofile');
+				$this->session->set_flashdata('password', 'unknown_error');
+				redirect('profile/myprofile');
 			}
 			//EoL 3.3
 
@@ -155,10 +155,10 @@ class Profile extends CI_Controller
 		//3. Kalo password lamanya bener, lanjut
 		else if ($old_password != $new_password) {
 
-			echo '3';
+			// echo '3';
 			//3.1 Lempar error kalo passwordnya ga sama
-			// $this->session->set_flashdata('password', 'different');
-			// redirect('profile/myprofile');
+			$this->session->set_flashdata('password', 'different');
+			redirect('profile/myprofile');
 			//EoL 3.1
 
 		}
@@ -169,8 +169,8 @@ class Profile extends CI_Controller
 
 			echo '4';
 			//4.1 Lempar error message kalo ada error yang ga kita tahu
-			// $this->session->set_flashdata('password', 'unknown_error');
-			// redirect('profile/myprofile');
+			$this->session->set_flashdata('password', 'unknown_error');
+			redirect('profile/myprofile');
 			//EoL 4.1
 
 		}
@@ -203,6 +203,7 @@ class Profile extends CI_Controller
 		$query = $this->profiles->updatePhone($id, $data);
 
 		if ($query) {
+			$this->session->set_flashdata('phone', 'success');
 			redirect('profile/myprofile');
 		}
 	}
@@ -227,14 +228,20 @@ class Profile extends CI_Controller
 		$this->load->library('upload');
 
 		$defaultPath = '/assets/images/member-img/' . $_FILES['file_name']['name'];
-
-		$id = $this->input->post('id');
+		$ext = pathinfo($_FILES['file_name']['name'], PATHINFO_EXTENSION);
+   
+		 $new_name=sha1($_FILES['file_name']['name'].date('YmdHis'));
+		$id = $this->input->post('id'); 
 		$file  = $defaultPath;
 
-		$this->profile->updatePhoto($id, $defaultPath);
+		
 
 		$config['upload_path']   = './assets/images/member-img/';
 		$config['allowed_types'] = 'jpeg|jpg|png';
+		$config['file_name']         = $new_name;
+
+		$file_name=$new_name.".".$ext;
+		$this->profiles->updatePhoto($id, $file_name);
 
 		$this->upload->initialize($config);
 
@@ -276,6 +283,7 @@ class Profile extends CI_Controller
 		$query = $this->profiles->updateAddress($id, $data);
 
 		if ($query) {
+			$this->session->set_flashdata('address', 'success');
 			redirect('profile/myprofile');
 		}
 	}

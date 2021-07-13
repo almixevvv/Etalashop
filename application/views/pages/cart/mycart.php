@@ -38,7 +38,7 @@
 								<div class="d-flex justify-content-center">Product Detail</div>
 							</div>
 							<div class="col-3 col-md-3 col-sm-3">
-								<div class="d-flex justify-content-center">Estimated Price</div>
+								<div class="d-flex justify-content-center">Total Price</div>
 							</div>
 							<div class="col-1 col-md-1 col-sm-1">
 								<div class="d-flex justify-content-center">Qty</div>
@@ -56,7 +56,6 @@
 					<?php } else { ?>
 
 						<?php foreach ($items->result() as $key) {
-
 							$price 				= $key->PRODUCT_PRICE;
 							$weight 			= $key->WEIGHT;
 
@@ -143,7 +142,8 @@
 										<!-- Product quantity -->
 										<div class="col-md-1 d-none d-md-flex">
 											<div class="d-flex justify-content-center">
-												<span><?= number_format($key->PRODUCT_QUANTITY); ?></span>
+												<span><?= number_format($key->PRODUCT_QUANTITY); ?></span> 
+												
 											</div>
 										</div>
 										<!-- EoL product quantity -->
@@ -152,9 +152,7 @@
 											<button type="button" class="btn btn-danger delete-item ml-5" style="height: 2.5em; width: 2.5em" title="Remove Item" data-id="<?php echo $key->PRODUCT_ID; ?>" data-buyer="<?php echo $key->PRODUCT_BUYER; ?>">
 												<i class="fa fa-trash"></i>
 											</button>
-										</div>
-
-
+										</div> 
 									</div>
 								</div>
 
@@ -181,9 +179,19 @@
 							<span class="pl-3">Total Items </span>
 						</div>
 						<div class="col-6 col-md-6 col-sm-6 text-right">
-							<span class="font-weight-bold pr-4"><?= ($subqty == 0 ? '0' : $subqty); ?></span>
+							<span class="pr-4"><?= ($subqty == 0 ? '0' : $subqty); ?></span>
 						</div>
 					</div>
+
+					<div class="row">
+						<div class="col-6 col-md-6 col-sm-6">
+							<span class="pl-3">Total Weight</span>
+						</div>
+
+						<div class="col-6 col-md-6 col-sm-6 text-right">
+							<span class="pr-4"><?= ($totalWeight == 0 ? '0.00' : number_format($totalWeight, 2, ',', '.')); ?> Kg</span>
+						</div>
+					</div> <br>
 
 					<div class="row">
 						<div class="col-6 col-md-6 col-sm-6">
@@ -197,17 +205,7 @@
 
 					<div class="row">
 						<div class="col-6 col-md-6 col-sm-6">
-							<span class="pl-3">Total Weight</span>
-						</div>
-
-						<div class="col-6 col-md-6 col-sm-6 text-right">
-							<span class="font-weight-bold pr-4"><?= ($totalWeight == 0 ? '0.00' : number_format($totalWeight, 2, ',', '.')); ?> Kg</span>
-						</div>
-					</div>
-
-					<div class="row">
-						<div class="col-6 col-md-6 col-sm-6">
-							<span class="pl-3">Total Price Weight</span>
+							<span class="pl-3">Total Shipping</span>
 						</div>
 
 						<div class="col-6 col-md-6 col-sm-6 text-right">
@@ -223,7 +221,7 @@
 
 					<div class="row">
 						<div class="col-6 col-md-6 col-sm-6">
-							<span class="font-weight-bold pl-3">TOTAL</span>
+							<span class="font-weight-bold pl-3">TOTAL AMOUNT</span>
 						</div>
 
 						<div class="col-6 col-md-6 col-sm-6 text-right">
@@ -268,7 +266,7 @@
 			if (result.value) {
 
 
-				$.get(baseUrl + 'General/Cart/removeCartItem', {
+				$.get('<?php echo base_url()?>General/Cart/removeCartItem', {
 					rowid: id,
 					buyer: email
 				}, function(resp) {
