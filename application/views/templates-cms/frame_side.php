@@ -43,7 +43,7 @@
   <li class="mt-4 nav-item sidebar-custom-bottom sidebar-custom-top">
     <a class="nav-link" href="<?= base_url('cms/dashboard'); ?>">
       <i class="fas fa-fw fa-tachometer-alt" style="color: #2db4d6"></i>
-      <span style="color: #6c757d">Dashboard</span>
+      <span style="color: #6c757d" class="font-weight-bold">Dashboard</span>
     </a>
   </li>
 
@@ -61,7 +61,7 @@
       <li class="nav-item sidebar-custom-bottom">
         <a class="nav-link" href="#<?= $parent->ID; ?>" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="<?= $parent->ID; ?>" style="color: #6c757d;">
           <i class="<?= $parent->ICON; ?>" style="color: #2db4d6"></i>
-          <span><?= $parent->NAME; ?></span>
+          <span class="font-weight-bold"><?= $parent->NAME; ?></span>
         </a>
 
         <?php

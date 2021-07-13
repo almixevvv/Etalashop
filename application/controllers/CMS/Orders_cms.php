@@ -12,6 +12,7 @@ class Orders_cms extends CI_Controller
 	public function index()
 	{
 		$dataSess = $this->session->userdata('cms_sess');
+
 		if (!isset($dataSess)) {
 			redirect('cms');
 		}
@@ -71,27 +72,6 @@ class Orders_cms extends CI_Controller
 		$this->load->view('pages-cms/order_management', $data);
 		$this->load->view('templates-cms/footer');
 	}
-
-
-
-	public function getDetails()
-	{
-		$orderNo = $this->input->get('id');
-
-		$data_update = array('VIEW_FLAG'  => '1');
-
-		// $this->db->where('ORDER_NO',  $orderNo);
-		// $this->db->update('g_order_master', $data_update);
-
-		$data['details'] = $this->cms->singleOrder($orderNo);
-		$data['internal'] = $this->cms->singleOrder($orderNo);
-		$data['messages'] = $this->cms->getOrderMessages($orderNo);
-
-
-		// $this->load->view('pages-cms/modal-orders', $data);
-	}
-
-
 
 	public function getPayment()
 	{
@@ -261,18 +241,88 @@ class Orders_cms extends CI_Controller
 
 	}
 
+	public function getDetails()
+	{
+		$orderID = $this->input->get('id');
+		header('Content-Type: application/json');
+		// $this->output->enable_profiler(TRUE);
+
+		$queryDetails  = $this->cms->singleOrder($orderID);
+		$queryMessages = $this->api->getGeneralData('g_message', 'ORDER_ID', $orderID);
 
 
+		if ($queryDetails->num_rows() >= 1) {
+			$updateData = array(
+				'VIEW_FLAG'	=> '1'
+			);
 
+			$queryUpdate = $this->api->updateGeneralData('g_order_master', 'ORDER_NO', $orderID, $updateData);
+		} else {
+
+			$msg = array(
+				'status'    => 'invalid_data',
+				'code'      =>  204,
+				'message'   => 'order not found',
+			);
+		}
+
+		echo json_encode($msg);
+	}
 
 	public function deleteOrder()
 	{
-		// $this->output->enable_profiler(TRUE);
+		header('Content-Type: application/json');
+
+
 		$orderNo = $this->input->post('orderNo');
 
-		$this->cms->delete_order_master($orderNo, 'g_order_master');
-		$this->cms->delete_order_detail($orderNo, 'g_order_detail');
+		$queryMaster = $this->api->getGeneralData('g_order_master', 'ORDER_NO', $orderNo);
+		$queryDetail = $this->api->getGeneralData('g_order_detail', 'ORDER_NO', $orderNo);
 
-		// redirect('cms/margin');
+		//1. Cek datanya ada atau engga
+		if ($queryMaster->num_rows() >= 1 && $queryDetail->num_rows() >= 1) {
+
+			$this->db->trans_begin();
+
+			$this->api->deleteGeneralData('g_order_master', 'ORDER_NO', $orderNo);
+			$this->api->deleteGeneralData('g_order_detail', 'ORDER_NO', $orderNo);
+
+			//1.1 Kalau misalnya ada yang salah pas hapus data
+			if ($this->db->trans_status() === FALSE) {
+				$this->db->trans_rollback();
+
+				$msg = array(
+					'status'    => 'data_error',
+					'code'      =>  504,
+					'message'   => 'cannot complete process',
+				);
+			}
+			//EoL 1.1
+
+			//1.2 Kalau misalnya berhasil hapus
+			else {
+				$this->db->trans_commit();
+
+				$msg = array(
+					'status'    => 'success',
+					'code'      =>  200,
+					'message'   => 'process completed',
+				);
+			}
+			//EoL 1.2
+		}
+		//EoL 1
+
+		//2. Kalau datanya ga ada, balikin error message
+		else {
+			$msg = array(
+				'status'    => 'invalid_data',
+				'code'      =>  204,
+				'message'   => 'order not found',
+			);
+		}
+		//EoL 2
+
+		echo json_encode($msg);
 	}
 }

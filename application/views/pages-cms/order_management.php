@@ -9,6 +9,10 @@
       color: white;
     }
 
+    .btn-outline-info>a {
+      font-size: .7rem;
+    }
+
     .new-order {
       background: linear-gradient(to top left, #ffffff 80%, #2dd6a8 100%);
     }
@@ -32,6 +36,10 @@
     }
 
     .action-button-text {
+      font-size: .8rem;
+    }
+
+    .card-body {
       font-size: .8rem;
     }
   </style>
@@ -270,7 +278,7 @@
 
   </div>
   <!-- EoL ORDER PART -->
-  <script src="<?= base_url('assets/incube-assets/orderManagement.1.0.js'); ?>"></script>
+  <script src="<?= base_url('assets/incube-assets/orderManagement.1.0.js?version=' . filemtime('./assets/incube-assets/orderManagement.1.0.js')); ?>"></script>
 
   <!-- Sticky Footer -->
   <footer class="sticky-footer">

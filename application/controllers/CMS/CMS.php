@@ -13,13 +13,13 @@ class CMS extends CI_Controller
 
 		$data['page'] = "LOGIN";
 
-		if ($this->session->userdata('name') == null) {
+		$dataSess = $this->session->userdata('cms_sess');
 
+		if (!isset($dataSess)) {
 			$this->load->view('templates-cms/header', $data);
 			$this->load->view('pages-cms/login');
 			$this->load->view('templates-cms/footer');
 		} else {
-
 			redirect('cms/dashboard');
 		}
 	}

@@ -541,21 +541,6 @@
         $this->db->update('g_order_master', $data);
     }
 
-    function delete_order_master($orderNo, $id)
-    {
-
-        $this->db->where('ORDER_NO', $orderNo);
-        $this->db->delete($id);
-    }
-
-    function delete_order_detail($orderNo, $id)
-    {
-
-        $this->db->where('ORDER_NO', $orderNo);
-        $this->db->delete($id);
-    }
-
-
     //-------------------------------------------------------------------------------------------------------------------  ORDER
 
     //-------------------------------------------------------------------------------------------------------------------  MESSAGE

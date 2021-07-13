@@ -14,9 +14,43 @@ $(document).on('click', '.buttonDelete', function() {
 		})
 		.then((result) => {
 			if (result.value) {
-				$.post(baseUrl + 'Orders_cms/deleteOrder', { orderNo: id }, function(resp) {
-					console.log(data);
-					location.reload();
+				$.post(baseUrl + 'CMS/Orders_cms/deleteOrder', { orderNo: id }, function(resp) {
+					if (resp.code == 200) {
+						swal
+							.fire({
+								title: 'Success',
+								text: 'Order has been deleted',
+								type: 'success',
+								showCancelButton: false,
+								confirmButtonText: 'Ok',
+								confirmButtonColor: '#3085d6'
+							})
+							.then((btnConfirm) => {
+								if (btnConfirm.value) {
+									location.reload();
+								}
+							});
+					} else if (resp.code == 204) {
+						swal.fire({
+							title: 'Invalid Data',
+							text: 'Order number not found, please try again later',
+							type: 'error',
+							showCancelButton: true,
+							cancelButtonColor: '#d33',
+							confirmButtonText: 'Ok',
+							confirmButtonColor: '#3085d6'
+						});
+					} else if (resp.code == 504) {
+						swal.fire({
+							title: 'Unknown Error',
+							text: 'Unknown error has occured, please try again later',
+							type: 'error',
+							showCancelButton: true,
+							cancelButtonColor: '#d33',
+							confirmButtonText: 'Delete data',
+							confirmButtonColor: '#3085d6'
+						});
+					}
 				});
 			}
 		});
