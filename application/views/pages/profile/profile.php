@@ -1,4 +1,4 @@
-<style type="text/css">
+<style type="text/css"> 
   .profile-button {
     background: #ffffff;
     border: 1px solid #24ca9d;
@@ -10,19 +10,14 @@
     font-size: 0.7em;
     margin-top: 0.3em;
   }
+
+  .main-color-grey{
+    color: #c2c0c0;
+  }
 </style>
 <div class="trans-container">
-
-  <div class="trans-inner-container">
     <!-- FILTER BUTTON -->
-    <div class="row" id="trans-filter-separator-desktop">
-
-      <div class="trans-filter-container-left">
-        <i class="far fa-user"></i>
-        <span style="font-weight: bold;"><?php echo $memberDetails->result()[0]->FIRST_NAME; ?> <?php echo $memberDetails->result()[0]->LAST_NAME; ?></span>
-      </div>
-
-    </div>
+     
     <!-- END OF FILTER BUTTON -->
 
     <!-- FILTER BUTTON MOBILE -->
@@ -60,11 +55,11 @@
               <div class="col-12 col-md-4 col-lg-4 col-xl-4 mt-2 mt-md-2 mt-lg-2 mt-xl-2 container-border-order">
                 <div class="row">
                   <div class="col-12">
-                    <?php if ($master->IMAGE == '') : ?>
+                    <?php if ($master->IMAGE == '') { ?>
                       <img style="width: 95%;" src="<?php echo base_url('assets/images/no-image.png') ?>">
-                    <?php else : ?>
-                      <img style="margin-left: 3em;width: 70%;" src="<?php echo base_url($master->IMAGE); ?>">
-                    <?php endif; ?>
+                    <?php } else { ?>
+                      <img style="margin-left: 3em;width: 70%;" src="<?php echo base_url('assets/images/member-img/'.$master->IMAGE); ?>"> 
+                    <?php } ?>
                   </div>
                 </div>
               </div>
@@ -77,7 +72,7 @@
                 </div>
                 <div class="row">
                   <div class="col-12">
-                    <span class="main-color font-weight-bold"><?php echo $master->FIRST_NAME; ?> <?php echo $master->LAST_NAME; ?> </span>
+                    <span class="main-color-grey font-weight-bold"><?php echo $master->FIRST_NAME; ?> <?php echo $master->LAST_NAME; ?> </span>
                   </div>
                 </div>
 
@@ -88,7 +83,7 @@
                 </div>
                 <div class="row">
                   <div class="col-12">
-                    <span class="main-color font-weight-bold"><?php echo date("d F Y", strtotime($master->BIRTH_DATE)); ?></span>
+                    <span class="main-color-grey font-weight-bold"><?php echo date("d F Y", strtotime($master->BIRTH_DATE)); ?></span>
                   </div>
                 </div>
 
@@ -100,7 +95,7 @@
 
                 <div class="row">
                   <div class="col-12">
-                    <span class="main-color font-weight-bold"><?php echo $master->EMAIL; ?></span>
+                    <span class="main-color-grey font-weight-bold"><?php echo $master->EMAIL; ?></span>
                   </div>
                 </div>
 
@@ -118,7 +113,7 @@
                 </div>
                 <div class="row">
                   <div class="col-12">
-                    <span class="main-color font-weight-bold"><?php echo $master->PHONE; ?></span>
+                    <span class="main-color-grey font-weight-bold"><?php echo $master->PHONE; ?></span>
                   </div>
                 </div>
               </div>
@@ -129,7 +124,7 @@
                     <span>Address</span>
                   </div>
                   <div class="col-12">
-                    <span class="main-color font-weight-bold"><?php echo $master->ADDRESS; ?></span>
+                    <span class="main-color-grey font-weight-bold"><?php echo $master->ADDRESS; ?></span>
                   </div>
                 </div>
 
@@ -138,7 +133,7 @@
                     <span>Address 2</span>
                   </div>
                   <div class="col-12">
-                    <span class="main-color font-weight-bold"><?php echo $master->ADDRESS_2; ?></span>
+                    <span class="main-color-grey font-weight-bold"><?php echo $master->ADDRESS_2; ?></span>
                   </div>
                 </div>
 
@@ -147,7 +142,7 @@
                     <span>Country</span>
                   </div>
                   <div class="col-12">
-                    <span class="main-color font-weight-bold"><?php echo $master->COUNTRY; ?></span>
+                    <span class="main-color-grey font-weight-bold"><?php echo $master->COUNTRY; ?></span>
                   </div>
                 </div>
 
@@ -156,34 +151,33 @@
                     <span>Province</span>
                   </div>
                   <div class="col-12">
-                    <span class="main-color font-weight-bold"><?php echo $master->PROVINCE; ?> - <?php echo $master->ZIP; ?> </span>
+                    <span class="main-color-grey font-weight-bold"><?php echo $master->PROVINCE; ?> - <?php echo $master->ZIP; ?> </span>
                   </div>
                 </div>
               </div>
 
               <div class="col-12 col-md-4 col-lg-4 col-xl-4 mt-2 mt-md-2 mt-lg-2 mt-xl-2 container-border-order-last">
-                <div class="trans-filter-button">
-                  <?php ?>
-                  <a href="<?php echo base_url('#'); ?>" data-id="<?php echo $master->ID; ?>" data-toggle="modal" data-target="#photoModal">
+                <a href="<?php echo base_url('#'); ?>" data-id="<?php echo $master->ID; ?>" data-toggle="modal" data-target="#photoModal">
+                <div class="trans-filter-button"> 
                     <span class="text-uppercase main-color"><i class="fas fa-image"></i> Change Photo</span>
-                  </a>
                 </div>
+                 </a>
               </div>
 
               <div class="col-12 col-md-4 col-lg-4 col-xl-4 mt-2 mt-md-2 mt-lg-2 mt-xl-2 container-border-order-last">
+                <a href="<?php echo base_url('#'); ?>" data-id="<?php echo $master->ID; ?>" data-toggle="modal" data-target="#passwordModal">
                 <div class="trans-filter-button">
-                  <a href="<?php echo base_url('#'); ?>" data-id="<?php echo $master->ID; ?>" data-toggle="modal" data-target="#passwordModal">
                     <span class="text-uppercase main-color"><i class="fas fa-key"></i> Change Password</span>
-                  </a>
                 </div>
+                </a>
               </div>
 
               <div class="col-12 col-md-4 col-lg-4 col-xl-4 mt-2 mt-md-2 mt-lg-2 mt-xl-2 container-border-order-last">
+                <a href="<?php echo base_url('#'); ?>" data-id="<?php echo $master->ID; ?>" data-toggle="modal" data-target="#addressModal">
                 <div class="trans-filter-button">
-                  <a href="<?php echo base_url('#'); ?>" data-id="<?php echo $master->ID; ?>" data-toggle="modal" data-target="#addressModal">
                     <span class="text-uppercase main-color"><i class="fas fa-map-marker-alt"></i> Change Address</span>
-                  </a>
                 </div>
+                </a>
               </div>
 
             </div>
@@ -197,7 +191,7 @@
       <!-- END OF MAIN TRANSACTION -->
     <?php endforeach; ?>
 
-  </div>
+ 
 
 </div>
 
@@ -225,7 +219,7 @@
 </div>
 
 <div id="addressModal" class="modal fade bd-example-modal-md" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-md">
+  <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-body" style="padding: 0!important;">
         <!-- LOAD THE CONTENT -->
@@ -236,7 +230,7 @@
 </div>
 
 <div id="phoneModal" class="modal fade bd-example-modal-md" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-md">
+  <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-body" style="padding: 0!important;">
         <!-- LOAD THE CONTENT -->
@@ -255,6 +249,58 @@
     swal.fire({
       text: "Incorrect password, please try enter your old password",
       type: "error",
+      showCancelButton: true,
+      cancelButtonColor: '#d33',
+      confirmButtonText: "Confirm",
+      confirmButtonColor: '#3085d6'
+    });
+  </script>
+<?php } ?>
+
+<?php if ($this->session->userdata('password') == 'unknown_error') { ?>
+  <script>
+    swal.fire({
+      text: "ERROR - UNKNOWN ERROR",
+      type: "error",
+      showCancelButton: true,
+      cancelButtonColor: '#d33',
+      confirmButtonText: "Confirm",
+      confirmButtonColor: '#3085d6'
+    });
+  </script>
+<?php } ?>
+
+<?php if ($this->session->userdata('password') == 'success') { ?>
+  <script>
+    swal.fire({
+      text: "SUCSESS UPDATE PASSWORD",
+      type: "success",
+      showCancelButton: true,
+      cancelButtonColor: '#d33',
+      confirmButtonText: "Confirm",
+      confirmButtonColor: '#3085d6'
+    });
+  </script>
+<?php } ?>
+
+<?php if ($this->session->userdata('phone') == 'success') { ?>
+  <script>
+    swal.fire({
+      text: "SUCSESS UPDATE PHONE NUMBER",
+      type: "success",
+      showCancelButton: true,
+      cancelButtonColor: '#d33',
+      confirmButtonText: "Confirm",
+      confirmButtonColor: '#3085d6'
+    });
+  </script>
+<?php } ?>
+
+<?php if ($this->session->userdata('address') == 'success') { ?>
+  <script>
+    swal.fire({
+      text: "SUCSESS UPDATE PHONE NUMBER",
+      type: "success",
       showCancelButton: true,
       cancelButtonColor: '#d33',
       confirmButtonText: "Confirm",

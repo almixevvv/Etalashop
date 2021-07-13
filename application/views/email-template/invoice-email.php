@@ -160,7 +160,7 @@
         </td>
         <td height="10" width="400">
           <div style="text-align: right; margin-top: 0.5em; font-size: 14px;color: #2db4d6; font-weight: bold;">IDR <?php echo number_format($totalPrice,2); ?></div>
-        </td>
+        </td> 
       </tr>
 
     </table>

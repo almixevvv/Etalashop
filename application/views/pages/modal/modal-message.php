@@ -1,4 +1,4 @@
- 
+  
  <div class="message-holder">
 
   <?php foreach($message->result() as $data): ?>

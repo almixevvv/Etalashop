@@ -13,7 +13,7 @@
     /*margin-left: 35em;*/
     margin-bottom: 1em;
     font-family: Arial, Helvetica, sans-serif;  
-  }
+  } 
 
   .buttonSendTop {
     background-color: #1e8c00;
