@@ -175,8 +175,18 @@
                               </div>
                             </div>
 
+                            <div class="row mt-4">
+                              <div class="col-12">
+                                <a class="btn btn-warning btn-invoice text-white" data-orderid="<?= $dt->ORDER_NO; ?>" href="<?= base_url('CMS/Orders_cms/invoice?id=' . $dt->ORDER_NO); ?>" target="_blank">Send Invoice</a>
+                                <span class="<?= ($dt->FLAG == 1 ? 'd-block' : 'd-none'); ?>">
+                                  <i class="pl-2 fas fa-clipboard-check secondary-theme-color"></i>
+                                  <label class="secondary-theme-color">Invoice Sent!</label>
+                                </span>
+                              </div>
+                            </div>
 
-                            <div class="row mt-2 <?= ($dt->STATUS_ORDER != 'NEW ORDER' ? 'd-block' : 'd-none'); ?>">
+
+                            <!-- <div class="row mt-2 <?= ($dt->STATUS_ORDER != 'NEW ORDER' ? 'd-block' : 'd-none'); ?>">
                               <div class="col-12">
                                 <button class="btn btn-warning btn-invoice text-white" type="button" data-orderid="<?= $dt->ORDER_NO; ?>">Send Invoice</button>
                                 <span class="<?= ($dt->FLAG == 1 ? 'd-block' : 'd-none'); ?>">
@@ -184,7 +194,7 @@
                                   <label class="secondary-theme-color">Invoice Sent!</label>
                                 </span>
                               </div>
-                            </div>
+                            </div> -->
 
                             <div class="row mt-2 <?= (($dt->STATUS_ORDER != 'NEW ORDER') && ($dt->STATUS_ORDER != 'UPDATED') ? 'd-block' : 'd-none'); ?>">
                               <div class="col-12">
