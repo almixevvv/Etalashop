@@ -172,17 +172,17 @@ class Orders_cms extends CI_Controller
 		$this->load->library('email');
 
 		$config['protocol']    = 'smtp';
-		$config['smtp_host']   = 'mail.kikikuku.com';
-		$config['smtp_user']   = 'admin@kikikuku.com';
-		$config['smtp_pass']   = 'nOX-D8NlrF#Z';
-		$config['smtp_port']   = 25;
+		$config['smtp_host']   = 'mail.etalashop.com';
+		$config['smtp_user']   = 'admin@etalashop.com';
+		$config['smtp_pass']   = '^DNDfCfS)Ox!';
+		$config['smtp_port']   = 465;
 		$config['charset']     = 'utf-8';
 		$config['wordwrap']    = TRUE;
 		$config['mailtype']    = 'html';
 
 		$this->email->initialize($config);
 
-		$this->email->from('admin@kikikuku.com', 'Kikikuku Team');
+		$this->email->from('admin@etalashop.com', 'Etalashop Team');
 		$this->email->to($emailAddress);
 		$this->email->set_mailtype('html');
 
@@ -243,20 +243,78 @@ class Orders_cms extends CI_Controller
 
 	public function getDetails()
 	{
-		$orderID = $this->input->get('id');
 		header('Content-Type: application/json');
+
+		$orderID = $this->input->get('id');
+
 		// $this->output->enable_profiler(TRUE);
 
-		$queryDetails  = $this->cms->singleOrder($orderID);
-		$queryMessages = $this->api->getGeneralData('g_message', 'ORDER_ID', $orderID);
+		$queryMaster   = $this->api->getGeneralData('v_g_order_master', 'ORDER_ID', $orderID);
+
+		if ($queryMaster->num_rows() >= 1) {
+
+			$getData = array(
+				'order_no'			=> $queryMaster->row()->ORDER_NO,
+				'order_id'			=> $queryMaster->row()->ORDER_ID,
+				'order_query'		=> $queryMaster->row()->SPC_INSTRUCTION,
+				'order_date'		=> date('Y-m-d h:i', strtotime($queryMaster->row()->ORDER_DATE)),
+				'order_status'		=> $queryMaster->row()->ORDER_STATUS,
+				'order_updated'		=> $queryMaster->row()->UPDATED,
+				'member_name'		=> $queryMaster->row()->FIRST_NAME . ' ' . $queryMaster->row()->LAST_NAME,
+				'member_mobile'		=> $queryMaster->row()->PHONE,
+				'member_address'	=> $queryMaster->row()->ADDRESS,
+				'member_address2'	=> $queryMaster->row()->ADDRESS_2,
+				'member_country'	=> $queryMaster->row()->COUNTRY,
+				'member_province'	=> $queryMaster->row()->PROVINCE,
+				'member_zip'		=> $queryMaster->row()->ZIP,
+				'member_email'		=> $queryMaster->row()->EMAIL,
+				'shipping_name'		=> $queryMaster->row()->MEMBER_NAME,
+				'shipping_mobile'	=> $queryMaster->row()->MEMBER_PHONE,
+				'shipping_address'	=> $queryMaster->row()->ADDRESSO_1,
+				'shipping_address2'	=> $queryMaster->row()->ADDRESSO_2,
+				'shipping_country'	=> $queryMaster->row()->COUNTRY_ORDER,
+				'shipping_province'	=> $queryMaster->row()->STATE,
+				'shipping_zip'		=> $queryMaster->row()->ZIP_ORDER,
+				'shipping_email'	=> $queryMaster->row()->MEMBER_EMAIL,
+				'total_order'		=> number_format($queryMaster->row()->TOTAL_ORDER, 2, ',', '.'),
+				'total_postage'		=> number_format($queryMaster->row()->TOTAL_POSTAGE, 2, ',', '.'),
+				'amount'			=> number_format(($queryMaster->row()->TOTAL_ORDER + $queryMaster->row()->TOTAL_POSTAGE), 2, ',', '.')
+			);
+
+			$queryDetails = $this->api->getGeneralData('v_g_orders', 'ORDER_ID', $orderID);
+
+			foreach ($queryDetails->result() as $detail) {
+
+				$getDetails[] = array(
+					'product_name'		=> $detail->PRODUCT_NAME,
+					'product_id'		=> $detail->PRODUCT_ID,
+					'product_image'		=> base_url('assets/uploads/products/' . $detail->PRODUCT_IMAGE),
+					'product_quantity'	=> number_format($detail->PRODUCT_QUANTITY),
+					'product_weight'	=> number_format($detail->PRODUCT_WEIGHT, 2, ',', '.'),
+					'product_price'		=> number_format($detail->PRODUCT_PRICE, 2, ',', '.'),
+					'product_final'		=> number_format($detail->PRODUCT_FINAL_PRICE, 2, ',', '.'),
+					'product_postage'	=> number_format($detail->PRODUCT_POSTAGE, 2, ',', '.'),
+					'product_notes'		=> $detail->PRODUCT_NOTES,
+				);
+			}
+
+			$detailEncode = json_encode($getDetails);
+
+			$msg = array(
+				'status'    => 'success',
+				'code'      =>  200,
+				'message'   => array(
+					'data'		=> $getData,
+					'details'	=> json_decode($detailEncode)
+				),
+			);
 
 
-		if ($queryDetails->num_rows() >= 1) {
 			$updateData = array(
 				'VIEW_FLAG'	=> '1'
 			);
 
-			$queryUpdate = $this->api->updateGeneralData('g_order_master', 'ORDER_NO', $orderID, $updateData);
+			$this->api->updateGeneralData('g_order_master', 'ORDER_ID', $orderID, $updateData);
 		} else {
 
 			$msg = array(
@@ -277,10 +335,10 @@ class Orders_cms extends CI_Controller
 		$orderNo = $this->input->post('orderNo');
 
 		$queryMaster = $this->api->getGeneralData('g_order_master', 'ORDER_NO', $orderNo);
-		$queryDetail = $this->api->getGeneralData('g_order_detail', 'ORDER_NO', $orderNo);
+		$queryMaster = $this->api->getGeneralData('g_order_detail', 'ORDER_NO', $orderNo);
 
 		//1. Cek datanya ada atau engga
-		if ($queryMaster->num_rows() >= 1 && $queryDetail->num_rows() >= 1) {
+		if ($queryMaster->num_rows() >= 1 && $queryMaster->num_rows() >= 1) {
 
 			$this->db->trans_begin();
 

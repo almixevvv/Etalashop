@@ -58,14 +58,113 @@ $(document).on('click', '.buttonDelete', function() {
 //EoL 1
 
 //2. Show order details
-$('#exampleModal').on('show.bs.modal', function(event) {
+$('#order-details').on('show.bs.modal', function(event) {
 	var button = $(event.relatedTarget);
 
 	var orderno = button.data('orderno');
 	var rowid = button.data('rowid');
 	var target = document.getElementById(rowid);
 
-	target.removeAttribute('style');
+	$.get(baseUrl + 'CMS/Orders_cms/getDetails', { id: orderno }, function(resp) {
+		// console.log(resp);
+
+		//Delete previous product list
+		$('.temporary-loop').remove();
+		$('.productSeparator').not('.d-none').remove();
+
+		if (resp.code == 200) {
+			let response = resp.message.data;
+
+			//General Order
+			$('#orderNo').text(response.order_no);
+			$('#orderDate').text(response.order_date);
+			$('#orderDate').text(response.order_date);
+			$('#orderStatus').val(response.order_status);
+			$('#orderInstruction').val(response.order_status);
+			$('#orderUpdated').text(response.order_updated);
+			//EoL General Order
+
+			//Member Details
+			$('#memberName').empty();
+			$('#memberMobile').empty();
+			$('#memberAddress').empty();
+			$('#memberEmail').empty();
+
+			$('#memberName').append(response.member_name);
+			$('#memberMobile').append(response.member_mobile);
+			$('#memberAddress').append(
+				response.member_address +
+					'</br>' +
+					response.member_address2 +
+					'</br>' +
+					response.member_country +
+					' ' +
+					response.member_province +
+					' ' +
+					response.member_zip
+			);
+			$('#memberEmail').append(response.member_email);
+			//EoL Member Details
+
+			//Shipping Details
+			$('#shippingName').empty();
+			$('#shippingMobile').empty();
+			$('#shippingAddress').empty();
+			$('#shippingEmail').empty();
+
+			$('#shippingName').append(response.member_name);
+			$('#shippingMobile').append(response.member_mobile);
+			$('#shippingAddress').append(
+				response.member_address +
+					'</br>' +
+					response.member_address2 +
+					'</br>' +
+					response.member_country +
+					response.member_province +
+					response.member_zip
+			);
+			$('#shippingEmail').append(response.member_email);
+			//EoL Member Details
+
+			//Order Total Price
+			$('#productAmount').val(response.total_order);
+			$('#productPostage').val(response.total_postage);
+			$('#productTotal').val(response.amount);
+
+			//EoL Order Total Price
+
+			var $separator = $('.productSeparator').last().clone();
+
+			resp.message.details.forEach(function(index) {
+				// $('.productSeparator').not(':first').remove();
+
+				var $mainLoop = $('.original-loop').last().clone();
+
+				$mainLoop.addClass('temporary-loop').removeClass('d-none original-loop');
+				$separator.removeClass('d-none');
+
+				let $productImage = $mainLoop.find('.productImage');
+				let $productID = $mainLoop.find('.productID');
+				let $productName = $mainLoop.find('.productName');
+				let $productPrice = $mainLoop.find('.productPrice');
+				let $productQty = $mainLoop.find('.productQty');
+
+				$productImage.attr('src', index.product_image);
+				$productImage.attr('alt', index.product_name);
+
+				$productID.append(index.product_id);
+				$productName.append(index.product_name);
+				$productPrice.append('IDR ' + index.product_price);
+				$productQty.append(index.product_quantity);
+
+				$mainLoop.insertAfter('.original-loop');
+				$separator.insertAfter('.temporary-loop');
+			});
+		} else {
+			console.log('error');
+		}
+	});
+
 	// $('#' + rowid)
 	// console.log('Button Position ' + orderno);
 

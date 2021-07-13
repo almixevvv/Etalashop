@@ -9,12 +9,29 @@ class Seeding extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        header('Content-Type: application/json');
+        $this->output->enable_profiler(TRUE);
+        // header('Content-Type: application/json');
     }
 
     public function index()
     {
-        echo 'test';
+        // echo 'test';
+    }
+
+    public function seedOrderID()
+    {
+        $queryDetail  = $this->api->getGeneralList('g_order_detail');
+
+        foreach ($queryDetail->result() as $detail) {
+
+            $queryMaster = $this->api->getGeneralData('g_order_master', 'ORDER_NO', $detail->ORDER_NO);
+
+            $dataUpdate = array(
+                'ORDER_ID'  => $queryMaster->row()->ORDER_ID
+            );
+
+            $this->api->updateGeneralData('g_order_detail', 'ORDER_NO', $queryMaster->row()->ORDER_NO, $dataUpdate);
+        }
     }
 
     public function seedProducts()

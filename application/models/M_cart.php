@@ -9,7 +9,7 @@
         } else {
             $last_ads_id = intval(substr($ads_id, -6)) + 1;
         }
-        $new_ads_id = "KKU" . date("ym") . str_pad(strval($last_ads_id), 6, "0", STR_PAD_LEFT);
+        $new_ads_id = "ETS" . date("ym") . str_pad(strval($last_ads_id), 6, "0", STR_PAD_LEFT);
         return $new_ads_id;
     }
 

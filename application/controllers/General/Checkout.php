@@ -38,6 +38,7 @@ class Checkout extends CI_Controller
 		$memberID      	= $userData['USERID'];
 		$hashEmail		= sha1($userData['EMAIL']);
 		$genID          = $this->carts->generateID();
+		$orderID		= sha1($this->incube->generateID('20'));
 
 		$subtotal 		= 0;
 		$curPrice 		= 0;
@@ -69,25 +70,26 @@ class Checkout extends CI_Controller
 		//2. Insert transaction to database
 		$this->db->trans_start();
 
-		$data = array(
-			'ORDER_NO'     	=> $genID,
-			'ORDER_DATE'   	=> date('Y-m-d h:i:s'),
-			'MEMBER_ID'    	=> $memberID,
-			'MEMBER_NAME'  	=> $this->input->post('txt-name'),
-			'MEMBER_PHONE' 	=> $this->input->post('txt-phone'),
-			'MEMBER_EMAIL' 	=> $this->input->post('txt-email'),
-			'TOTAL_ORDER'  	=> $subtotal,
-			'TOTAL_POSTAGE'	=> $weightPrice,
-			'STATUS'       	=> 'NEW ORDER',
-			'ADDRESS_1'    	=> $this->input->post('txt-address-1'),
-			'ADDRESS_2'    	=> $this->input->post('txt-address-2'),
-			'COUNTRY'      	=> $this->input->post('txt-country'),
-			'ZIP'          	=> $this->input->post('txt-zip'),
-			'STATE'        	=> $this->input->post('txt-state'),
-			'SAVE_FLAG'	   	=> ($this->input->post('save-info') == 'on' ? 1 : 0)
-		);
+		// $data = array(
+		// 	'ORDER_NO'     	=> $genID,
+		// 	'ORDER_ID'		=> $orderID,
+		// 	'ORDER_DATE'   	=> date('Y-m-d h:i:s'),
+		// 	'MEMBER_ID'    	=> $memberID,
+		// 	'MEMBER_NAME'  	=> $this->input->post('txt-name'),
+		// 	'MEMBER_PHONE' 	=> $this->input->post('txt-phone'),
+		// 	'MEMBER_EMAIL' 	=> $this->input->post('txt-email'),
+		// 	'TOTAL_ORDER'  	=> $subtotal,
+		// 	'TOTAL_POSTAGE'	=> $weightPrice,
+		// 	'STATUS'       	=> 'NEW ORDER',
+		// 	'ADDRESS_1'    	=> $this->input->post('txt-address-1'),
+		// 	'ADDRESS_2'    	=> $this->input->post('txt-address-2'),
+		// 	'COUNTRY'      	=> $this->input->post('txt-country'),
+		// 	'ZIP'          	=> $this->input->post('txt-zip'),
+		// 	'STATE'        	=> $this->input->post('txt-state'),
+		// 	'SAVE_FLAG'	   	=> ($this->input->post('save-info') == 'on' ? 1 : 0)
+		// );
 
-		$this->api->insertGeneralData('g_order_master', $data);
+		// $this->api->insertGeneralData('g_order_master', $data);
 
 		//2.1 Loop data for inserting to order detail
 		foreach ($carts->result() as $carts) {
@@ -102,24 +104,25 @@ class Checkout extends CI_Controller
 
 			$finalPrice = ($carts->PRODUCT_PRICE == null ? 0 : $carts->PRODUCT_PRICE) + $curPrice;
 
-			$details = array(
-				'FLAG'            => (substr($carts->PRODUCT_ID, 1, 1) != 'P' ? '1' : '2'),
-				'ORDER_NO'        => $genID,
-				'PROD_ID'         => $carts->PRODUCT_ID,
-				'PROD_IMAGE'	  => $queryProduct->row()->IMAGES1,
-				'PROD_NAME'		  => $queryProduct->row()->PRODUCT_NAME,
-				'QUANTITY'        => $carts->PRODUCT_QUANTITY,
-				'WEIGHT'          => $carts->WEIGHT,
-				'PRICE'           => ($carts->PRODUCT_PRICE == null ? 0 : $carts->PRODUCT_PRICE),
-				'FINAL_PRICE'     => $finalPrice,
-				'POSTAGE'         => $curPrice,
-				'NOTES'           => $carts->PRODUCT_NOTES
-			);
+			// $details = array(
+			// 	'FLAG'            => (substr($carts->PRODUCT_ID, 1, 1) != 'P' ? '1' : '2'),
+			// 	'ORDER_NO'        => $genID,
+			// 	'ORDER_ID'	      => $orderID,
+			// 	'PROD_ID'         => $carts->PRODUCT_ID,
+			// 	'PROD_IMAGE'	  => $queryProduct->row()->IMAGES1,
+			// 	'PROD_NAME'		  => $queryProduct->row()->PRODUCT_NAME,
+			// 	'QUANTITY'        => $carts->PRODUCT_QUANTITY,
+			// 	'WEIGHT'          => $carts->WEIGHT,
+			// 	'PRICE'           => ($carts->PRODUCT_PRICE == null ? 0 : $carts->PRODUCT_PRICE),
+			// 	'FINAL_PRICE'     => $finalPrice,
+			// 	'POSTAGE'         => $curPrice,
+			// 	'NOTES'           => $carts->PRODUCT_NOTES
+			// );
 
-			$this->api->insertGeneralData('g_order_detail', $details);
+			// $this->api->insertGeneralData('g_order_detail', $details);
 
 			//2.1.3 Delete the items from cart 
-			$this->carts->updateCartFlag($hashEmail);
+			// $this->carts->updateCartFlag($hashEmail);
 			//EoL 2.1.3
 		}
 		//EoL 2.1
@@ -127,15 +130,15 @@ class Checkout extends CI_Controller
 		//EoL 2
 
 		//3. Validate the data
-		if ($this->db->trans_status() === FALSE) {
-			$this->db->trans_rollback();
-			$this->session->set_flashdata('inquiry', 'failed');
-			redirect(base_url());
-		} else {
-			$this->db->trans_commit();
-			$this->session->set_flashdata('inquiry', 'created');
-			redirect(base_url());
-		}
+		// if ($this->db->trans_status() === FALSE) {
+		// 	$this->db->trans_rollback();
+		// 	$this->session->set_flashdata('inquiry', 'failed');
+		// 	redirect(base_url());
+		// } else {
+		// 	$this->db->trans_commit();
+		// 	$this->session->set_flashdata('inquiry', 'created');
+		// 	redirect(base_url());
+		// }
 		//EoL 3
 	}
 
