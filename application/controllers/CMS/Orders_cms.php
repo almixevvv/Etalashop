@@ -203,7 +203,8 @@ class Orders_cms extends CI_Controller
 		$this->email->initialize($config);
 
 		$this->email->from('admin@kikikuku.com', 'Kikikuku Team');
-		$this->email->to($emailAddress);
+		//$this->email->to($emailAddress);
+		$this->email->to('hamzahaji1999@gmail.com');
 		$this->email->set_mailtype('html');
 
 		$message = $this->load->view('email-template/invoice-email', $data, true);

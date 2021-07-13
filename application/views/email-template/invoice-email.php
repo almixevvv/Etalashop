@@ -68,13 +68,13 @@
         </td>
       </tr>
     </table>
-<?php endforeach; ?>
+<?php endforeach; ?> 
 
     <hr>
 
     <center>
       <div style="font-weight: bold; font-size: 12px; margin-top: 1em;">
-        Order Details
+        ORDER DETAILS
       </div>
     </center>
 
@@ -102,30 +102,36 @@
   $totalPrice=0;
   $a=0;
   $counter = 1;
+  $harga_awal = 0;
+
   foreach($query->result() as $data): ?>
-    <?php $total = $data->QUANTITY * $data->FINAL_PRICE ; ?>
+    <?php  
+      $harga_awal = ($data->PRICE / $data->QUANTITY);
+    ?>
 
     
     <table>
       <tr> <!-- Product Desc -->
         <td height="10" width="900" style="text-align: left; padding: 4px;">
           <div style="margin-top: 0.5em; font-size: 12px; color: #666666"><?php echo $data->PROD_NAME;?></div>
-          <div style="font-size: 12px; color: #2db4d6; font-weight: bold;"><?php echo $data->QUANTITY;?></label> X <?php echo number_format($data->FINAL_PRICE,2);?></div>
+          <div style="font-size: 12px; color: #2db4d6; font-weight: bold;"><?php echo $data->QUANTITY;?></label> X <?php echo number_format($harga_awal,2);?></div>
         </td>
         <td height="10" width="400" style="text-align:right;padding: 4px;">
-          <div style="font-size: 12px; color: #666666"><?php echo number_format($total,2); ?></div>
+          <div style="font-size: 12px; color: #666666"><?php echo number_format($$data->PRICE,2); ?></div>
         </td>
       </tr>
     </table>
-
     <hr>
 
 <?php
   $counter++;
-  $product_amount=$product_amount+($data->FINAL_PRICE * $data->QUANTITY);
+  //$product_amount=$product_amount+($data->FINAL_PRICE * $data->QUANTITY);
+
+  $product_amount =  $product_amount+$data->PRICE;
   $totalPrice=$product_amount + $totalPostage;
   $a++;
-  endforeach; ?>
+  endforeach; 
+?>
 
     <table>
 
@@ -167,7 +173,7 @@
 
     <center>
       <div class="card-header" style="margin-top: 1em;margin-bottom:1em;background-color: #ffedc4;border: 1px solid #f0c465; color: #666666;padding-top: 2em;padding-bottom: 2em; font-size: 12px;">
-        Be sure not to inform evidence and payment data to any party except Kikikuku
+        Be sure not to inform evidence and payment data to any party except Etalashop
       </div>
     </center>
 
