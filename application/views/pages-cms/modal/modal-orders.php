@@ -1,14 +1,117 @@
 <style>
   textarea[name="spc_instruction"] {
-    height: 69px !important;
+    height: 63px !important;
   }
 
   .custom-select {
     width: 95%;
+    font-size: .8rem;
   }
 
-  #order-details+.font-weight-bold {
+  .md-textarea {
     font-size: .8rem;
+  }
+
+  .modal-body {
+    font-size: .8rem;
+  }
+
+  #boxMessage {
+    background: #e8e8e8;
+    max-height: 100%;
+    height: 260px;
+    overflow: auto;
+    margin-left: 0em;
+    border: 1px solid lightgrey;
+  }
+
+
+  .user-message-window {
+    height: auto;
+    position: relative;
+    border: 1px solid #2db4d6;
+    background-color: #fafafa;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 18px 20px;
+    width: 260px;
+
+  }
+
+  .admin-message-window {
+    height: auto;
+    position: relative;
+    border: 1px solid #2dd6a7;
+    background-color: #f0fffa;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 15px 20px;
+    width: 260px;
+  }
+
+  .tri-left.right-top:before {
+    content: ' ';
+    position: absolute;
+    width: 0;
+    height: 0;
+    left: auto;
+    right: -13px;
+    top: -1px;
+    bottom: auto;
+    border: 13px solid;
+    border-color: #2dd6a7 transparent transparent transparent;
+  }
+
+  .tri-left.right-top:after {
+    content: ' ';
+    position: absolute;
+    width: 0;
+    height: 0;
+    left: auto;
+    right: -11px;
+    top: 0px;
+    bottom: auto;
+    border: 12px solid;
+    border-color: #f0fffa #e6d9d900 #8c393900 #5f4b4b00;
+  }
+
+  .tri-right.left-top:before {
+    content: ' ';
+    position: absolute;
+    width: 0;
+    height: 0;
+    left: -14px;
+    right: auto;
+    top: -1px;
+    bottom: auto;
+    border: 13px solid;
+    border-color: #2db4d6 transparent transparent transparent;
+  }
+
+
+  .tri-right.left-top:after {
+    content: ' ';
+    position: absolute;
+    width: 0;
+    height: 0;
+    left: -12px;
+    right: auto;
+    top: -.5px;
+    bottom: auto;
+    border: 14px solid;
+    border-color: #fafafa transparent transparent transparent;
+  }
+
+  html {
+    overflow: scroll;
+    overflow-x: hidden;
+  }
+
+  ::-webkit-scrollbar {
+    width: 0;
+    /* Remove scrollbar space */
+    background: transparent;
+    /* Optional: just make scrollbar invisible */
   }
 </style>
 
@@ -138,7 +241,7 @@
           <!-- Member Detail -->
           <div class="row">
 
-            <div class="col-8">
+            <div class="col-7">
 
               <!-- Member Details -->
               <div class="member-details">
@@ -243,13 +346,62 @@
               <!-- EoL Shipping Details -->
 
             </div>
-            <div class="col-4">
-
-              <!-- Order Message Header -->
-              <span class="font-weight-bold text-uppercase primary-theme-color">messages</span>
-              <!-- EoL Order Message Header -->
+            <div class="col-5 pr-1 pl-0">
 
               <!-- Order Messages -->
+
+              <div class="col-12">
+                <div id="boxMessage" class="w-100 mb-2">
+
+                  <div class="user-message-window tri-right left-top">
+                    <div class="time-right" style="text-align: left; color: #2db4d6"><b>CUSTOMER</b>&nbsp 3213123</div>
+                    <div style="text-align: left;">d21d215124</div>
+                  </div>
+
+                  <div class="user-message-window tri-right left-top">
+                    <div class="time-right" style="text-align: left; color: #2db4d6"><b>CUSTOMER</b>&nbsp 3213123</div>
+                    <div style="text-align: left;">d21d215124</div>
+                  </div>
+
+                  <div class="user-message-window tri-right left-top">
+                    <div class="time-right" style="text-align: left; color: #2db4d6"><b>CUSTOMER</b>&nbsp 3213123</div>
+                    <div style="text-align: left;">d21d215124</div>
+                  </div>
+
+                  <div class="user-message-window tri-right left-top">
+                    <div class="time-right" style="text-align: left; color: #2db4d6"><b>CUSTOMER</b>&nbsp 3213123</div>
+                    <div style="text-align: left;">d21d215124</div>
+                  </div>
+
+                  <div class="admin-message-window tri-left right-top">
+                    <div class="time-right" style="text-align: right; color: #2dd6a7;">3123 <b>KIKIKUKU</b></div>
+                    <div style="text-align: right;">3123124213</div>
+                  </div>
+
+                </div>
+                <div class="row">
+                  <div class="col-12">
+                    <div id="boxTextarea">
+                      <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                          <span class="btn btn-primary" id="basic-addon2">Send</span>
+                        </div>
+                      </div>
+                      <!-- <div class="row">
+                        <div class="col-8">
+                          <textarea id="text_message" name="text_message" class="md-textarea form-control" rows="1" style="width: 270px; font-size: 11px;"></textarea>
+                        </div>
+                        <div class="col-4">
+                          <button type="button" class="btn btn-primary btn-sm" id="submitMessages" style="font-size: 12px; margin-left: 1em;">Send</button>
+                        </div>
+                      </div> -->
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
 
               <!-- EoL Order Messages -->
             </div>
@@ -364,8 +516,6 @@
                       <span class="font-weight-bold">Order Queries</span>
                     </div>
                     <div class="col-1">
-                      <span>:</span>
-
                     </div>
                     <div class="col-12 pt-2">
                       <textarea class="md-textarea form-control pt-2 productQueries" name="inquiry" id="inquiry" cols="30" rows="2"></textarea>
