@@ -56,7 +56,7 @@
                 <div class="row">
                   <div class="col-12">
                     <?php if ($master->IMAGE == '') { ?>
-                      <img style="width: 95%;" src="<?php echo base_url('assets/images/no-image.png') ?>">
+                      <img class="img-fluid"> src="<?php echo base_url('assets/images/no-image.png') ?>">
                     <?php } else { ?>
                       <img style="margin-left: 3em;width: 70%;" src="<?php echo base_url('assets/images/member-img/'.$master->IMAGE); ?>"> 
                     <?php } ?>
@@ -247,6 +247,7 @@
 <?php if ($this->session->userdata('password') == 'different') { ?>
   <script>
     swal.fire({
+      title : "Incorrect Password",
       text: "Incorrect password, please try enter your old password",
       type: "error",
       showCancelButton: true,
@@ -260,7 +261,8 @@
 <?php if ($this->session->userdata('password') == 'unknown_error') { ?>
   <script>
     swal.fire({
-      text: "ERROR - UNKNOWN ERROR",
+      title : "Unknown Error",
+      text: "Error - Unknown Error",
       type: "error",
       showCancelButton: true,
       cancelButtonColor: '#d33',
@@ -273,7 +275,8 @@
 <?php if ($this->session->userdata('password') == 'success') { ?>
   <script>
     swal.fire({
-      text: "SUCSESS UPDATE PASSWORD",
+      title : "Update Password",
+      text: "Success Update Password",
       type: "success",
       showCancelButton: true,
       cancelButtonColor: '#d33',
@@ -286,7 +289,8 @@
 <?php if ($this->session->userdata('phone') == 'success') { ?>
   <script>
     swal.fire({
-      text: "SUCSESS UPDATE PHONE NUMBER",
+      title : "Update Number",
+      text: "Success Update Phone Number",
       type: "success",
       showCancelButton: true,
       cancelButtonColor: '#d33',
@@ -299,7 +303,8 @@
 <?php if ($this->session->userdata('address') == 'success') { ?>
   <script>
     swal.fire({
-      text: "SUCSESS UPDATE PHONE NUMBER",
+      title : "Update Address",
+      text: "Success Update Address",
       type: "success",
       showCancelButton: true,
       cancelButtonColor: '#d33',
