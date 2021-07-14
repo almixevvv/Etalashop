@@ -1,6 +1,6 @@
 //1. BaseURL BUAT Javascript
 let getUrl = window.location;
-let baseUrl = getUrl.protocol + '//' + getUrl.host + '/' + getUrl.pathname.split('/')[1] + '/';
+let baseUrl = getUrl.protocol + '//' + getUrl.host + '/' + getUrl.pathname.split('/')[0] + '/';
 
 //2. Validasi form buat ngeliat yang kosong
 //2.1 Validasi Form Standard

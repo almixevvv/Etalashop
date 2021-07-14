@@ -7,7 +7,7 @@ class Checkout extends CI_Controller
 	{
 
 		parent::__construct();
-		// $this->output->enable_profiler(TRUE);
+		$this->output->enable_profiler(TRUE);
 	}
 
 	public function index()
@@ -38,6 +38,7 @@ class Checkout extends CI_Controller
 		$memberID      	= $userData['USERID'];
 		$hashEmail		= sha1($userData['EMAIL']);
 		$genID          = $this->carts->generateID();
+		$orderID		= sha1($this->incube->generateID('20'));
 
 		$subtotal 		= 0;
 		$curPrice 		= 0;
@@ -71,6 +72,7 @@ class Checkout extends CI_Controller
 
 		$data = array(
 			'ORDER_NO'     	=> $genID,
+			'ORDER_ID'		=> $orderID,
 			'ORDER_DATE'   	=> date('Y-m-d h:i:s'),
 			'MEMBER_ID'    	=> $memberID,
 			'MEMBER_NAME'  	=> $this->input->post('txt-name'),
@@ -96,15 +98,16 @@ class Checkout extends CI_Controller
 			//EoL 2.1.1
 
 			//2.1.2 Calculate the item weight & price
-			$curWeight   = $items->WEIGHT * $items->PRODUCT_QUANTITY;
+			$curWeight   = $carts->WEIGHT * $carts->PRODUCT_QUANTITY;
 			$curPrice    = $curWeight * WEIGHT_PRICE;
 			//EoL 2.1.2
 
-			$finalPrice = ($carts->PRODUCT_PRICE == null ? 0 : $carts->PRODUCT_PRICE) + $curPrice;
+			$finalPrice = $carts->PRODUCT_PRICE + $curPrice;
 
 			$details = array(
 				'FLAG'            => (substr($carts->PRODUCT_ID, 1, 1) != 'P' ? '1' : '2'),
 				'ORDER_NO'        => $genID,
+				'ORDER_ID'	      => $orderID,
 				'PROD_ID'         => $carts->PRODUCT_ID,
 				'PROD_IMAGE'	  => $queryProduct->row()->IMAGES1,
 				'PROD_NAME'		  => $queryProduct->row()->PRODUCT_NAME,

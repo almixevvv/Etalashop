@@ -1,10 +1,117 @@
 <style>
   textarea[name="spc_instruction"] {
-    height: 69px !important;
+    height: 63px !important;
   }
 
   .custom-select {
     width: 95%;
+    font-size: .8rem;
+  }
+
+  .md-textarea {
+    font-size: .8rem;
+  }
+
+  .modal-body {
+    font-size: .8rem;
+  }
+
+  #boxMessage {
+    background: #e8e8e8;
+    max-height: 100%;
+    height: 260px;
+    overflow: auto;
+    margin-left: 0em;
+    border: 1px solid lightgrey;
+  }
+
+
+  .user-message-window {
+    height: auto;
+    position: relative;
+    border: 1px solid #2db4d6;
+    background-color: #fafafa;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 18px 20px;
+    width: 260px;
+
+  }
+
+  .admin-message-window {
+    height: auto;
+    position: relative;
+    border: 1px solid #2dd6a7;
+    background-color: #f0fffa;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 15px 20px;
+    width: 260px;
+  }
+
+  .tri-left.right-top:before {
+    content: ' ';
+    position: absolute;
+    width: 0;
+    height: 0;
+    left: auto;
+    right: -13px;
+    top: -1px;
+    bottom: auto;
+    border: 13px solid;
+    border-color: #2dd6a7 transparent transparent transparent;
+  }
+
+  .tri-left.right-top:after {
+    content: ' ';
+    position: absolute;
+    width: 0;
+    height: 0;
+    left: auto;
+    right: -11px;
+    top: 0px;
+    bottom: auto;
+    border: 12px solid;
+    border-color: #f0fffa #e6d9d900 #8c393900 #5f4b4b00;
+  }
+
+  .tri-right.left-top:before {
+    content: ' ';
+    position: absolute;
+    width: 0;
+    height: 0;
+    left: -14px;
+    right: auto;
+    top: -1px;
+    bottom: auto;
+    border: 13px solid;
+    border-color: #2db4d6 transparent transparent transparent;
+  }
+
+
+  .tri-right.left-top:after {
+    content: ' ';
+    position: absolute;
+    width: 0;
+    height: 0;
+    left: -12px;
+    right: auto;
+    top: -.5px;
+    bottom: auto;
+    border: 14px solid;
+    border-color: #fafafa transparent transparent transparent;
+  }
+
+  html {
+    overflow: scroll;
+    overflow-x: hidden;
+  }
+
+  ::-webkit-scrollbar {
+    width: 0;
+    /* Remove scrollbar space */
+    background: transparent;
+    /* Optional: just make scrollbar invisible */
   }
 </style>
 
@@ -34,7 +141,7 @@
                 </div>
                 <div class="col-4 pl-0">
                   <span class="mr-2">:</span>
-                  <span class="primary-theme-color font-weight-bold">31239054</span>
+                  <span class="primary-theme-color font-weight-bold" id="orderNo">31239054</span>
                 </div>
 
                 <div class="col-6">
@@ -57,7 +164,7 @@
                     </div>
                     <div class="col-7 pl-0">
                       <span class="mr-2">:</span>
-                      <span class="primary-theme-color font-weight-bold">20-20-2021 09:00</span>
+                      <span class="primary-theme-color font-weight-bold" id="orderDate">20-20-2021 09:00</span>
                     </div>
                   </div>
                   <div class="row mt-2">
@@ -66,8 +173,8 @@
                     </div>
                     <div class="col-8 pl-0">
                       <div class="d-inline">
-                        <label for="order-status" style="margin-right: 4px;">:</label>
-                        <select class="custom-select" id="order-status" name="order-status">
+                        <label for="orderStatus" style="margin-right: 4px;">:</label>
+                        <select class="custom-select" id="orderStatus" name="order-status">
                           <option selected value="NEW ORDER">NEW ORDER</option>
                           <option value="UPDATED">UPDATED</option>
                           <option value="CONFIRMED">CONFIRMED</option>
@@ -80,7 +187,7 @@
                   </div>
                 </div>
                 <div class="col-6">
-                  <textarea name="spc_instruction" class="md-textarea form-control" rows="2" cols="50">SPESHAL</textarea>
+                  <textarea name="spc_instruction" class="md-textarea form-control" id="orderInstruction" rows="2" cols="50">SPESHAL</textarea>
                 </div>
               </div>
 
@@ -92,7 +199,7 @@
                     </div>
                     <div class="col-8 pl-0">
                       <span class="mr-2">:</span>
-                      <span class="font-weight-bold primary-theme-color">
+                      <span class="font-weight-bold primary-theme-color" id="orderUpdated">
                         20-20-2021 19:01 by Admin
                       </span>
                     </div>
@@ -134,7 +241,7 @@
           <!-- Member Detail -->
           <div class="row">
 
-            <div class="col-8">
+            <div class="col-7">
 
               <!-- Member Details -->
               <div class="member-details">
@@ -143,32 +250,28 @@
                     <span class="font-weight-bold text-capitalize">name</span>
                   </div>
                   <div class="col-4">
-                    <div>
+                    <div id="memberName">
                       <span class="mr-2">:</span>
-                      Bianda Fedia
                     </div>
                   </div>
                   <div class="col-2 pl-0">
                     <span class="font-weight-bold text-capitalize">Mobile</span>
                   </div>
                   <div class="col-3 px-0">
-                    <div>
+                    <div id="memberMobile">
                       <span class="mr-2">:</span>
-                      082299737991
                     </div>
                   </div>
                 </div>
 
                 <div class="row my-2">
-                  <div class="col-3 mr-0">
+                  <div class="col-3">
                     <div>
                       <span class="font-weight-bold text-capitalize">address</span>
-                      <span style="padding-left: 23px;">:</span>
                     </div>
                   </div>
-                  <div class="col-9 pl-0">
-                    <p class="mb-0" style="margin-left: -15px;">
-                      Pamulang Pedurenan Tengah </br> Manual update API </br>Polandia Tengah 198209 Polandia
+                  <div class="col-9">
+                    <p class="mb-0" style="margin-left: -45px;" id="memberAddress">
                     </p>
                   </div>
                 </div>
@@ -178,9 +281,8 @@
                     <span class="font-weight-bold text-capitalize">email</span>
                   </div>
                   <div class="col-10">
-                    <div>
+                    <div id="memberEmail">
                       <span class="mr-2">:</span>
-                      al.mixev@gmail.com
                     </div>
                   </div>
                 </div>
@@ -203,32 +305,28 @@
                     <span class="font-weight-bold text-capitalize">name</span>
                   </div>
                   <div class="col-4">
-                    <div>
+                    <div id="shippingName">
                       <span class="mr-2">:</span>
-                      Bianda Fedia
                     </div>
                   </div>
                   <div class="col-2 pl-0">
                     <span class="font-weight-bold text-capitalize">Mobile</span>
                   </div>
                   <div class="col-3 px-0">
-                    <div>
+                    <div id="shippingMobile">
                       <span class="mr-2">:</span>
-                      082299737991
                     </div>
                   </div>
                 </div>
 
                 <div class="row my-2">
-                  <div class="col-3 mr-0">
+                  <div class="col-3">
                     <div>
                       <span class="font-weight-bold text-capitalize">address</span>
-                      <span style="padding-left: 23px;">:</span>
                     </div>
                   </div>
-                  <div class="col-9 pl-0">
-                    <p class="mb-0" style="margin-left: -15px;">
-                      Pamulang Pedurenan Tengah </br> Manual update API </br>Polandia Tengah 198209 Polandia
+                  <div class="col-9">
+                    <p class="mb-0" style="margin-left: -45px;" id="shippingAddress">
                     </p>
                   </div>
                 </div>
@@ -238,9 +336,8 @@
                     <span class="font-weight-bold text-capitalize">email</span>
                   </div>
                   <div class="col-10">
-                    <div>
+                    <div id="shippingEmail">
                       <span class="mr-2">:</span>
-                      al.mixev@gmail.com
                     </div>
                   </div>
                 </div>
@@ -249,13 +346,62 @@
               <!-- EoL Shipping Details -->
 
             </div>
-            <div class="col-4">
-
-              <!-- Order Message Header -->
-              <span class="font-weight-bold text-uppercase primary-theme-color">messages</span>
-              <!-- EoL Order Message Header -->
+            <div class="col-5 pr-1 pl-0">
 
               <!-- Order Messages -->
+
+              <div class="col-12">
+                <div id="boxMessage" class="w-100 mb-2">
+
+                  <div class="user-message-window tri-right left-top">
+                    <div class="time-right" style="text-align: left; color: #2db4d6"><b>CUSTOMER</b>&nbsp 3213123</div>
+                    <div style="text-align: left;">d21d215124</div>
+                  </div>
+
+                  <div class="user-message-window tri-right left-top">
+                    <div class="time-right" style="text-align: left; color: #2db4d6"><b>CUSTOMER</b>&nbsp 3213123</div>
+                    <div style="text-align: left;">d21d215124</div>
+                  </div>
+
+                  <div class="user-message-window tri-right left-top">
+                    <div class="time-right" style="text-align: left; color: #2db4d6"><b>CUSTOMER</b>&nbsp 3213123</div>
+                    <div style="text-align: left;">d21d215124</div>
+                  </div>
+
+                  <div class="user-message-window tri-right left-top">
+                    <div class="time-right" style="text-align: left; color: #2db4d6"><b>CUSTOMER</b>&nbsp 3213123</div>
+                    <div style="text-align: left;">d21d215124</div>
+                  </div>
+
+                  <div class="admin-message-window tri-left right-top">
+                    <div class="time-right" style="text-align: right; color: #2dd6a7;">3123 <b>KIKIKUKU</b></div>
+                    <div style="text-align: right;">3123124213</div>
+                  </div>
+
+                </div>
+                <div class="row">
+                  <div class="col-12">
+                    <div id="boxTextarea">
+                      <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                          <span class="btn btn-primary" id="basic-addon2">Send</span>
+                        </div>
+                      </div>
+                      <!-- <div class="row">
+                        <div class="col-8">
+                          <textarea id="text_message" name="text_message" class="md-textarea form-control" rows="1" style="width: 270px; font-size: 11px;"></textarea>
+                        </div>
+                        <div class="col-4">
+                          <button type="button" class="btn btn-primary btn-sm" id="submitMessages" style="font-size: 12px; margin-left: 1em;">Send</button>
+                        </div>
+                      </div> -->
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
 
               <!-- EoL Order Messages -->
             </div>
@@ -290,12 +436,13 @@
 
             <div class="col-12 detail-loop">
 
-              <div class="row">
+              <!-- Main Loop Template -->
+              <div class="row original-loop d-none">
                 <!-- Detail Image -->
                 <div class="col-2">
 
                   <div class="p-2 border">
-                    <img src="<?= base_url('assets/uploads/products/0af9de3e0abb706d6053b87641605033.jpg'); ?>" alt="Product Alternative Title" class="img-fluid">
+                    <img class="img-fluid productImage">
                   </div>
 
                 </div>
@@ -315,10 +462,8 @@
                     <div class="col-5 pr-0">
                       <span class="font-weight-bold">Product ID</span>
                     </div>
-                    <div class="col-7">
-                      <p class="mb-0">
-                        <span class="mr-2">:</span>
-                        31920394
+                    <div class="col-7 px-0">
+                      <p class="mb-0 productID">
                       </p>
                     </div>
                   </div>
@@ -327,10 +472,8 @@
                     <div class="col-5 pr-0">
                       <span class="font-weight-bold">Product Name</span>
                     </div>
-                    <div class="col-7">
-                      <p class="mb-0">
-                        <span class="mr-2">:</span>
-                        31920394
+                    <div class="col-7 px-0">
+                      <p class="mb-0 productName">
                       </p>
                     </div>
                   </div>
@@ -339,10 +482,8 @@
                     <div class="col-5 pr-0">
                       <span class="font-weight-bold">Order Price</span>
                     </div>
-                    <div class="col-7">
-                      <p class="mb-0">
-                        <span class="mr-2">:</span>
-                        <?= number_format('1235312', 2, ',', '.'); ?>
+                    <div class="col-7 px-0">
+                      <p class="mb-0 productPrice">
                       </p>
                     </div>
                   </div>
@@ -351,10 +492,8 @@
                     <div class="col-5 pr-0">
                       <span class="font-weight-bold">Order Qty</span>
                     </div>
-                    <div class="col-7">
-                      <p class="mb-0">
-                        <span class="mr-2">:</span>
-                        <?= number_format('1235312', 2, ',', '.'); ?>
+                    <div class="col-7 px-0">
+                      <p class="mb-0 productQty">
                       </p>
                     </div>
                   </div>
@@ -377,11 +516,9 @@
                       <span class="font-weight-bold">Order Queries</span>
                     </div>
                     <div class="col-1">
-                      <span>:</span>
-
                     </div>
                     <div class="col-12 pt-2">
-                      <textarea class="md-textarea form-control pt-2" name="inquiry" id="inquiry" cols="30" rows="2"></textarea>
+                      <textarea class="md-textarea form-control pt-2 productQueries" name="inquiry" id="inquiry" cols="30" rows="2"></textarea>
                     </div>
                   </div>
 
@@ -389,119 +526,16 @@
                 <!-- EoL Detail Inquiry -->
               </div>
 
-              <div class="row">
+              <div class="row productSeparator d-none">
                 <div class="col-12">
                   <hr>
                 </div>
               </div>
-
-              <div class="row">
-                <!-- Detail Image -->
-                <div class="col-2">
-
-                  <div class="p-2 border">
-                    <img src="<?= base_url('assets/uploads/products/0af9de3e0abb706d6053b87641605033.jpg'); ?>" alt="Product Alternative Title" class="img-fluid">
-                  </div>
-
-                </div>
-                <!-- EoL Detail Image -->
-
-                <!-- Detail Info -->
-                <div class="col-5">
-
-                  <div class="row">
-                    <div class="col-12">
-                      <span class="font-weight-bold primary-theme-color text-uppercase">product info</span>
-                    </div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-5 pr-0">
-                      <span class="font-weight-bold">Product ID</span>
-                    </div>
-                    <div class="col-7">
-                      <p class="mb-0">
-                        <span class="mr-2">:</span>
-                        31920394
-                      </p>
-                    </div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-5 pr-0">
-                      <span class="font-weight-bold">Product Name</span>
-                    </div>
-                    <div class="col-7">
-                      <p class="mb-0">
-                        <span class="mr-2">:</span>
-                        31920394
-                      </p>
-                    </div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-5 pr-0">
-                      <span class="font-weight-bold">Order Price</span>
-                    </div>
-                    <div class="col-7">
-                      <p class="mb-0">
-                        <span class="mr-2">:</span>
-                        <?= number_format('1235312', 2, ',', '.'); ?>
-                      </p>
-                    </div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-5 pr-0">
-                      <span class="font-weight-bold">Order Qty</span>
-                    </div>
-                    <div class="col-7">
-                      <p class="mb-0">
-                        <span class="mr-2">:</span>
-                        <?= number_format('1235312', 2, ',', '.'); ?>
-                      </p>
-                    </div>
-                  </div>
-
-
-                </div>
-                <!-- EoL Detail Info -->
-
-                <!-- Detail Inquiry -->
-                <div class="col-5">
-
-                  <div class="col-12">
-                    <br>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-5">
-                      <span class="font-weight-bold">Order Queries</span>
-                    </div>
-                    <div class="col-1">
-                      <span>:</span>
-
-                    </div>
-                    <div class="col-12 pt-2">
-                      <textarea class="md-textarea form-control pt-2" name="inquiry" id="inquiry" cols="30" rows="2"></textarea>
-                    </div>
-                  </div>
-
-                </div>
-                <!-- EoL Detail Inquiry -->
-              </div>
+              <!-- EoL Main Loop Template -->
 
             </div>
 
           </div>
-
-          <!-- Detail Separator -->
-          <div class="row">
-            <div class="col-12 px-0 mx-0">
-              <hr class="my-4">
-            </div>
-          </div>
-          <!-- EoL Detail Separator -->
 
           <!-- Detail Pricing -->
           <div class="row">
@@ -509,7 +543,7 @@
               <span class="font-weight-bold text-capitalize pt-4">product amount</span>
             </div>
             <div class="col-4">
-              <input class="form-control" type="text" value="<?= number_format('20000', 2, ',', '.'); ?>" id="txtPrice" disabled>
+              <input id="productAmount" class="form-control text-right" type="text" value="<?= number_format('20000', 2, ',', '.'); ?>" id="txtPrice" disabled>
             </div>
           </div>
 
@@ -518,7 +552,7 @@
               <span class="font-weight-bold text-capitalize pt-4">shipping cost</span>
             </div>
             <div class="col-4">
-              <input class="form-control" type="text" value="<?= number_format('20000', 2, ',', '.'); ?>" id="txtPrice" disabled>
+              <input id="productPostage" class="form-control text-right" type="text" value="<?= number_format('20000', 2, ',', '.'); ?>" id="txtPrice" disabled>
             </div>
           </div>
 
@@ -527,7 +561,7 @@
               <span class="font-weight-bold text-capitalize pt-4">total</span>
             </div>
             <div class="col-4">
-              <input class="form-control" type="text" value="<?= number_format('20000', 2, ',', '.'); ?>" id="txtPrice" disabled>
+              <input id="productTotal" class="form-control text-right" type="text" value="<?= number_format('20000', 2, ',', '.'); ?>" id="txtPrice" disabled>
             </div>
           </div>
 
@@ -539,7 +573,7 @@
               </div>
             </div>
             <div class="col-12">
-              <textarea name="spc_instruction" class="md-textarea form-control" rows="2" cols="50">SPESHAL</textarea>
+              <textarea id="internalNotes" name="spc_instruction" class="md-textarea form-control" rows="2" cols="50">SPESHAL</textarea>
             </div>
           </div>
           <!-- EoL Detail Pricing -->

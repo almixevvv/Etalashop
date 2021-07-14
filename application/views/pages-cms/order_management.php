@@ -9,6 +9,10 @@
       color: white;
     }
 
+    .btn-outline-info>a {
+      font-size: .7rem;
+    }
+
     .new-order {
       background: linear-gradient(to top left, #ffffff 80%, #2dd6a8 100%);
     }
@@ -32,6 +36,10 @@
     }
 
     .action-button-text {
+      font-size: .8rem;
+    }
+
+    .card-body {
       font-size: .8rem;
     }
   </style>
@@ -234,7 +242,7 @@
                           <td>
                             <div class="row">
                               <div class="col-12">
-                                <button class="btn btn-info action-button-text w-100" type="button" data-toggle="modal" data-target="#order-details" data-orderno="<?= $dt->ORDER_NO; ?>" data-rowid="order_<?= $no; ?>">VIEW</button>
+                                <button class="btn btn-info action-button-text w-100" type="button" data-toggle="modal" data-target="#order-details" data-orderno="<?= $dt->ORDER_ID; ?>" data-rowid="order_<?= $no; ?>">VIEW</button>
                               </div>
                             </div>
                             <div class="mt-2 row">
@@ -270,7 +278,8 @@
 
   </div>
   <!-- EoL ORDER PART -->
-  <script src="<?= base_url('assets/incube-assets/orderManagement.1.0.js'); ?>"></script>
+  <script src="<?= base_url('assets/incube-assets/orderManagement.1.0.js?version=' . filemtime('./assets/incube-assets/orderManagement.1.0.js')); ?>"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
 
   <!-- Sticky Footer -->
   <footer class="sticky-footer">
