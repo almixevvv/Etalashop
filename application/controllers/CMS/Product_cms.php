@@ -136,7 +136,7 @@ class Product_cms extends CI_Controller
     public function add_product()
     {
         //Check if category
-        $queryCheck = $this->cms->getGeneralData('m_category', 'DESCRIPTION', $this->input->post('txtPRODCategory'));
+        $queryCheck = $this->api->getGeneralData('m_category', 'DESCRIPTION', $this->input->post('txtPRODCategory'));
 
         if ($queryCheck->num_rows() == 0) {
             //Invalid category ID
@@ -158,7 +158,7 @@ class Product_cms extends CI_Controller
                 'USER_ID'           => $this->session->userdata('id')
             );
 
-            $this->cms->insertGeneralData('g_product_master', $masterData);
+            $this->api->insertGeneralData('g_product_master', $masterData);
             //EoL Upload master data
 
             //2. Upload multiple quantities
@@ -179,7 +179,7 @@ class Product_cms extends CI_Controller
                     'CREATED'           => '',
                 );
 
-                $this->cms->insertGeneralData('g_product_quantity', $qtyData);
+                $this->api->insertGeneralData('g_product_quantity', $qtyData);
             }
             //EoL Upload Multiple Quantity
 
@@ -221,7 +221,7 @@ class Product_cms extends CI_Controller
                 'CREATED'           => date('Y-m-d h:i:s'),
             );
 
-            $this->cms->insertGeneralData('g_product_images', $imageData);
+            $this->api->insertGeneralData('g_product_images', $imageData);
             //EoL Upload Multiple Images
 
             $this->db->trans_complete();
@@ -242,7 +242,7 @@ class Product_cms extends CI_Controller
 
     public function edit_product()
     {
-        $queryCheck = $this->cms->getGeneralData('m_category', 'DESCRIPTION', $this->input->post('editPRODCategory'));
+        $queryCheck = $this->api->getGeneralData('m_category', 'DESCRIPTION', $this->input->post('editPRODCategory'));
 
         if ($queryCheck->num_rows() == 0) {
             //Invalid Category
@@ -264,7 +264,7 @@ class Product_cms extends CI_Controller
                 'USER_ID'           => $this->session->userdata('id')
             );
 
-            $this->cms->updateGeneralData('g_product_master', 'PRODUCT_ID', $this->input->post('editPRODID'),  $masterData);
+            $this->api->updateGeneralData('g_product_master', 'PRODUCT_ID', $this->input->post('editPRODID'),  $masterData);
             //EoL 1 
 
             // 2. Update Images 
@@ -309,7 +309,7 @@ class Product_cms extends CI_Controller
                     'CREATED'           => date('Y-m-d h:i:s'),
                 );
 
-                $this->cms->updateGeneralData('g_product_images', 'PRODUCT_ID', $this->input->post('editPRODID'),  $imageData);
+                $this->api->updateGeneralData('g_product_images', 'PRODUCT_ID', $this->input->post('editPRODID'),  $imageData);
                 //EoL 2.1
             }
             //EoL 2
@@ -321,7 +321,7 @@ class Product_cms extends CI_Controller
 
             $qtyCount = count($arrPrice);
 
-            $this->cms->deleteGeneralData('g_product_quantity', 'PRODUCT_ID', $this->input->post('editPRODID'));
+            $this->api->deleteGeneralData('g_product_quantity', 'PRODUCT_ID', $this->input->post('editPRODID'));
 
             for ($i = 0; $i < $qtyCount; $i++) {
 
@@ -334,7 +334,7 @@ class Product_cms extends CI_Controller
                     'UPDATED'           => date('Y-m-d h:i:s'),
                 );
 
-                $this->cms->insertGeneralData('g_product_quantity', $qtyData);
+                $this->api->insertGeneralData('g_product_quantity', $qtyData);
             }
             //EoL 3
 
@@ -366,9 +366,9 @@ class Product_cms extends CI_Controller
     {
         $id_product = $this->input->get('id');
 
-        $this->cms->deleteGeneralData('g_product_master', 'PRODUCT_ID', $id_product);
-        $this->cms->deleteGeneralData('g_product_images', 'PRODUCT_ID', $id_product);
-        $this->cms->deleteGeneralData('g_product_quantity', 'PRODUCT_ID', $id_product);
+        $this->api->deleteGeneralData('g_product_master', 'PRODUCT_ID', $id_product);
+        $this->api->deleteGeneralData('g_product_images', 'PRODUCT_ID', $id_product);
+        $this->api->deleteGeneralData('g_product_quantity', 'PRODUCT_ID', $id_product);
 
         redirect(base_url('cms/products'));
     }
