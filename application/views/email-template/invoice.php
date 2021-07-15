@@ -44,7 +44,7 @@
   <?php $totalPostage = $data->TOTAL_POSTAGE; ?>
 
   <center>
-    <?php echo form_open('Orders_cms/sendInvoice'); ?>
+    <?php echo form_open('CMS/Orders_cms/sendInvoice'); ?>
 
     <a style="text-decoration: none!important;" href="<?php echo base_url('cms/orders'); ?>">
       <button type="button" class="buttonBack">
@@ -217,8 +217,7 @@
       <tr>
         <!-- Shipping Cost -->
         <td height="10" width="900">
-          <div style="text-align: left; margin-top: 0.5em; font-size: 12px; color: #666666; ">Shipping Cost</div>
-          <div style="text-align: left; font-size: 12px; color: #2db4d6">(Not include shipping cost to outside Jakarta)</div>
+          <div style="text-align: left; margin-top: 0.5em; font-size: 12px; color: #666666; ">Shipping Cost</div> 
         </td>
         <td height="10" width="400">
           <div style="text-align: right;  font-size: 12px; color: #666666"><?php echo number_format($totalPostage, 2); ?></div>

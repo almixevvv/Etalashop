@@ -171,18 +171,18 @@ class Orders_cms extends CI_Controller
 		$this->cms->updateFlagInvoce($orderNo);
 		$this->load->library('email');
 
-		$config['protocol']    = 'smtp';
-		$config['smtp_host']   = 'mail.etalashop.com';
-		$config['smtp_user']   = 'admin@etalashop.com';
-		$config['smtp_pass']   = '^DNDfCfS)Ox!';
-		$config['smtp_port']   = 465;
-		$config['charset']     = 'utf-8';
-		$config['wordwrap']    = TRUE;
-		$config['mailtype']    = 'html';
+		// $config['protocol']    = 'smtp';
+		// $config['smtp_host']   = 'mail.etalashop.com';
+		// $config['smtp_user']   = 'admin@etalashop.com';
+		// $config['smtp_pass']   = '^DNDfCfS)Ox!';
+		// $config['smtp_port']   = 465;
+		// $config['charset']     = 'utf-8';
+		// $config['wordwrap']    = TRUE;
+		// $config['mailtype']    = 'html';
 
-		$this->email->initialize($config);
+		// $this->email->initialize($config); 
 
-		$this->email->from('admin@kikikuku.com', 'Kikikuku Team');
+		$this->email->from('admin@etalashop.com', 'Etalashop Team');
 		//$this->email->to($emailAddress);
 		$this->email->to('hamzahaji1999@gmail.com');
 		$this->email->set_mailtype('html');

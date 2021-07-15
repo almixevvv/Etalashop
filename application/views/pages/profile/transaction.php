@@ -26,6 +26,14 @@
     font-size: 14px;
     color: #b8b7b4;
   }
+
+  .btn-info{
+    min-width: 110px;
+  }
+
+  .wrap-transaction{
+    font-size: 12px;
+  }
 </style>
 
 
@@ -42,44 +50,41 @@
 
       <div class="trans-filter-container-right" id="trans-scrollbar">
 
-        <div class="trans-filter-button<?= ($this->input->get('transaction') == 'created' ? '-active' : ''); ?>">
+        <div class="btn-info trans-filter-button<?= ($this->input->get('transaction') == 'created' ? '-active' : ''); ?>">
           <a href="<?= ($this->input->get('transaction') == 'created' ? base_url('profile/transaction') : base_url('profile/transaction?transaction=created')); ?>">
-            <span class="text-uppercase <?= ($this->input->get('transaction') == 'created' ? 'trans-filter-active' : 'main-color'); ?>">Inquiry Created</span>
+            <span class="text-uppercase <?= ($this->input->get('transaction') == 'created' ? 'trans-filter-active' : 'main-color'); ?>">New Order</span>
           </a>
-        </div>
+        </div> 
 
-        <div class="trans-filter-button<?= ($this->input->get('transaction') == 'updated' ? '-active' : ''); ?>">
-          <a href="<?= ($this->input->get('transaction') == 'updated' ? base_url('profile/transaction') : base_url('profile/transaction?transaction=updated')); ?>">
-            <span class="text-uppercase <?= ($this->input->get('transaction') == 'updated' ? 'trans-filter-active' : 'main-color'); ?>">Inquiry Updated</span>
-          </a>
-        </div>
-
-        <div class="trans-filter-button<?= ($this->input->get('transaction') == 'confirmed' ? '-active' : ''); ?>">
+        <div class="btn-info trans-filter-button<?= ($this->input->get('transaction') == 'confirmed' ? '-active' : ''); ?>">
           <a href="<?= ($this->input->get('transaction') == 'confirmed' ? base_url('profile/transaction') : base_url('profile/transaction?transaction=confirmed')); ?>">
-            <span class="text-uppercase <?= ($this->input->get('transaction') == 'confirmed' ? 'trans-filter-active' : 'main-color'); ?>">Confirm Payment</span>
+            <span class="text-uppercase <?= ($this->input->get('transaction') == 'confirmed' ? 'trans-filter-active' : 'main-color'); ?>">Confirmed</span>
           </a>
-        </div>
+        </div> 
 
-
-        <div class="trans-filter-button<?= ($this->input->get('transaction') == 'paid' ? '-active' : ''); ?>">
-          <a href="<?= ($this->input->get('transaction') == 'paid' ? base_url('profile/transaction') : base_url('profile/transaction?transaction=paid')); ?>">
-            <span class="text-uppercase <?= ($this->input->get('transaction') == 'paid' ? 'trans-filter-active' : 'main-color'); ?>">Inquiry Paid</span>
+        <div class="btn-info trans-filter-button<?= ($this->input->get('transaction') == 'sent' ? '-active' : ''); ?>">
+          <a href="<?= ($this->input->get('transaction') == 'sent' ? base_url('profile/transaction') : base_url('profile/transaction?transaction=sent')); ?>">
+            <span class="text-uppercase <?= ($this->input->get('transaction') == 'sent' ? 'trans-filter-active' : 'main-color'); ?>">Sent</span>
           </a>
-        </div>
+        </div> 
 
+        <div class="btn-info trans-filter-button<?= ($this->input->get('transaction') == 'received' ? '-active' : ''); ?>">
+          <a href="<?= ($this->input->get('transaction') == 'received' ? base_url('profile/transaction') : base_url('profile/transaction?transaction=received')); ?>">
+            <span class="text-uppercase <?= ($this->input->get('transaction') == 'received' ? 'trans-filter-active' : 'main-color'); ?>">Received</span>
+          </a>
+        </div> 
 
-        <div class="trans-filter-button<?= ($this->input->get('transaction') == 'canceled' ? '-active' : ''); ?>">
+        <div class="btn-info trans-filter-button<?= ($this->input->get('transaction') == 'closed' ? '-active' : ''); ?>">
+          <a href="<?= ($this->input->get('transaction') == 'closed' ? base_url('profile/transaction') : base_url('profile/transaction?transaction=closed')); ?>">
+            <span class="text-uppercase <?= ($this->input->get('transaction') == 'closed' ? 'trans-filter-active' : 'main-color'); ?>">Closed</span>
+          </a>
+        </div> 
+
+        <div class="btn-info trans-filter-button<?= ($this->input->get('transaction') == 'canceled' ? '-active' : ''); ?>">
           <a href="<?= ($this->input->get('transaction') == 'canceled' ? base_url('profile/transaction') : base_url('profile/transaction?transaction=canceled')); ?>">
-            <span class="text-uppercase <?= ($this->input->get('transaction') == 'canceled' ? 'trans-filter-active' : 'main-color'); ?>">Inquiry Canceled</span>
+            <span class="text-uppercase <?= ($this->input->get('transaction') == 'canceled' ? 'trans-filter-active' : 'main-color'); ?>">Canceled</span>
           </a>
-        </div>
-
-
-        <div class="trans-filter-button<?= ($this->input->get('transaction') == 'done' ? '-active' : ''); ?>">
-          <a href="<?= ($this->input->get('transaction') == 'done' ? base_url('profile/transaction') : base_url('profile/transaction?transaction=done')); ?>">
-            <span class="text-uppercase <?= ($this->input->get('transaction') == 'done' ? 'trans-filter-active' : 'main-color'); ?>">Inquiry Done</span>
-          </a>
-        </div>
+        </div> 
 
       </div>
 
@@ -158,7 +163,7 @@
     <?php } else { ?>
 
       <?php foreach ($masterData->result() as $master) { ?>
-        <div class="trans-main-container">
+        <div class="trans-main-container wrap-transaction">
 
           <div class="row container-border-main">
             <div class="col-12">
@@ -329,9 +334,9 @@
                   </a>
                 </div>
 
-                <div class="trans-container-footer-right">
+               <!--  <div class="trans-container-footer-right">
                   <span><i class="fas fa-clipboard-list pr-2"></i> Order Detail</span>
-                </div>
+                </div> -->
 
                 <?php
                 //DONT'S SHOW THE PAYMENT BUTTON IF THE STATUS IS NEW ORDER AND UPDATED
