@@ -578,7 +578,10 @@
   <i class="fas fa-angle-up"></i>
 </a>
 
-<script src="<?= base_url('assets/incube-assets/general.js?version=' . filemtime('./assets/incube-assets/general.js')); ?>"></script>
+<script src="<?= base_url('assets/tinymce/tinymce.min.js'); ?>"></script>
+<script src="<?= base_url('assets/autocomplete/jquery.autocomplete.js'); ?>"></script>
+<link rel="stylesheet" href="<?= base_url('assets/autocomplete/autocomplete.css'); ?>">
+
 <script src="<?= base_url('assets/incube-assets/productFunction.js?version=' . filemtime('./assets/incube-assets/productFunction.js')); ?>"></script>
 
 <?php if ($this->session->userdata('inputError') == '0') { ?>

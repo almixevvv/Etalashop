@@ -5,27 +5,38 @@ class Product_cms extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        // $this->output->enable_profiler(TRUE);
+        $this->output->enable_profiler(TRUE);
     }
 
     public function index()
     {
-        $data['title'] = 'Product';
-        $data['page'] = 'Product';
+
+        $data['title']     = 'Product';
+        $data['page']      = 'Product';
 
         $data['new_order']      = $this->cms->select_order_new();
         $data['unview_order']   = $this->cms->select_order_unview();
         $data['product_master'] = $this->cms->getGeneralListGroup('v_g_products', 'PRODUCT_ID', 'USER_NAME');
 
-        $this->load->view('templates-cms/header', $data);
-        $this->load->view('templates-cms/navbar');
-        $this->load->view('pages-cms/product', $data);
-        $this->load->view('templates-cms/footer');
+        $dataSess = $this->session->userdata('cms_sess');
+
+        $data['sess_data']         = $this->session->userdata('cms_sess');
+
+        if (!isset($dataSess)) {
+            $this->load->view('templates-cms/header', $data);
+            $this->load->view('pages-cms/login');
+            $this->load->view('templates-cms/footer');
+        } else {
+            $this->load->view('templates-cms/header', $data);
+            $this->load->view('templates-cms/navbar');
+            $this->load->view('pages-cms/product', $data);
+            $this->load->view('templates-cms/footer');
+        }
     }
 
     public function get_product_detail()
     {
-        $getQty = $this->cms->getGeneralData('v_g_products', 'PRODUCT_ID', $this->input->post('idproduct'));
+        $getQty = $this->api->getGeneralData('v_g_products', 'PRODUCT_ID', $this->input->post('idproduct'));
 
         echo '
             <div class="row">

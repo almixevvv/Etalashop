@@ -138,6 +138,8 @@
   </form>
 
 </div>
+
+<script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="<?= CLIENT_KEY ?>"></script>
 <script type="text/javascript">
   //GET ORDER ID
   var orderID;

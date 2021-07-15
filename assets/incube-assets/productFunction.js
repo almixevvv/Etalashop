@@ -37,7 +37,7 @@ $('body').on('click', '.img-thumbnail', function(evt) {
 //4. Nampilin semua kategori dari DB
 var countries = [];
 
-$.get(baseUrl + 'API/getAllCategories', function(resp) {
+$.get(baseUrl + 'API/API/getAllCategories', function(resp) {
 	$.each(resp, function(_index, value) {
 		let ctgData;
 		ctgData = {
@@ -121,7 +121,7 @@ $('#addProductModal').on('show.bs.modal', function(event) {
 
 	//5.3 Auto generate PID
 	$.get(
-		baseUrl + 'API/generatePID',
+		baseUrl + 'API/API/generatePID',
 		{
 			key: 'c549303dcef12a687e9077a21e1a51fb67851efb'
 		},
@@ -269,7 +269,7 @@ $('#editProductModal').on('show.bs.modal', function(event) {
 
 	//6.1 Ambil detail product
 	$.get(
-		baseUrl + 'API/getProductDetail',
+		baseUrl + 'API/API/getProductDetail',
 		{
 			id: btnID
 		},

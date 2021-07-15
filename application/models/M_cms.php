@@ -441,6 +441,17 @@
         return $query;
     }
 
+    public function getGeneralListGroup($table, $group)
+    {
+        $this->db->select('*');
+        $this->db->from($table);
+        $this->db->group_by($group);
+
+        $query = $this->db->get();
+
+        return $query;
+    }
+
     function singleOrder($orderNo)
     {
 
