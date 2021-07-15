@@ -120,16 +120,17 @@
 <div class="modal fade" id="order-details" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">View Order Management</h4>
-        <button type="button" class="close" data-dismiss="modal">
-          <span aria-hidden="true">×</span><span class="sr-only">Close</span>
-        </button>
-      </div>
-      <div class="modal-body">
+
+      <form id="formOrder" action="<?= base_url('CMS/Orders_cms/updateOrder'); ?>">
+        <div class="modal-header">
+          <h4 class="modal-title">View Order Management</h4>
+          <button type="button" class="close" data-dismiss="modal">
+            <span aria-hidden="true">×</span><span class="sr-only">Close</span>
+          </button>
+        </div>
+        <div class="modal-body">
 
 
-        <form action="#">
 
           <!-- Detail Header -->
           <div class="row">
@@ -271,7 +272,7 @@
                     </div>
                   </div>
                   <div class="col-9">
-                    <p class="mb-0" style="margin-left: -45px;" id="memberAddress">
+                    <p class="mb-0" style="margin-left: -39px;" id="memberAddress">
                     </p>
                   </div>
                 </div>
@@ -326,7 +327,7 @@
                     </div>
                   </div>
                   <div class="col-9">
-                    <p class="mb-0" style="margin-left: -45px;" id="shippingAddress">
+                    <p class="mb-0" style="margin-left: -39px;" id="shippingAddress">
                     </p>
                   </div>
                 </div>
@@ -518,7 +519,7 @@
                     <div class="col-1">
                     </div>
                     <div class="col-12 pt-2">
-                      <textarea class="md-textarea form-control pt-2 productQueries" name="inquiry" id="inquiry" cols="30" rows="2"></textarea>
+                      <textarea readonly class="md-textarea form-control pt-2 productQueries" name="inquiry[]" cols="30" rows="2"></textarea>
                     </div>
                   </div>
 
@@ -578,14 +579,16 @@
           </div>
           <!-- EoL Detail Pricing -->
 
-        </form>
 
 
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default btn-info" id="btnSaveData">Save Data</button>
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-      </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-default btn-info" id="btnSaveData">Save Data</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+
+      </form>
+
     </div>
   </div>
 </div>

@@ -139,7 +139,7 @@ class M_profile extends CI_Model
 		$this->db->select('*');
 		$this->db->from('v_g_order_master');
 		$this->db->where('MEMBER_EMAIL', $email);
-		$this->db->order_by('ORDER_DATE', 'DESC');
+		$this->db->order_by('ORDER_NO', 'DESC');
 
 		$query = $this->db->get();
 

@@ -29,6 +29,8 @@ class API extends CI_Controller
 
             $queryUpdateMember = $this->api->updateGeneralData('g_member', 'ID', $members->ID, $queryUpdate);
         }
+
+        echo $queryUpdateMember;
     }
 
     public function generateMemberPassword()

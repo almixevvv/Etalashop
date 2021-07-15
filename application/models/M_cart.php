@@ -4,12 +4,16 @@
     function generateID()
     {
         $ads_id = $this->getiklanid();
+
         if ($ads_id == '0') {
             $last_ads_id = 1;
         } else {
+
             $last_ads_id = intval(substr($ads_id, -6)) + 1;
         }
+
         $new_ads_id = "ETS" . date("ym") . str_pad(strval($last_ads_id), 6, "0", STR_PAD_LEFT);
+
         return $new_ads_id;
     }
 

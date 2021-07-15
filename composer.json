@@ -11,10 +11,10 @@
 		"source": "https://github.com/bcit-ci/CodeIgniter"
 	},
 	"require": {
-		"php": "^7.2||^8.0",
 		"google/apiclient": "^2.10",
 		"mobiledetect/mobiledetectlib": "^2.8",
-		"fzaninotto/faker": "^1.9"
+		"fzaninotto/faker": "^1.9",
+		"midtrans/midtrans-php": "^2.4"
 	},
 	"suggest": {
 		"paragonie/random_compat": "Provides better randomness in PHP 5.x"

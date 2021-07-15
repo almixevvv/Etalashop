@@ -93,6 +93,18 @@ class Cart extends CI_Controller
 			else {
 				$hashID 	= sha1($userData['EMAIL']);
 
+
+				//URUTAN STATUS BARU
+				//PAS CHECKOUT LANGSUNG MODAL BAYAR
+
+				//URUTAN YANG BARU
+				// NEW ORDER (PAID)
+				// CONFIRMED
+				// SENT - DI UPDATE ETALASHOP
+				// RECEIVED - DI UPDATE MEMBER
+				// CLOSED/CANCELED
+
+
 				$itemArray = array(
 					'CART_ID' 			=> $hashID,
 					'PRODUCT_ID' 		=> $this->input->post('product-id'),
@@ -121,7 +133,7 @@ class Cart extends CI_Controller
 				}
 				//EoL 2.2.1
 
-				redirect('mycart'); 
+				redirect('mycart');
 			}
 			//EoL 2.2
 		}
@@ -131,8 +143,8 @@ class Cart extends CI_Controller
 	public function removeCartItem()
 	{
 
-		 $productID = $this->input->get('rowid');
-		 $productBuyer = $this->input->get('buyer');
+		$productID = $this->input->get('rowid');
+		$productBuyer = $this->input->get('buyer');
 
 		if ($this->carts->deleteItem($productID, $productBuyer)) {
 			return true;

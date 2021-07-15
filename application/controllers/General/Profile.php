@@ -1,5 +1,5 @@
 <?php if (!defined("BASEPATH")) exit("Hack Attempt");
-class Profile extends CI_Controller 
+class Profile extends CI_Controller
 {
 	public function __construct()
 	{
@@ -229,18 +229,18 @@ class Profile extends CI_Controller
 
 		$defaultPath = '/assets/images/member-img/' . $_FILES['file_name']['name'];
 		$ext = pathinfo($_FILES['file_name']['name'], PATHINFO_EXTENSION);
-   
-		 $new_name=sha1($_FILES['file_name']['name'].date('YmdHis'));
-		$id = $this->input->post('id'); 
+
+		$new_name = sha1($_FILES['file_name']['name'] . date('YmdHis'));
+		$id = $this->input->post('id');
 		$file  = $defaultPath;
 
-		
+
 
 		$config['upload_path']   = './assets/images/member-img/';
 		$config['allowed_types'] = 'jpeg|jpg|png';
 		$config['file_name']         = $new_name;
 
-		$file_name=$new_name.".".$ext;
+		$file_name = $new_name . "." . $ext;
 		$this->profiles->updatePhoto($id, $file_name);
 
 		$this->upload->initialize($config);

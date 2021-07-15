@@ -148,9 +148,11 @@ $('#order-details').on('show.bs.modal', function(event) {
 				let $productName = $mainLoop.find('.productName');
 				let $productPrice = $mainLoop.find('.productPrice');
 				let $productQty = $mainLoop.find('.productQty');
+				let $productNotes = $mainLoop.find('.productQueries');
 
 				$productImage.attr('src', index.product_image);
 				$productImage.attr('alt', index.product_name);
+				$productNotes.text(index.product_notes);
 
 				$productID.append(index.product_id);
 				$productName.append(index.product_name);
@@ -164,6 +166,14 @@ $('#order-details').on('show.bs.modal', function(event) {
 			console.log('error');
 		}
 	});
+
+	//2. Submit the form
+	$('#formOrder').submit(function(evt) {
+		// evt.preventDefault();
+		// console.log('submit');
+	});
+
+	//EoL 2
 
 	// $('#' + rowid)
 	// console.log('Button Position ' + orderno);
