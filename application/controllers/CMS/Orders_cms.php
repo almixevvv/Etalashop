@@ -81,6 +81,44 @@ class Orders_cms extends CI_Controller
 		$this->load->view('pages-cms/modal-checkpayment', $data);
 	}
 
+
+
+	public function updateOrder()
+	{
+		$orderNo = $this->input->get('order-no');
+		$status = $this->input->get('order-status');
+		$prevstatus = $this->input->get('prev_status');
+		$finalPrice = $this->input->get('final_price');
+		$importCost = $this->input->get('import_cost');
+		$spc_instruction = $this->input->get('spc_instruction');
+		$internal_notes = $this->input->get('internal_notes');
+		$updated = date('Y-m-d H:i:s');
+
+		// $quantity = $this->input->post('txt_quantity');
+		$counter = $this->input->get('loop-counter');
+
+		for ($i = 1; $i < $counter; $i++) {
+			// echo 'hiyaiyahiay'.' '.$i;
+			$currentPrice = $this->input->get('final_price_' . $i);
+			$currentID = $this->input->get('product_name_' . $i);
+			$currentQuantity = $this->input->get('txt_quantity_' . $i);
+
+			$this->cms->updateFinalPrice($currentID, $currentPrice, $currentQuantity);
+			// echo 'satu beres';
+		}
+
+		$this->cms->updateOrderStatus($orderNo, $status, $importCost, $updated, $spc_instruction, $internal_notes);
+
+		// $this->load-> AutoSendInvoice($orderNo);
+		if ($status == 'UPDATED' && $prevstatus == 'NEW ORDER') {
+			$this->AutoSendInvoice($orderNo);
+		}
+
+		redirect('cms/orders');
+	}
+
+
+
 	public function adminSendMessages()
 	{
 		$ORDER_ID = $this->input->post('id');
@@ -133,18 +171,18 @@ class Orders_cms extends CI_Controller
 		$this->cms->updateFlagInvoce($orderNo);
 		$this->load->library('email');
 
-		$config['protocol']    = 'smtp';
-		$config['smtp_host']   = 'mail.etalashop.com';
-		$config['smtp_user']   = 'admin@etalashop.com';
-		$config['smtp_pass']   = '^DNDfCfS)Ox!';
-		$config['smtp_port']   = 465;
-		$config['charset']     = 'utf-8';
-		$config['wordwrap']    = TRUE;
-		$config['mailtype']    = 'html';
+		// $config['protocol']    = 'smtp';
+		// $config['smtp_host']   = 'mail.etalashop.com';
+		// $config['smtp_user']   = 'admin@etalashop.com';
+		// $config['smtp_pass']   = '^DNDfCfS)Ox!';
+		// $config['smtp_port']   = 465;
+		// $config['charset']     = 'utf-8';
+		// $config['wordwrap']    = TRUE;
+		// $config['mailtype']    = 'html';
 
-		$this->email->initialize($config);
+		// $this->email->initialize($config); 
 
-		$this->email->from('admin@kikikuku.com', 'Kikikuku Team');
+		$this->email->from('admin@etalashop.com', 'Etalashop Team');
 		//$this->email->to($emailAddress);
 		$this->email->to('hamzahaji1999@gmail.com');
 		$this->email->set_mailtype('html');
@@ -203,46 +241,6 @@ class Orders_cms extends CI_Controller
 		// redirect(base_url('cms/orders'));
 
 	}
-
-
-	public function updateOrder()
-	{
-
-
-
-
-		// $orderNo = $this->input->get('order-no');
-		// $status = $this->input->get('order-status');
-		// $prevstatus = $this->input->get('prev_status');
-		// $finalPrice = $this->input->get('final_price');
-		// $importCost = $this->input->get('import_cost');
-		// $spc_instruction = $this->input->get('spc_instruction');
-		// $internal_notes = $this->input->get('internal_notes');
-		// $updated = date('Y-m-d H:i:s');
-
-		// // $quantity = $this->input->post('txt_quantity');
-		// $counter = $this->input->get('loop-counter');
-
-		// for ($i = 1; $i < $counter; $i++) {
-		// 	// echo 'hiyaiyahiay'.' '.$i;
-		// 	$currentPrice = $this->input->get('final_price_' . $i);
-		// 	$currentID = $this->input->get('product_name_' . $i);
-		// 	$currentQuantity = $this->input->get('txt_quantity_' . $i);
-
-		// 	$this->cms->updateFinalPrice($currentID, $currentPrice, $currentQuantity);
-		// 	// echo 'satu beres';
-		// }
-
-		// $this->cms->updateOrderStatus($orderNo, $status, $importCost, $updated, $spc_instruction, $internal_notes);
-
-		// // $this->load-> AutoSendInvoice($orderNo);
-		// if ($status == 'UPDATED' && $prevstatus == 'NEW ORDER') {
-		// 	$this->AutoSendInvoice($orderNo);
-		// }
-
-		// redirect('cms/orders');
-	}
-
 
 	public function getDetails()
 	{

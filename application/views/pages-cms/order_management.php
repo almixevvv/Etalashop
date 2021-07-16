@@ -86,13 +86,7 @@
                     <a class="filter-menu text-uppercase font-weight-bold" href="#">
                       new order
                     </a>
-                  </button>
-
-                  <button class="btn btn-outline-info rounded flex-grow-1 mx-3 ">
-                    <a class="filter-menu text-uppercase font-weight-bold" href="#">
-                      updated
-                    </a>
-                  </button>
+                  </button> 
 
                   <button class="btn btn-outline-info rounded flex-grow-1 mx-3 ">
                     <a class="filter-menu text-uppercase font-weight-bold" href="#">
@@ -102,7 +96,19 @@
 
                   <button class="btn btn-outline-info rounded flex-grow-1 mx-3 ">
                     <a class="filter-menu text-uppercase font-weight-bold" href="#">
-                      paid
+                      sent
+                    </a>
+                  </button>
+
+                  <button class="btn btn-outline-info rounded flex-grow-1 mx-3 ">
+                    <a class="filter-menu text-uppercase font-weight-bold" href="#">
+                      received
+                    </a>
+                  </button>
+
+                  <button class="btn btn-outline-info rounded flex-grow-1 mx-3 ">
+                    <a class="filter-menu text-uppercase font-weight-bold" href="#">
+                      closed
                     </a>
                   </button>
 
@@ -110,13 +116,7 @@
                     <a class="filter-menu text-uppercase font-weight-bold" href="#">
                       canceled
                     </a>
-                  </button>
-
-                  <button class="btn btn-outline-info rounded flex-grow-1 mx-3 ">
-                    <a class="filter-menu text-uppercase font-weight-bold" href="#">
-                      done
-                    </a>
-                  </button>
+                  </button> 
 
                 </div>
               </div>
@@ -173,12 +173,22 @@
                               <div class="col-12">
                                 <span class="font-weight-bold" id="status-color"><?= $dt->STATUS_ORDER; ?></span>
                               </div>
-                            </div>
 
 
                             <div class="row mt-2 <?= ($dt->STATUS_ORDER != 'NEW ORDER' ? 'd-block' : 'd-none'); ?>">
                               <div class="col-12">
                                 <button class="btn btn-warning btn-invoice text-white" type="button" data-orderid="<?= $dt->ORDER_NO; ?>">Send Invoice</button>
+                                <span class="<?= ($dt->FLAG == 1 ? 'd-block' : 'd-none'); ?>">
+                                  <i class="pl-2 fas fa-clipboard-check secondary-theme-color"></i>
+                                  <label class="secondary-theme-color">Invoice Sent!</label>
+                                </span>
+                              </div>
+                            </div>
+
+
+                            <div class="row mt-2">
+                              <div class="col-12">
+                                <a href="<?= base_url('CMS/Orders_cms/invoice?id=' . $dt->ORDER_NO); ?>" target="_blank" class="btn btn-warning btn-invoice text-white ml-3" data-orderid="<?= $dt->ORDER_NO; ?>">Send Invoice</a>
                                 <span class="<?= ($dt->FLAG == 1 ? 'd-block' : 'd-none'); ?>">
                                   <i class="pl-2 fas fa-clipboard-check secondary-theme-color"></i>
                                   <label class="secondary-theme-color">Invoice Sent!</label>
