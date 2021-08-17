@@ -7,7 +7,7 @@ class Checkout extends CI_Controller
 	{
 
 		parent::__construct();
-		$this->output->enable_profiler(TRUE);
+		// $this->output->enable_profiler(TRUE);
 	}
 
 	public function index()
@@ -22,7 +22,7 @@ class Checkout extends CI_Controller
 		}
 
 		$data['userEmail'] = $sessionData['EMAIL'];
-		$data['userID']    = $sessionData['USERID'];
+		$data['userID']    = $sessionData['REC_ID'];
 		$data['saveFlag']  = $this->profiles->getMemberDetails($sessionData['EMAIL']);
 		$data['userData']  = $sessionData;
 
@@ -80,7 +80,7 @@ class Checkout extends CI_Controller
 			'MEMBER_EMAIL' 	=> $this->input->post('txt-email'),
 			'TOTAL_ORDER'  	=> $subtotal,
 			'TOTAL_POSTAGE'	=> $weightPrice,
-			'STATUS'       	=> 'NEW ORDER',
+			'STATUS'       	=> 'PAID',
 			'ADDRESS_1'    	=> $this->input->post('txt-address-1'),
 			'ADDRESS_2'    	=> $this->input->post('txt-address-2'),
 			'COUNTRY'      	=> $this->input->post('txt-country'),

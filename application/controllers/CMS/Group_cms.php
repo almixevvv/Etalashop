@@ -13,7 +13,7 @@ class Group_cms extends CI_Controller {
 		$data['page'] = 'User Group';
 
 		$data['content'] = $this->cms->select_group();
-
+		$data['sess_data'] 		= $this->session->userdata('cms_sess');
 		$data['new_order'] = $this->cms->select_order_new();
 		$data['unview_order'] = $this->cms->select_order_unview();
 
@@ -149,4 +149,3 @@ class Group_cms extends CI_Controller {
 		// redirect('cms/margin');
 	}
 }
-?>

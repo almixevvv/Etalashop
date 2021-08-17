@@ -235,7 +235,7 @@ class Product_cms extends CI_Controller
                 $this->db->trans_commit();
                 $this->session->set_flashdata('inputError', '0');
 
-                redirect(base_url('cms/products'));
+                redirect(base_url('cms/product'));
             }
         }
     }

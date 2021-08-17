@@ -1,3 +1,17 @@
+<style>
+  .pop-wrapper>.container-fluid {
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+
+  @media only screen and (min-width: 568px) and (min-height: 510px) and (max-height: 639px) {
+    .app-container {
+      max-width: 475px;
+    }
+  }
+</style>
+
+
 <div class="checkout-container">
 
   <div class="row d-none d-md-block d-lg-block d-xl-block">
@@ -129,9 +143,8 @@
 
       </div>
 
-      <div class="d-none" id="id-user"><?php echo $userID; ?></div>
-      <div class="d-none" id="email-user"><?php echo $userEmail; ?></div>
-      <div class="d-none" id="order-id"></div>
+      <input type="hidden" name="id-user" value="<?= $userID; ?>" readonly />
+      <input type="hidden" name="email-user" value="<?= $userEmail; ?>" readonly />
 
     </div>
 
@@ -140,50 +153,126 @@
 </div>
 
 <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="<?= CLIENT_KEY ?>"></script>
+<script src="<?= base_url('assets/incube-assets/general.js?version=' . filemtime('./assets/incube-assets/general.js')); ?>"></script>
 <script type="text/javascript">
-  //GET ORDER ID
-  var orderID;
-
-  // Example starter JavaScript for disabling form submissions if there are invalid fields
-  (function() {
-    'use strict';
-    window.addEventListener('load', function() {
-      // Fetch all the forms we want to apply custom Bootstrap validation styles to
-      var forms = document.getElementsByClassName('needs-validation');
-      // Loop over them and prevent submission
-      var validation = Array.prototype.filter.call(forms, function(form) {
-        form.addEventListener('submit', function(event) {
-          if (form.checkValidity() === false) {
-            event.preventDefault();
-            event.stopPropagation();
-          }
-          form.classList.add('was-validated');
-        }, false);
-      });
-    }, false);
-  })();
-
-  const form = document.querySelector('#add-inquiry-form');
-
-  form.addEventListener('submit', (e) => {
-    if (form.checkValidity() === true) {
-      // e.preventDefault();
-      let email = $('#email-user').text();
-      let id = $('#id-user').text();
-
-      db.collection('inquiries').add({
-        action: 'submitInquiry',
-        customerEmail: email,
-        customerID: id,
-        orderID: orderID,
-        flag: '1'
-      }).then(() => {
-        form.submit();
-      });
-    }
-  });
-
   var email = $('#email-user').text();
+
+
+  $('#add-inquiry-form').on('submit', function(ext) {
+
+    ext.preventDefault();
+
+    $('.btn-kku').attr('disabled', true);
+
+    let userEmail = $('#email-user').text();
+    let emptyCheck = checkEmptyEditForm(this);
+
+    let formInput = $('#add-inquiry-form input, select, checkbox');
+
+    console.log(emptyCheck);
+
+    if (emptyCheck) {
+
+      $.post(baseUrl + 'API/Midtrans/createSnap', formInput.serialize(), function(resp) {
+
+        console.log(resp);
+        if (resp.code == 200) {
+          snap.pay(resp.message, {
+
+            onSuccess: function(result) {
+
+              console.log(result);
+
+              $('.btn-kku').attr('disabled', false);
+
+              swal
+                .fire({
+                  title: 'Payment Complete',
+                  text: 'Payment Process Completed',
+                  type: 'success',
+                  showCancelButton: false,
+                  confirmButtonText: 'Confirm',
+                  confirmButtonColor: '#3085d6'
+                })
+                .then((result) => {
+                  if (result.value) {
+                    // window.location.replace(baseUrl);
+                    $('#add-inquiry-form')[0].submit();
+                  }
+                });
+
+            },
+            onPending: function(result) {
+              console.log(result);
+              $('.btn-kku').attr('disabled', false);
+
+              swal
+                .fire({
+                  title: 'Payment Pending',
+                  text: 'Payment Process on Hold',
+                  type: 'warning',
+                  showCancelButton: false,
+                  confirmButtonText: 'Confirm',
+                  confirmButtonColor: '#3085d6'
+                })
+                .then((result) => {
+                  if (result.value) {
+                    window.location.replace(baseUrl + 'profile/transaction');
+                  }
+                });
+
+            },
+            onError: function(result) {
+              console.log(result);
+              $('.btn-kku').attr('disabled', false);
+
+              swal
+                .fire({
+                  title: 'Payment Failed',
+                  text: 'Something Wrong While Processing Your Payment, Please Try Again Later',
+                  type: 'error',
+                  showCancelButton: false,
+                  confirmButtonText: 'Confirm',
+                  confirmButtonColor: '#3085d6'
+                });
+
+            }
+          });
+
+        } else if (resp.code == 204) {
+
+          swal
+            .fire({
+              title: 'Payment Failed',
+              text: 'Something Wrong While Processing Your Payment, Please Try Again Later',
+              type: 'error',
+              showCancelButton: false,
+              confirmButtonText: 'Confirm',
+              confirmButtonColor: '#3085d6'
+            });
+
+        } else if (resp.code == 504) {
+
+          swal
+            .fire({
+              title: 'Payment Failed',
+              text: 'Something Wrong While Processing Your Payment, Please Try Again Later',
+              type: 'error',
+              showCancelButton: false,
+              confirmButtonText: 'Confirm',
+              confirmButtonColor: '#3085d6'
+            });
+
+        }
+
+      });
+
+
+    } else if (!emptyCheck) {
+      $('.btn-kku').attr('disabled', false);
+    }
+
+  });
 
   $('#clear-data').on('change', function() {
 
@@ -199,7 +288,7 @@
       $('input[name=txt-zip]').val('');
     } else {
 
-      $.post(baseUrl + 'API/getMemberData', {
+      $.post(baseUrl + 'API/API/getMemberData', {
         email: email
       }, function(resp) {
         $.each(resp, function(index, value) {

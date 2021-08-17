@@ -10,6 +10,39 @@ class Incube
 		$this->CI->load->model('M_product', 'product');
 	}
 
+	public function basicAuth()
+	{
+		if (!isset($_GET['key']) || strlen($_GET['key']) == 0) {
+
+			$msg = array(
+				'code'      => 401,
+				'status'    => 200,
+				'message'   => 'invalid user',
+			);
+			return json_encode($msg);
+			exit; // Be safe and ensure no other content is returned.
+		}
+
+		if ($_GET['key'] == API_KEY) {
+			$msg = array(
+				'code'      => 200,
+				'status'    => 200,
+				'message'   => 'access granted',
+			);
+
+			return json_encode($msg);
+		} else {
+			$msg = array(
+				'code'      => 401,
+				'status'    => 200,
+				'message'   => 'incorrect key',
+			);
+
+
+			return json_encode($msg);
+		}
+	}
+
 	public function generateID($length)
 	{
 		$randomSalt = md5(uniqid(rand(), true));

@@ -223,6 +223,10 @@
 <?php } ?>
 
 <script type="text/javascript">
+	const getUrl = window.location;
+	const baseUrl = getUrl.protocol + '//' + getUrl.host + '/' + getUrl.pathname.split('/')[0];
+
+
 	$('#datepicker').datepicker({
 		uiLibrary: 'bootstrap4'
 	});
@@ -258,13 +262,15 @@
 
 			$("#uEmail").removeClass("is-invalid").addClass("is-valid");
 
-			$.get(baseUrl + 'Register/checkExistingEmail', {
+			$.get(baseUrl + 'General/Register/checkExistingEmail', {
 				email: email
 			}, function(resp) {
-				if (result === 'existing') {
-					$('#uEmail').removeClass("is-valid").addClass("is-invalid");
-				} else {
+				if (resp.status == true) {
 					$("#uEmail").removeClass("is-invalid").addClass("is-valid");
+					$('.btn-kku').attr('disabled', false);
+				} else if (resp.status == false) {
+					$('#uEmail').removeClass("is-valid").addClass("is-invalid");
+					$('.btn-kku').attr('disabled', true);
 				}
 			});
 

@@ -52,15 +52,89 @@ class Register extends CI_Controller
 
 	public function checkExistingEmail()
 	{
+		// $this->output->enable_profiler(TRUE);
+		header('Content-Type: application/json');
 
 		$userEmail = $this->input->get('email');
 
-		$userQuery = $this->user->checkExistingEmail($userEmail);
+		$this->db->select('*')
+			->from('g_member')
+			->where('EMAIL', $userEmail);
 
-		if ($userQuery->num_rows() > 0) {
-			echo "existing";
+		$userQuery = $this->db->get();
+
+		if ($userQuery->num_rows() == 0) {
+			echo json_encode(array(
+				'code'		=> 204,
+				'message'	=> 0,
+				'status'	=> true
+			));
 		} else {
-			echo "false";
+			echo json_encode(array(
+				'code'		=> 200,
+				'message'	=> $userQuery->num_rows(),
+				'status'	=> false
+			));
+		}
+	}
+
+	public function verification()
+	{
+		// $this->output->enable_profiler(TRUE);
+		// header('Content-Type: application/json');
+
+		$email 		= $this->input->get('email');
+		$emailHash 	= sha1($email);
+
+		$this->db->select('*')
+			->from('g_member')
+			->where('HASH', $emailHash);
+
+		$query = $this->db->get();
+
+		if ($query->num_rows() == 0) {
+			echo json_encode(array(
+				'code'		=> 204,
+				'message'	=> 'invalid hash'
+			));
+
+			$this->session->set_flashdata('verification', 'invalid');
+			redirect(base_url('home'));
+
+			return;
+		} else {
+
+			if ($query->row()->STATUS == 'ACTIVE') {
+				echo json_encode(array(
+					'code'		=> 202,
+					'message'	=> 'already activated'
+				));
+
+				$this->session->set_flashdata('verification', 'existing');
+				redirect(base_url('home'));
+
+				return;
+			} else {
+				$update = $this->user->updateStatus($email);
+
+				if ($update) {
+					echo json_encode(array(
+						'code'		=> 200,
+						'message'	=> 'successful'
+					));
+
+					$this->session->set_flashdata('verification', 'success');
+					redirect(base_url('home'));
+				} else {
+					echo json_encode(array(
+						'code'		=> 400,
+						'message'	=> 'unkown error'
+					));
+
+					$this->session->set_flashdata('verification', 'db_error');
+					redirect(base_url('home'));
+				}
+			}
 		}
 	}
 
@@ -142,34 +216,11 @@ class Register extends CI_Controller
 
 			if ($this->email->send()) {
 				$this->session->set_flashdata('verification', 'pending');
-				redirect(base_url('home'));
+				// redirect(base_url('home'));
 			}
 		} else {
 			$this->session->set_flashdata('verification', 'error');
-			redirect(base_url('home'));
-		}
-	}
-
-	public function verification()
-	{
-
-		$hash = $this->input->get('key');
-		$email = $this->input->get('email');
-
-		$emailHash = sha1($email);
-
-		$query = $this->user->verifyAccount($emailHash);
-
-		if ($query->num_rows() > 0) {
-			$update = $this->user->updateStatus($email);
-			if ($update) {
-				//Account verified
-				echo 'success';
-			} else {
-				echo 'error';
-			}
-		} else {
-			echo 'verified';
+			// redirect(base_url('home'));
 		}
 	}
 }

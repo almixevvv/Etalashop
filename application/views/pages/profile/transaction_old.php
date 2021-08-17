@@ -502,8 +502,8 @@
             } else {
                 snap.pay(resp.message.token, {
                     onSuccess: function(result) {
-                        console.log('success');
-                        console.log(result);
+                        // console.log('success');
+                        // console.log(result);
                         $.post(baseUrl + 'API/finishPayment', {
                             data: result,
                             key: 'c549303dcef12a687e9077a21e1a51fb67851efb'

@@ -94,16 +94,6 @@ class Cart extends CI_Controller
 				$hashID 	= sha1($userData['EMAIL']);
 
 
-				//URUTAN STATUS BARU
-				//PAS CHECKOUT LANGSUNG MODAL BAYAR
-
-				//URUTAN YANG BARU
-				// NEW ORDER (PAID)
-				// CONFIRMED
-				// SENT - DI UPDATE ETALASHOP
-				// RECEIVED - DI UPDATE MEMBER
-				// CLOSED/CANCELED
-
 
 				$itemArray = array(
 					'CART_ID' 			=> $hashID,

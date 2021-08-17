@@ -11,6 +11,7 @@
 		$this->db->select('*');
 		$this->db->from($table);
 		$this->db->group_by($group);
+		$this->db->order_by('RAND()');
 
 		$query = $this->db->get();
 

@@ -1,4 +1,4 @@
-<div class="login-container"> 
+<div class="login-container">
 
 	<?php if ($this->input->get('refer') != null) : ?>
 		<form method="POST" action="<?php echo base_url('General/Login/login_user?refer=' . $this->input->get('refer')); ?>" class="needs-validation" novalidate>
@@ -98,13 +98,13 @@
 			</div> -->
 
 					<!-- GMAIL LOGIN BUTTON -->
-					<div class="row">
+					<!-- <div class="row">
 						<div class="col-12">
 							<div class="d-flex justify-content-center">
 								<button onclick="location.href = '<?php echo $googleURL; ?>';" id="gmail-button" type="button"><i class="fab fa-google"></i>Login with Gmail</button>
 							</div>
 						</div>
-					</div>
+					</div> -->
 
 
 				</div>

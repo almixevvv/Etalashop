@@ -79,55 +79,6 @@ class API extends CI_Controller
         echo json_encode($msg);
     }
 
-    public function index()
-    {
-        $apiKey = $this->input->get('key');
-        if (isset($apiKey)) {
-
-            if ($apiKey != API_KEY) {
-
-                $msg = array(
-                    'status'    => 'ok',
-                    'code'      => 204,
-                    'message'   => 'invalid api key',
-                );
-            }
-        } else {
-            $msg = array(
-                'status'    => 'ok',
-                'code'      => 204,
-                'message'   => 'incomplete api parameter',
-            );
-        }
-
-        echo json_encode($msg);
-    }
-
-    public function getProductDetail()
-    {
-        $queryProduct = $this->api->getGeneralData('v_g_products', 'PRODUCT_ID', $this->input->get('id'));
-
-        $tmpData = json_encode($queryProduct->result());
-
-        echo $tmpData;
-    }
-
-    public function getAllCategories()
-    {
-        $queryProduct = $this->api->getGeneralData('m_category', 'PARENT !=', '0');
-
-        foreach ($queryProduct->result() as $rows) {
-            $tmpData[] = array(
-                'value' => $rows->LINK,
-                'data'  => $rows->NAME
-            );
-        }
-
-        $tmpData = json_encode($tmpData);
-
-        echo $tmpData;
-    }
-
     public function getMemberData()
     {
         $userData = $this->api->getGeneralData('g_member', 'EMAIL', $this->input->post('email'));

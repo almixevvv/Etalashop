@@ -15,7 +15,7 @@ $route['register'] = 'General/Register';
 $route['social'] = 'General/Login/social';
 $route['account'] = 'General/account/view';
 $route['register/verification'] = 'General/Register/input';
-$route['verification'] = 'Home/index';
+$route['verification'] = 'General/Register/verification';
 
 /* User Profile Part */
 $route['profile/transaction'] = 'General/Profile/transaction';

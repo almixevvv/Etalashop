@@ -1,26 +1,29 @@
-<?php if(!defined("BASEPATH")) exit("Hack Attempt");
-class User_cms extends CI_Controller {
-	public function index(){
+<?php if (!defined("BASEPATH")) exit("Hack Attempt");
+class User_cms extends CI_Controller
+{
+	public function index()
+	{
 
 		$data['title'] = 'User Account';
 
 		$this->load->model('M_cms', 'cms');
 		$this->load->helper('form');
-		
+
 		$data['page'] = 'User Account';
 
 		$data['content'] = $this->cms->select_user();
-
+		$data['sess_data'] 		= $this->session->userdata('cms_sess');
 		$data['new_order'] = $this->cms->select_order_new();
 		$data['unview_order'] = $this->cms->select_order_unview();
 
-  		$this->load->view('templates-cms/header', $data);
-        $this->load->view('templates-cms/navbar');
-        $this->load->view('pages-cms/user_account');
-        $this->load->view('templates-cms/footer');
+		$this->load->view('templates-cms/header', $data);
+		$this->load->view('templates-cms/navbar');
+		$this->load->view('pages-cms/user_account');
+		$this->load->view('templates-cms/footer');
 	}
 
-	public function getAccount() {
+	public function getAccount()
+	{
 
 		//$this->output->enable_profiler(TRUE);
 		// echo 'masuk';
@@ -33,11 +36,12 @@ class User_cms extends CI_Controller {
 		$data['content'] = $this->M_cms->singleUser($id);
 		$data['group'] = $this->M_cms->select_group();
 
- 		$this->load->view('pages-cms/modal-edit-user', $data);
- 		//exit;
+		$this->load->view('pages-cms/modal-edit-user', $data);
+		//exit;
 	}
 
-	public function updateAccount(){
+	public function updateAccount()
+	{
 
 		// $this->output->enable_profiler(TRUE);
 		// echo "masuk";
@@ -55,7 +59,8 @@ class User_cms extends CI_Controller {
 		redirect('cms/user');
 	}
 
-	public function getAddAccount() {
+	public function getAddAccount()
+	{
 		// $this->output->enable_profiler(TRUE);
 		// echo 'masuk';
 		$this->load->helper('form');
@@ -63,10 +68,11 @@ class User_cms extends CI_Controller {
 		$this->load->model('M_cms');
 		$data['group'] = $this->M_cms->select_group();
 
- 		$this->load->view('pages-cms/modal-add-account',$data);
+		$this->load->view('pages-cms/modal-add-account', $data);
 	}
 
-	public function addAccount(){
+	public function addAccount()
+	{
 
 		// $this->output->enable_profiler(TRUE);
 		$this->load->library('upload');
@@ -82,14 +88,14 @@ class User_cms extends CI_Controller {
 		$hashPassword = sha1($password);
 
 		$data = array(
-            'ID'  => $id,
-            'NAME' => $name,
-            'GROUP_ID' => $group,
-            'PASS' => $hashPassword,
-            'STATUS' => $status
-        );
+			'ID'  => $id,
+			'NAME' => $name,
+			'GROUP_ID' => $group,
+			'PASS' => $hashPassword,
+			'STATUS' => $status
+		);
 
-        //UPDATE PREVIOUS DATA
+		//UPDATE PREVIOUS DATA
 
 		$this->M_cms->addUser($data);
 		$this->session->set_flashdata('adduser', 'adduser');
@@ -97,18 +103,17 @@ class User_cms extends CI_Controller {
 		redirect('cms/user');
 	}
 
-	public function deleteAccount(){
+	public function deleteAccount()
+	{
 
 		$this->output->enable_profiler(TRUE);
 
 		$this->load->model('M_cms');
-		
+
 		$recID = $this->input->post('id');
-		
+
 		$this->M_cms->delete_user($recID, 's_user');
 
 		// redirect('cms/margin');
 	}
-	
 }
-?>

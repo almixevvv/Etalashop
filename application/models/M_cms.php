@@ -643,6 +643,14 @@
         $this->db->update('g_rate', $data);
     }
 
+    function insertGeneralData($table, $data)
+    {
+
+        $queryInsert = $this->db->insert($table, $data);
+
+        return $queryInsert;
+    }
+
     function insert_margin($data)
     {
         $insert = $this->db->insert('g_convert', $data);

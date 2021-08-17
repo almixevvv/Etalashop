@@ -10,6 +10,7 @@ class Banner_cms extends CI_Controller {
 		
 		$data['content'] = $this->cms->select_banner();
 		$data['page'] = 'Banner List';
+		$data['sess_data'] 		= $this->session->userdata('cms_sess');
 
 		$data['new_order'] = $this->cms->select_order_new();
 		$data['unview_order'] = $this->cms->select_order_unview();		
@@ -20,4 +21,3 @@ class Banner_cms extends CI_Controller {
         $this->load->view('templates-cms/footer');
 	}
 }
-?>

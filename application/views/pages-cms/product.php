@@ -195,9 +195,9 @@
                     <td>
                       <div class="row">
                         <div class="col-12">
-                          <div class="w-100">
+                          <div class="w-100 d-flex justify-content-center">
                             <a class="thumbnail" href="#" data-toggle="modal" data-image-id="" data-image="<?= (strpos($dt->IMAGES1, 'http') === false ? base_url('assets/uploads/products/' . $dt->IMAGES1) : $dt->IMAGES1); ?>" data-target="#image-gallery">
-                              <img class="img-fluid img-thumbnail" style="width:100%; max-height: 200px" src="<?= (strpos($dt->IMAGES1, 'http') === false ? base_url('assets/uploads/products/' . $dt->IMAGES1) : $dt->IMAGES1); ?>" alt="<?= $dt->PRODUCT_NAME; ?>" onError="this.onerror=null;this.src='<?= base_url('assets/images/no-image-icon.png') ?>'">
+                              <img class="img-fluid img-thumbnail" style="max-height: 200px" src="<?= (strpos($dt->IMAGES1, 'http') === false ? base_url('assets/uploads/products/' . $dt->IMAGES1) : $dt->IMAGES1); ?>" alt="<?= $dt->PRODUCT_NAME; ?>" onError="this.onerror=null;this.src='<?= base_url('assets/images/no-image-icon.png') ?>'">
                             </a>
                           </div>
                         </div>
@@ -206,21 +206,21 @@
                         <div class="col-4">
                           <div class="w-100">
                             <a class="thumbnail" href="#" data-toggle="modal" data-image-id="" data-image="<?= (strpos($dt->IMAGES2, 'http') === false ? base_url('assets/uploads/products/' . $dt->IMAGES2) : $dt->IMAGES2); ?>" data-target="#image-gallery">
-                              <img class="img-fluid img-thumbnail" style="width:100%; max-height: 200px" src="<?= (strpos($dt->IMAGES2, 'http') === false ? base_url('assets/uploads/products/' . $dt->IMAGES2) : $dt->IMAGES2); ?>" alt="<?= $dt->PRODUCT_NAME; ?>" onError="this.onerror=null;this.src='<?= base_url('assets/images/no-image-icon.png') ?>'">
+                              <img class="img-fluid img-thumbnail" style="max-height: 200px" src="<?= (strpos($dt->IMAGES2, 'http') === false ? base_url('assets/uploads/products/' . $dt->IMAGES2) : $dt->IMAGES2); ?>" alt="<?= $dt->PRODUCT_NAME; ?>" onError="this.onerror=null;this.src='<?= base_url('assets/images/no-image-icon.png') ?>'">
                             </a>
                           </div>
                         </div>
                         <div class="col-4">
                           <div class="w-100">
                             <a class="thumbnail" href="#" data-toggle="modal" data-image-id="" data-title="" data-image="<?= (strpos($dt->IMAGES3, 'http') === false ? base_url('assets/uploads/products/' . $dt->IMAGES3) : $dt->IMAGES3); ?>" data-target="#image-gallery">
-                              <img class="img-fluid img-thumbnail" style="width:100%; max-height: 200px" src="<?= (strpos($dt->IMAGES3, 'http') === false ? base_url('assets/uploads/products/' . $dt->IMAGES3) : $dt->IMAGES3); ?>" alt="<?= $dt->PRODUCT_NAME; ?>" onError="this.onerror=null;this.src='<?= base_url('assets/images/no-image-icon.png') ?>'">
+                              <img class="img-fluid img-thumbnail" style="max-height: 200px" src="<?= (strpos($dt->IMAGES3, 'http') === false ? base_url('assets/uploads/products/' . $dt->IMAGES3) : $dt->IMAGES3); ?>" alt="<?= $dt->PRODUCT_NAME; ?>" onError="this.onerror=null;this.src='<?= base_url('assets/images/no-image-icon.png') ?>'">
                             </a>
                           </div>
                         </div>
                         <div class="col-4">
                           <div class="w-100">
                             <a class="thumbnail" href="#" data-toggle="modal" data-image-id="" data-title="" data-image="<?= (strpos($dt->IMAGES4, 'http') === false ? base_url('assets/uploads/products/' . $dt->IMAGES4) : $dt->IMAGES4); ?>" data-target="#image-gallery">
-                              <img class="img-fluid img-thumbnail" style="width:100%; max-height: 200px" src="<?= (strpos($dt->IMAGES4, 'http') === false ? base_url('assets/uploads/products/' . $dt->IMAGES4) : $dt->IMAGES4); ?>" alt="<?= $dt->PRODUCT_NAME; ?>" onError="this.onerror=null;this.src='<?= base_url('assets/images/no-image-icon.png') ?>'">
+                              <img class="img-fluid img-thumbnail" style="max-height: 200px" src="<?= (strpos($dt->IMAGES4, 'http') === false ? base_url('assets/uploads/products/' . $dt->IMAGES4) : $dt->IMAGES4); ?>" alt="<?= $dt->PRODUCT_NAME; ?>" onError="this.onerror=null;this.src='<?= base_url('assets/images/no-image-icon.png') ?>'">
                             </a>
                           </div>
                         </div>

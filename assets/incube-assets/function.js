@@ -31,9 +31,11 @@ function checkPassword() {
 
 	if (input.match(upperCase) && input.match(lowerCase) && input.match(numbers) && input.length > 8) {
 		$('#uPass').removeClass('is-invalid').addClass('is-valid');
+		$('.btn-kku').attr('disabled', false);
 	} else {
 		$('#uPass').removeClass('is-valid').addClass('is-invalid');
 		$('#uPass2').removeClass('is-valid').addClass('is-invalid');
+		$('.btn-kku').attr('disabled', true);
 	}
 }
 
@@ -238,12 +240,6 @@ function zipCodeVerification() {
 		}
 	});
 }
-
-/* 
-	11. Base Url
-*/
-const getUrl = window.location;
-const baseUrl = getUrl.protocol + '//' + getUrl.host + '/' + getUrl.pathname.split('/')[0];
 
 /*
 	12. Quantity Verification

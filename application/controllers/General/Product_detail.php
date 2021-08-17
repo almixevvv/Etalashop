@@ -21,7 +21,43 @@ class Product_detail extends CI_Controller
             $this->load->view('templates/footer', $data);
         } else {
             //2. Kalo ada data
-            $productTitle = $data['dataproduct']->row()->PRODUCT_NAME;
+
+            //2.1 Tampilin data secara random
+            $this->db->select('*')
+                ->from('g_product_master')
+                ->order_by('RAND()')
+                ->limit(5);
+
+            $queryProduct = $this->db->get();
+
+            foreach ($queryProduct->result() as $result) {
+
+                $this->db->select('*')
+                    ->from('g_product_quantity')
+                    ->where('PRODUCT_ID', $result->PRODUCT_ID)
+                    ->order_by('QUANTITY_MIN')
+                    ->limit(1);
+
+                $queryQuantity = $this->db->get();
+
+                $this->db->select('*')
+                    ->from('g_product_images')
+                    ->where('PRODUCT_ID', $result->PRODUCT_ID);
+
+                $queryImages = $this->db->get();
+
+                $productList[] = array(
+                    'ID'                => $result->PRODUCT_ID,
+                    'TITLE'             => $result->PRODUCT_NAME,
+                    'PICTURE'           => base_url('assets/uploads/products/' . $queryImages->row()->IMAGES1),
+                    'START_QUANTITY'    => $queryQuantity->row()->QUANTITY_MIN,
+                    'PRICE'             => $queryQuantity->row()->QUANTITY_PRICE
+                );
+            }
+            //EoL 2.1
+
+            $productTitle        = $data['dataproduct']->row()->PRODUCT_NAME;
+            $data['recomended']  = $productList;
             $data['productName'] =  ucwords($productTitle);
 
             $this->load->view('templates/header', $data);

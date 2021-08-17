@@ -221,6 +221,7 @@ class Profile extends CI_Controller
 		}
 	}
 
+
 	public function updatePhoto()
 	{
 		$this->output->enable_profiler(TRUE);
@@ -248,7 +249,13 @@ class Profile extends CI_Controller
 		if (!$this->upload->do_upload('file_name')) {
 			echo $this->upload->display_errors();
 		} else {
-			$this->upload->data();
+			$uploadFile = $this->upload->data();
+
+			$sessQuery = $this->session->userdata('user_data');
+			$sessQuery['IMAGE'] = $uploadFile['file_name'];
+
+			$this->session->set_userdata('user_data', $sessQuery);
+
 			redirect('profile/myprofile');
 			// $this->set('showModal',true);
 		}

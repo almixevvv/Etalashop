@@ -44,74 +44,74 @@ class Seeding extends CI_Controller
 
             for ($i = 0; $i < 10; $i++) {
 
-                echo $i;
-
-                // $rowID = $faker->md5;
+                $rowID = $faker->md5;
 
 
-                // $injectMaster = array(
-                //     'PRODUCT_ID'        => substr($rowID, 0, 10),
-                //     'PRODUCT_NAME'      => ucwords($faker->bs),
-                //     'SKU'               => $faker->numerify('SKU-#####-####-##'),
-                //     'CATEGORY'          => (string) $this->seedCategory(),
-                //     'CREATED'           => date('Y-m-d h:i:s'),
-                //     'STATUS'            => 'ACTIVE',
-                //     'USER_ID'           => 'ADMIN',
-                //     'PRODUCT_DETAIL'    => '<p>' . $faker->realText(190, 2) . '</p>'
-                // );
+                $injectMaster = array(
+                    'PRODUCT_ID'        => substr($rowID, 0, 10),
+                    'PRODUCT_NAME'      => ucwords($faker->bs),
+                    'SKU'               => $faker->numerify('SKU-#####-####-##'),
+                    'CATEGORY'          => (string) $this->seedCategory(),
+                    'CREATED'           => date('Y-m-d h:i:s'),
+                    'STATUS'            => 'ACTIVE',
+                    'USER_ID'           => 'ADMIN',
+                    'PRODUCT_DETAIL'    => '<p>' . $faker->realText(190, 2) . '</p>'
+                );
 
-                // $injectImage = array(
-                //     'PRODUCT_ID'        => substr($rowID, 0, 10),
-                //     'IMAGES1'           => substr($faker->picsum('./assets/uploads/products', 400, 400, true), 26),
-                //     'IMAGES2'           => substr($faker->picsum('./assets/uploads/products', 400, 400, true), 26),
-                //     'IMAGES3'           => substr($faker->picsum('./assets/uploads/products', 400, 400, true), 26),
-                //     'IMAGES4'           => substr($faker->picsum('./assets/uploads/products', 400, 400, true), 26),
-                //     'CREATED'           => date('Y-m-d h:i:s')
-                // );
+                $injectImage = array(
+                    'PRODUCT_ID'        => substr($rowID, 0, 10),
+                    'IMAGES1'           => substr($faker->picsum('./assets/uploads/products', 400, 400, true), 26),
+                    'IMAGES2'           => substr($faker->picsum('./assets/uploads/products', 400, 400, true), 26),
+                    'IMAGES3'           => substr($faker->picsum('./assets/uploads/products', 400, 400, true), 26),
+                    'IMAGES4'           => substr($faker->picsum('./assets/uploads/products', 400, 400, true), 26),
+                    'CREATED'           => date('Y-m-d h:i:s')
+                );
 
-                // $this->cms->insertGeneralData('g_product_master', $injectMaster);
-                // $this->cms->insertGeneralData('g_product_images', $injectImage);
+                $this->cms->insertGeneralData('g_product_master', $injectMaster);
+                $this->cms->insertGeneralData('g_product_images', $injectImage);
 
-                // $qtyAmmount = rand(2, 5);
+                $qtyAmmount = rand(2, 5);
 
-                // for ($j = 0; $j < $qtyAmmount; $j++) {
+                for ($j = 0; $j < $qtyAmmount; $j++) {
 
-                //     $qtyMin = rand(1, 100);
-                //     $qtyMax = rand(1, 100);
+                    $qtyMin = rand(1, 100);
+                    $qtyMax = rand(1, 100);
 
-                //     if ($qtyMin > $qtyMax) {
-                //         $tmpQty = $qtyMin;
+                    if ($qtyMin > $qtyMax) {
+                        $tmpQty = $qtyMin;
 
-                //         $qtyMin = $qtyMax;
-                //         $qtyMin = $tmpQty;
-                //     }
+                        $qtyMin = $qtyMax;
+                        $qtyMin = $tmpQty;
+                    }
 
-                //     $injectQuantity = array(
-                //         'PRODUCT_ID'        => substr($rowID, 0, 10),
-                //         'QUANTITY_MIN'      => $qtyMin,
-                //         'QUANTITY_MAX'      => $qtyMax,
-                //         'QUANTITY_PRICE'    => $faker->randomNumber('4', true),
-                //         'CREATED'           => date('Y-m-d h:i:s')
-                //     );
+                    $injectQuantity = array(
+                        'PRODUCT_ID'        => substr($rowID, 0, 10),
+                        'QUANTITY_MIN'      => $qtyMin,
+                        'QUANTITY_MAX'      => $qtyMax,
+                        'QUANTITY_PRICE'    => $faker->randomNumber('4', true),
+                        'CREATED'           => date('Y-m-d h:i:s')
+                    );
 
-                //     $this->cms->insertGeneralData('g_product_quantity', $injectQuantity);
-                // }
+                    $this->cms->insertGeneralData('g_product_quantity', $injectQuantity);
+                }
 
-                // $this->db->trans_complete();
+                $this->db->trans_complete();
 
-                // if ($this->db->trans_status() === FALSE) {
-                //     $this->db->trans_rollback();
-                //     throw new Exception('Insert error.');
-                // } else {
-                //     $this->db->trans_commit();
-
-                //     echo json_encode(array(
-                //         'total_data'    => $i,
-                //         'status'        => 200,
-                //         'message'       => 'finish process'
-                //     ));
-                // }
+                if ($this->db->trans_status() === FALSE) {
+                    $this->db->trans_rollback();
+                    throw new Exception('Insert error.');
+                } else {
+                    $this->db->trans_commit();
+                }
             }
+
+            echo json_encode(array(
+                'total_data'    => $i,
+                'status'        => 200,
+                'message'       => 'finish process'
+            ));
+
+            return;
         } catch (Exception $ex) {
             var_dump($ex);
         }

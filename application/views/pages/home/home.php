@@ -199,56 +199,53 @@
 			showCancelButton: false,
 		});
 	</script>
+
 <?php endif; ?>
 
-<?php
-//VERIFICATION AJAX FUNCTION
-if ($this->input->get('key') != null && $this->input->get('email') != null) :
-?>
-	<script type="text/javascript">
-		var email = "<?php echo $this->input->get('email'); ?>";
-		var hash = "<?php echo $this->input->get('key'); ?>";
-
-		$.ajax({
-			url: '<?php echo base_url('Register/verification'); ?>',
-			type: 'GET',
-			data: {
-				email: email,
-				key: hash
-			},
-			success: function(data) {
-				console.log(data);
-				if (data === 'success') {
-					swal.fire({
-						title: 'Verification Successful',
-						text: 'Account Verification Successful. Happy shopping!',
-						type: 'success',
-						showCancelButton: false,
-					});
-				} else if (data === 'error') {
-					swal.fire({
-						title: 'Verification Unsuccessful',
-						text: 'Something wrong with your registration process. Please try again later',
-						type: 'error',
-						showCancelButton: false,
-					});
-				} else if (data === 'verified') {
-					swal.fire({
-						title: 'Verification Unsuccessful',
-						text: 'This account is already verified',
-						type: 'info',
-						showCancelButton: false,
-					});
-				}
-			},
-			error: function(xhr, ajaxOptions, thrownError) {
-				var errorMsg = 'Ajax Failed: ' + xhr.responseText;
-				console.log(errorMsg);
-			}
+<?php if ($this->session->userdata('verification') == 'success') { ?>
+	<script>
+		swal.fire({
+			title: 'Verification Successful',
+			text: 'Account Verification Successful. Happy shopping!',
+			type: 'success',
+			showCancelButton: false,
 		});
 	</script>
+<?php } ?>
 
-<?php endif; ?>
+<?php if ($this->session->userdata('verification') == 'invalid') { ?>
+	<script>
+		swal.fire({
+			title: 'Verification Unsuccessful',
+			text: 'Invalid User Details, Please Try Again Later',
+			type: 'info',
+			showCancelButton: false,
+		});
+	</script>
+<?php } ?>
+
+<?php if ($this->session->userdata('verification') == 'existing') { ?>
+	<script>
+		swal.fire({
+			title: 'Verification Unsuccessful',
+			text: 'This account is already verified',
+			type: 'info',
+			showCancelButton: false,
+		});
+	</script>
+<?php } ?>
+
+<?php if ($this->session->userdata('verification') == 'db_error') { ?>
+	<script>
+		swal.fire({
+			title: 'Unkown Error',
+			text: 'Please Try Again Later',
+			type: 'error',
+			showCancelButton: false,
+		});
+	</script>
+<?php } ?>
+
 
 <?php if ($this->session->userdata('inquiry') == 'created') : ?>
 	<script type="text/javascript">

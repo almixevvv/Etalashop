@@ -12,6 +12,7 @@ class Vision_mission_cms extends CI_Controller
     {
         $data['title'] = 'Vision & Mission';
         $data['page'] = 'Vision & Mission';
+        $data['sess_data']         = $this->session->userdata('cms_sess');
 
         $module = $this->cms->module_check("USER", $this->session->userdata('GROUP_ID'));
 
