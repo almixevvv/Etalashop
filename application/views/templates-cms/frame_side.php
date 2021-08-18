@@ -8,7 +8,7 @@
   }
 </style>
 
-<ul class="sidebar navbar-nav" style="background-image: linear-gradient(to top, #5bebc3 0%, #a6ffe7 100%);">
+<ul class="sidebar navbar-nav" style="background-image: linear-gradient(to top, #DDDDDD 0%, #F3F3F3 100%);">
 
   <center>
     <a class="sidebar-brand d-flex align-items-center justify-content-center mt-1" href="dashboard">

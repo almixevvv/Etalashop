@@ -70,15 +70,36 @@ class Login_cms extends CI_Controller
 
     public function updatePassword()
     {
-        $id = $this->session->userdata('ID');
-        $email = $this->session->userdata('EMAIL');
-        $pass = $this->input->post("new_pass");
-        $rec_id = $this->session->userdata('REC_ID');
-        // $randomSalt = md5(uniqid(rand(), true));
-        // $salt = substr($randomSalt, 0, MAX_SALT_LENGTH);
-        // $hashPassword = hash('sha256', $pass . $salt);
-        $this->cms->changePassword($pass, $id);
-        redirect('cms/dashboard');
+        $this->output->enable_profiler(TRUE);
+
+        $password = 'Abc123';
+
+        $password = $this->input->post('new_pass');
+        $salt = sha1($this->incube->generateID('10'));
+        $sessData = $this->session->userdata('cms_sess');
+
+        $passHash = password_hash($password . $salt, PASSWORD_BCRYPT, array('cost' => 12));
+
+        $newPass = array(
+            'SALT'  => $salt,
+            'PASS'  => $passHash
+        );
+
+
+
+        $queryUpdate =  $this->db->set($newPass)
+            ->where('ID', $sessData['user_id'])
+            ->update('s_user');
+
+        // $id = $this->session->userdata('ID');
+        // $email = $this->session->userdata('EMAIL');
+        // $pass = $this->input->post("new_pass");
+        // $rec_id = $this->session->userdata('REC_ID');
+        // // $randomSalt = md5(uniqid(rand(), true));
+        // // $salt = substr($randomSalt, 0, MAX_SALT_LENGTH);
+        // // $hashPassword = hash('sha256', $pass . $salt);
+        // $this->cms->changePassword($pass, $id);
+        // redirect('cms/dashboard');
     }
 
     public function logout()

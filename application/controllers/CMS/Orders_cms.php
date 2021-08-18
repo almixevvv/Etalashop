@@ -37,14 +37,12 @@ class Orders_cms extends CI_Controller
 
 
 	public function status()
-
 	{
-
+		$data['sess_data'] 			= $this->session->userdata('cms_sess');
 		$data['page'] = 'ORDER MANAGEMENT';
+
 		//GET THE PARAMETER FOR QUERY
 		$searchQuery = $this->input->get('query');
-		// $emailQuery  = $this->input->get('id');
-		// $userEmail	 = $this->session->userdata('EMAIL');
 
 		//SET EACH PARAMETER TO MATCH THE DATABASE
 		if ($searchQuery == 'new') {
@@ -102,7 +100,6 @@ class Orders_cms extends CI_Controller
 
 	public function confirmPayment()
 	{
-		// $this->output->enable_profiler(TRUE);
 		// echo "masuk";
 
 		$id = $this->input->post('hiddenid');
@@ -125,6 +122,8 @@ class Orders_cms extends CI_Controller
 
 	public function sendInvoice()
 	{
+		$this->output->enable_profiler(TRUE);
+
 		$orderNo = $this->input->post('email-order-no');
 		$emailAddress = $this->input->post('email-sender');
 
@@ -133,20 +132,18 @@ class Orders_cms extends CI_Controller
 		$this->cms->updateFlagInvoce($orderNo);
 		$this->load->library('email');
 
-		$config['protocol']    = 'smtp';
-		$config['smtp_host']   = 'mail.etalashop.com';
 		$config['smtp_user']   = 'admin@etalashop.com';
-		$config['smtp_pass']   = '^DNDfCfS)Ox!';
-		$config['smtp_port']   = 465;
+		$config['smtp_pass']   = 'rV#qMNCdt,W!';
+		$config['smtp_port']   = 25;
 		$config['charset']     = 'utf-8';
 		$config['wordwrap']    = TRUE;
 		$config['mailtype']    = 'html';
 
 		$this->email->initialize($config);
 
-		$this->email->from('admin@kikikuku.com', 'Kikikuku Team');
-		//$this->email->to($emailAddress);
-		$this->email->to('hamzahaji1999@gmail.com');
+		$this->email->from('admin@etalashop.com', 'Etalashop Admin');
+		$this->email->to($emailAddress);
+		// $this->email->to('hamzahaji1999@gmail.com');
 		$this->email->set_mailtype('html');
 
 		$message = $this->load->view('email-template/invoice-email', $data, true);
@@ -207,38 +204,36 @@ class Orders_cms extends CI_Controller
 
 	public function updateOrder()
 	{
+		$this->output->enable_profiler(TRUE);
 
+		$orderNo 			= $this->input->get('order-no');
+		$status 			= $this->input->get('order-status');
+		$prevstatus 		= $this->input->get('prev_status');
+		$finalPrice 		= $this->input->get('final_price');
+		$importCost 		= $this->input->get('import_cost');
+		$spc_instruction 	= $this->input->get('spc_instruction');
+		$internal_notes 	= $this->input->get('internal_notes');
+		$updated 			= date('Y-m-d H:i:s');
 
+		// $quantity = $this->input->post('txt_quantity');
+		$counter = $this->input->get('loop-counter');
 
+		for ($i = 1; $i < $counter; $i++) {
+			// echo 'hiyaiyahiay'.' '.$i;
+			$currentPrice = $this->input->get('final_price_' . $i);
+			$currentID = $this->input->get('product_name_' . $i);
+			$currentQuantity = $this->input->get('txt_quantity_' . $i);
 
-		// $orderNo = $this->input->get('order-no');
-		// $status = $this->input->get('order-status');
-		// $prevstatus = $this->input->get('prev_status');
-		// $finalPrice = $this->input->get('final_price');
-		// $importCost = $this->input->get('import_cost');
-		// $spc_instruction = $this->input->get('spc_instruction');
-		// $internal_notes = $this->input->get('internal_notes');
-		// $updated = date('Y-m-d H:i:s');
+			$this->cms->updateFinalPrice($currentID, $currentPrice, $currentQuantity);
+			// echo 'satu beres';
+		}
 
-		// // $quantity = $this->input->post('txt_quantity');
-		// $counter = $this->input->get('loop-counter');
+		$this->cms->updateOrderStatus($orderNo, $status, $importCost, $updated, $spc_instruction, $internal_notes);
 
-		// for ($i = 1; $i < $counter; $i++) {
-		// 	// echo 'hiyaiyahiay'.' '.$i;
-		// 	$currentPrice = $this->input->get('final_price_' . $i);
-		// 	$currentID = $this->input->get('product_name_' . $i);
-		// 	$currentQuantity = $this->input->get('txt_quantity_' . $i);
-
-		// 	$this->cms->updateFinalPrice($currentID, $currentPrice, $currentQuantity);
-		// 	// echo 'satu beres';
-		// }
-
-		// $this->cms->updateOrderStatus($orderNo, $status, $importCost, $updated, $spc_instruction, $internal_notes);
-
-		// // $this->load-> AutoSendInvoice($orderNo);
-		// if ($status == 'UPDATED' && $prevstatus == 'NEW ORDER') {
-		// 	$this->AutoSendInvoice($orderNo);
-		// }
+		// $this->load-> AutoSendInvoice($orderNo);
+		if ($status == 'UPDATED' && $prevstatus == 'NEW ORDER') {
+			$this->AutoSendInvoice($orderNo);
+		}
 
 		// redirect('cms/orders');
 	}

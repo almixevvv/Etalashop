@@ -44,7 +44,7 @@
     {
 
         $this->db->select('*');
-        $this->db->from('V_G_CART');
+        $this->db->from('v_g_cart');
         $this->db->where('CART_ID', $email);
         $this->db->where('CART_FLAG', '0');
         $this->db->order_by('REC_ID', 'ASC');

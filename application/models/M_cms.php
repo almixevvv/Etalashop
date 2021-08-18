@@ -86,6 +86,15 @@
         return $query;
     }
 
+    // BANNER CMS
+
+    function AddBanner($data,$table)
+    { 
+        $this->db->insert('g_banner', $data);
+    } 
+
+    // END BANNER CMS
+
 
 
 

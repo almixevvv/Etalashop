@@ -4,26 +4,44 @@
 	<div class="banner-container header-desktop">
 		<div class="row" style="width: 100%; margin-left: 0!important; margin-right: 0!important;">
 
-			<!-- LEFT PART -->
-			<div class="col-10 col-md-10 col-lg-10 col-xl-10">
-				<img alt="Main Banner" src="<?php echo base_url('assets/images/banner-03.jpg'); ?>" style="width: 100%;" />
-			</div>
+			<?php foreach ($bannerFile->result() as $banner) { ?>
+
+				<?php if ($banner->ORDER_NO == 1) { ?>
+					<!-- LEFT PART -->
+					<div class="col-10 col-md-10 col-lg-10 col-xl-10">
+						<img alt="Main Banner" src="<?= base_url($banner->BANNER_IMAGE); ?>" style="width: 100%;" />
+					</div>
+				<?php } ?>
+
+			<?php } ?>
+
 
 			<!-- RIGHT PART -->
 			<div class="col-2 col-md-2 col-lg-2 col-xl-2">
 
-				<!-- UPPER IMAGE -->
-				<div class="row" style="padding-top: 0!important; padding-bottom: 0!important;">
-					<div class="col-12" style="padding-left: 0!important;">
-						<img alt="Side Banner" src="<?php echo base_url('assets/images/banner-01.jpg'); ?>" style="width: 100%;" />
-					</div>
-				</div>
-				<!-- LOWER IMAGE -->
-				<div class="row" style="padding-top: 0.5em!important;">
-					<div class="col-12" style="padding-left: 0!important;">
-						<img alt="Side Banner" src="<?php echo base_url('assets/images/banner-01.jpg'); ?>" style="width: 100%;" />
-					</div>
-				</div>
+				<?php foreach ($bannerFile->result() as $banner2) { ?>
+
+					<?php if ($banner2->ORDER_NO == 2) { ?>
+						<!-- UPPER IMAGE -->
+						<div class="row" style="padding-top: 0!important; padding-bottom: 0!important;">
+							<div class="col-12" style="padding-left: 0!important;">
+								<img alt="Side Banner" src="<?= base_url($banner2->BANNER_IMAGE); ?>" style="width: 100%;" />
+							</div>
+						</div>
+					<?php } ?>
+
+					<?php if ($banner2->ORDER_NO == 3) { ?>
+						<!-- LOWER IMAGE -->
+						<div class="row" style="padding-top: 0.5em!important;">
+							<div class="col-12" style="padding-left: 0!important;">
+								<img alt="Side Banner" src="<?= base_url($banner2->BANNER_IMAGE); ?>" style="width: 100%;" />
+							</div>
+						</div>
+					<?php } ?>
+
+
+				<?php } ?>
+
 			</div>
 
 		</div>
@@ -35,17 +53,21 @@
 		<div class="row" style="width: 100%; margin-left: 0!important; margin-right: 0!important;">
 			<div class="col-12 no-gutters no-padding-x">
 				<div id="carouselBanner" class="carousel slide" data-ride="carousel" data-touch="true">
+
 					<div class="carousel-inner">
+
 						<div class="carousel-item active">
-							<img alt="Side Banner" class="d-block w-100" src="<?php echo base_url('assets/images/banner-01.jpg'); ?>" style="width: 100%;" />
+							<img alt="Side Banner" class="d-block w-100" src="<?= base_url('assets/images/banner-01.jpg'); ?>" style="width: 100%;" />
 						</div>
 						<div class="carousel-item">
-							<img alt="Main Banner" class="d-block w-100" src="<?php echo base_url('assets/images/banner-03.jpg'); ?>" style="width: 100%;" />
+							<img alt="Main Banner" class="d-block w-100" src="<?= base_url('assets/images/banner-03.jpg'); ?>" style="width: 100%;" />
 						</div>
 						<div class="carousel-item">
-							<img alt="Main Banner" class="d-block w-100" src="<?php echo base_url('assets/images/banner-03.jpg'); ?>" style="width: 100%;" />
+							<img alt="Main Banner" class="d-block w-100" src="<?= base_url('assets/images/banner-03.jpg'); ?>" style="width: 100%;" />
 						</div>
+
 					</div>
+
 					<a class="carousel-control-prev" href="#carouselBanner" role="button" data-slide="prev">
 						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
 						<span class="sr-only">Previous</span>
@@ -250,8 +272,8 @@
 <?php if ($this->session->userdata('inquiry') == 'created') : ?>
 	<script type="text/javascript">
 		swal.fire({
-			title: 'Inquiry Created',
-			text: 'Your inquiry has been created. Our team will process your order',
+			title: 'Order Successfull',
+			text: 'Your order has been created. Our team will process your order',
 			type: 'success',
 			showCancelButton: false,
 		});
@@ -259,8 +281,8 @@
 <?php elseif ($this->session->userdata('inquiry') == 'failed') : ?>
 	<script type="text/javascript">
 		swal.fire({
-			title: 'Inquiry Not Created',
-			text: 'Your inquiry has not been created. Please try again later.',
+			title: 'Order Failed',
+			text: 'Your order has not been created. Please try again later.',
 			type: 'error',
 			showCancelButton: false,
 		});

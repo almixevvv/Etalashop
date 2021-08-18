@@ -5,7 +5,7 @@ class Product_cms extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->output->enable_profiler(TRUE);
+        // $this->output->enable_profiler(TRUE);
     }
 
     public function index()
@@ -141,9 +141,11 @@ class Product_cms extends CI_Controller
         if ($queryCheck->num_rows() == 0) {
             //Invalid category ID
             $this->session->set_flashdata('errorInvalidID', true);
-            redirect(base_url('cms/products'));
+            redirect(base_url('cms/product'));
         } else {
             $this->db->trans_start();
+
+            $dataSess = $this->session->userdata('cms_sess');
 
             //1. Upload master data
             $masterData = array(
@@ -155,7 +157,7 @@ class Product_cms extends CI_Controller
                 'CATEGORY'          => $queryCheck->row()->LINK,
                 'CREATED'           => date('Y-m-d h:i:s'),
                 'STATUS'            => 'ACTIVE',
-                'USER_ID'           => $this->session->userdata('id')
+                'USER_ID'           => $dataSess['user_id']
             );
 
             $this->api->insertGeneralData('g_product_master', $masterData);
@@ -176,7 +178,6 @@ class Product_cms extends CI_Controller
                     'QUANTITY_MAX'      => $arrMax[$i],
                     'QUANTITY_PRICE'    => $arrPrice[$i],
                     'CREATED'           => date('Y-m-d h:i:s'),
-                    'CREATED'           => '',
                 );
 
                 $this->api->insertGeneralData('g_product_quantity', $qtyData);
@@ -230,7 +231,7 @@ class Product_cms extends CI_Controller
                 $this->db->trans_rollback();
                 $this->session->set_flashdata('inputError', '1');
 
-                redirect(base_url('cms/products'));
+                redirect(base_url('cms/product'));
             } else {
                 $this->db->trans_commit();
                 $this->session->set_flashdata('inputError', '0');
@@ -242,15 +243,20 @@ class Product_cms extends CI_Controller
 
     public function edit_product()
     {
+        $this->output->enable_profiler(TRUE);
+
         $queryCheck = $this->api->getGeneralData('m_category', 'DESCRIPTION', $this->input->post('editPRODCategory'));
 
         if ($queryCheck->num_rows() == 0) {
             //Invalid Category
-            echo 'kesini';
             $this->session->set_flashdata('errorInvalidID', true);
-            // redirect(base_url('cms/products'));
+            redirect(base_url('cms/product'));
         } else {
             $this->db->trans_start();
+
+            $dataSess = $this->session->userdata('cms_sess');
+
+            var_dump($dataSess);
 
             //1. Update master data
             $masterData = array(
@@ -261,7 +267,7 @@ class Product_cms extends CI_Controller
                 'UPDATED'           => date('Y-m-d h:i:s'),
                 'STATUS'            => 'ACTIVE',
                 'PRODUCT_DETAIL'    => $this->input->post('editPRODDetail'),
-                'USER_ID'           => $this->session->userdata('id')
+                'USER_ID'           => $dataSess['user_id']
             );
 
             $this->api->updateGeneralData('g_product_master', 'PRODUCT_ID', $this->input->post('editPRODID'),  $masterData);
@@ -344,12 +350,12 @@ class Product_cms extends CI_Controller
                 $this->db->trans_rollback();
                 $this->session->set_flashdata('inputError', '1');
 
-                redirect(base_url('cms/products'));
+                redirect(base_url('cms/product'));
             } else {
                 $this->db->trans_commit();
                 $this->session->set_flashdata('inputError', '0');
 
-                redirect(base_url('cms/products'));
+                redirect(base_url('cms/product'));
             }
         }
     }
@@ -370,6 +376,6 @@ class Product_cms extends CI_Controller
         $this->api->deleteGeneralData('g_product_images', 'PRODUCT_ID', $id_product);
         $this->api->deleteGeneralData('g_product_quantity', 'PRODUCT_ID', $id_product);
 
-        redirect(base_url('cms/products'));
+        redirect(base_url('cms/product'));
     }
 }

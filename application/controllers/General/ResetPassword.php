@@ -14,8 +14,6 @@ class ResetPassword extends CI_Controller
 
 		$this->load->library('email');
 		$this->load->helper('form');
-
-		date_default_timezone_set('Asia/Jakarta');
 	}
 
 	public function index()

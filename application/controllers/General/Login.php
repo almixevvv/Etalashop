@@ -114,6 +114,7 @@ class Login extends CI_Controller
 						'PHONE' 		=> $queryEmail->row()->PHONE,
 						'EMAIL' 		=> $queryEmail->row()->EMAIL,
 						'ADDRESS' 		=> $queryEmail->row()->ADDRESS,
+						'ADDRESS_2'		=> $queryEmail->row()->ADDRESS_2,
 						'COUNTRY' 		=> $queryEmail->row()->COUNTRY,
 						'PROVINCE' 		=> $queryEmail->row()->PROVINCE,
 						'USERID' 		=> $queryEmail->row()->ID,

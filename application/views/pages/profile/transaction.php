@@ -1,4 +1,4 @@
-<style> 
+<style>
   a {
     cursor: pointer;
   }
@@ -22,7 +22,7 @@
     display: block;
   }
 
-  .notes-text{
+  .notes-text {
     font-size: 14px;
     color: #b8b7b4;
   }
@@ -42,42 +42,36 @@
 
       <div class="trans-filter-container-right" id="trans-scrollbar">
 
-        <div class="trans-filter-button<?= ($this->input->get('transaction') == 'created' ? '-active' : ''); ?>">
+        <div class="trans-filter-button<?= ($this->input->get('transaction') == 'created' ? '-active' : ''); ?>" style="min-width: 108px;">
           <a href="<?= ($this->input->get('transaction') == 'created' ? base_url('profile/transaction') : base_url('profile/transaction?transaction=created')); ?>">
-            <span class="text-uppercase <?= ($this->input->get('transaction') == 'created' ? 'trans-filter-active' : 'main-color'); ?>">Inquiry Created</span>
+            <span class="text-uppercase <?= ($this->input->get('transaction') == 'created' ? 'trans-filter-active' : 'main-color'); ?>">New Order</span>
           </a>
         </div>
 
-        <div class="trans-filter-button<?= ($this->input->get('transaction') == 'updated' ? '-active' : ''); ?>">
-          <a href="<?= ($this->input->get('transaction') == 'updated' ? base_url('profile/transaction') : base_url('profile/transaction?transaction=updated')); ?>">
-            <span class="text-uppercase <?= ($this->input->get('transaction') == 'updated' ? 'trans-filter-active' : 'main-color'); ?>">Inquiry Updated</span>
-          </a>
-        </div>
-
-        <div class="trans-filter-button<?= ($this->input->get('transaction') == 'confirmed' ? '-active' : ''); ?>">
+        <div class="trans-filter-button<?= ($this->input->get('transaction') == 'confirmed' ? '-active' : ''); ?>" style="min-width: 108px;">
           <a href="<?= ($this->input->get('transaction') == 'confirmed' ? base_url('profile/transaction') : base_url('profile/transaction?transaction=confirmed')); ?>">
             <span class="text-uppercase <?= ($this->input->get('transaction') == 'confirmed' ? 'trans-filter-active' : 'main-color'); ?>">Confirm Payment</span>
           </a>
         </div>
 
 
-        <div class="trans-filter-button<?= ($this->input->get('transaction') == 'paid' ? '-active' : ''); ?>">
+        <div class="trans-filter-button<?= ($this->input->get('transaction') == 'paid' ? '-active' : ''); ?>" style="min-width: 108px;">
           <a href="<?= ($this->input->get('transaction') == 'paid' ? base_url('profile/transaction') : base_url('profile/transaction?transaction=paid')); ?>">
-            <span class="text-uppercase <?= ($this->input->get('transaction') == 'paid' ? 'trans-filter-active' : 'main-color'); ?>">Inquiry Paid</span>
+            <span class="text-uppercase <?= ($this->input->get('transaction') == 'paid' ? 'trans-filter-active' : 'main-color'); ?>">Paid</span>
           </a>
         </div>
 
 
-        <div class="trans-filter-button<?= ($this->input->get('transaction') == 'canceled' ? '-active' : ''); ?>">
+        <div class="trans-filter-button<?= ($this->input->get('transaction') == 'canceled' ? '-active' : ''); ?>" style="min-width: 108px;">
           <a href="<?= ($this->input->get('transaction') == 'canceled' ? base_url('profile/transaction') : base_url('profile/transaction?transaction=canceled')); ?>">
-            <span class="text-uppercase <?= ($this->input->get('transaction') == 'canceled' ? 'trans-filter-active' : 'main-color'); ?>">Inquiry Canceled</span>
+            <span class="text-uppercase <?= ($this->input->get('transaction') == 'canceled' ? 'trans-filter-active' : 'main-color'); ?>">Canceled</span>
           </a>
         </div>
 
 
-        <div class="trans-filter-button<?= ($this->input->get('transaction') == 'done' ? '-active' : ''); ?>">
+        <div class="trans-filter-button<?= ($this->input->get('transaction') == 'done' ? '-active' : ''); ?>" style="min-width: 108px;">
           <a href="<?= ($this->input->get('transaction') == 'done' ? base_url('profile/transaction') : base_url('profile/transaction?transaction=done')); ?>">
-            <span class="text-uppercase <?= ($this->input->get('transaction') == 'done' ? 'trans-filter-active' : 'main-color'); ?>">Inquiry Done</span>
+            <span class="text-uppercase <?= ($this->input->get('transaction') == 'done' ? 'trans-filter-active' : 'main-color'); ?>">Closed</span>
           </a>
         </div>
 
@@ -98,42 +92,36 @@
       <div class="row" style="width: 99%;">
         <div class="col-12 pl-1 pr-1 pt-2" id="trans-scrollbar">
 
-          <div class="trans-filter-button<?= ($this->input->get('transaction') == 'created' ? '-active' : ''); ?>">
+          <div class="trans-filter-button<?= ($this->input->get('transaction') == 'created' ? '-active' : ''); ?>" style="min-width: 108px;">
             <a href="<?= ($this->input->get('transaction') == 'created' ? base_url('profile/transaction') : base_url('profile/transaction?transaction=created')); ?>">
-              <span class="text-uppercase <?= ($this->input->get('transaction') == 'created' ? 'trans-filter-active' : 'main-color'); ?>">Inquiry Created</span>
+              <span class="text-uppercase <?= ($this->input->get('transaction') == 'created' ? 'trans-filter-active' : 'main-color'); ?>">New Order</span>
             </a>
           </div>
 
-          <div class="trans-filter-button<?= ($this->input->get('transaction') == 'updated' ? '-active' : ''); ?>">
-            <a href="<?= ($this->input->get('transaction') == 'updated' ? base_url('profile/transaction') : base_url('profile/transaction?transaction=updated')); ?>">
-              <span class="text-uppercase <?= ($this->input->get('transaction') == 'updated' ? 'trans-filter-active' : 'main-color'); ?>">Inquiry Updated</span>
-            </a>
-          </div>
-
-          <div class="trans-filter-button<?= ($this->input->get('transaction') == 'confirmed' ? '-active' : ''); ?>">
+          <div class="trans-filter-button<?= ($this->input->get('transaction') == 'confirmed' ? '-active' : ''); ?>" style="min-width: 108px;">
             <a href="<?= ($this->input->get('transaction') == 'confirmed' ? base_url('profile/transaction') : base_url('profile/transaction?transaction=confirmed')); ?>">
               <span class="text-uppercase <?= ($this->input->get('transaction') == 'confirmed' ? 'trans-filter-active' : 'main-color'); ?>">Confirm Payment</span>
             </a>
           </div>
 
 
-          <div class="trans-filter-button<?= ($this->input->get('transaction') == 'paid' ? '-active' : ''); ?>">
+          <div class="trans-filter-button<?= ($this->input->get('transaction') == 'paid' ? '-active' : ''); ?>" style="min-width: 108px;">
             <a href="<?= ($this->input->get('transaction') == 'paid' ? base_url('profile/transaction') : base_url('profile/transaction?transaction=paid')); ?>">
-              <span class="text-uppercase <?= ($this->input->get('transaction') == 'paid' ? 'trans-filter-active' : 'main-color'); ?>">Inquiry Paid</span>
+              <span class="text-uppercase <?= ($this->input->get('transaction') == 'paid' ? 'trans-filter-active' : 'main-color'); ?>">Paid</span>
             </a>
           </div>
 
 
-          <div class="trans-filter-button<?= ($this->input->get('transaction') == 'canceled' ? '-active' : ''); ?>">
+          <div class="trans-filter-button<?= ($this->input->get('transaction') == 'canceled' ? '-active' : ''); ?>" style="min-width: 108px;">
             <a href="<?= ($this->input->get('transaction') == 'canceled' ? base_url('profile/transaction') : base_url('profile/transaction?transaction=canceled')); ?>">
-              <span class="text-uppercase <?= ($this->input->get('transaction') == 'paid' ? 'trans-filter-active' : 'main-color'); ?>">Inquiry Canceled</span>
+              <span class="text-uppercase <?= ($this->input->get('transaction') == 'canceled' ? 'trans-filter-active' : 'main-color'); ?>">Canceled</span>
             </a>
           </div>
 
 
-          <div class="trans-filter-button<?= ($this->input->get('transaction') == 'done' ? '-active' : ''); ?>">
+          <div class="trans-filter-button<?= ($this->input->get('transaction') == 'done' ? '-active' : ''); ?>" style="min-width: 108px;">
             <a href="<?= ($this->input->get('transaction') == 'done' ? base_url('profile/transaction') : base_url('profile/transaction?transaction=done')); ?>">
-              <span class="text-uppercase <?= ($this->input->get('transaction') == 'done' ? 'trans-filter-active' : 'main-color'); ?>">Inquiry Done</span>
+              <span class="text-uppercase <?= ($this->input->get('transaction') == 'done' ? 'trans-filter-active' : 'main-color'); ?>">Closed</span>
             </a>
           </div>
 
@@ -328,28 +316,6 @@
                     <span><i class="fas fa-comments pr-2"></i> Send Message</span>
                   </a>
                 </div>
-
-                <div class="trans-container-footer-right">
-                  <span><i class="fas fa-clipboard-list pr-2"></i> Order Detail</span>
-                </div>
-
-                <?php
-                //DONT'S SHOW THE PAYMENT BUTTON IF THE STATUS IS NEW ORDER AND UPDATED
-                if ($master->STATUS_ORDER == 'UPDATED') {
-
-                  $attributes = array('id' => 'myform' . $counter);
-                  echo form_open('order/payment', $attributes);
-
-                  //GENERATE RANDOM NUMBER TO HELP CONFIRM THE TRANSFER
-                  $transID = rand(100, 1000);
-                ?>
-                  <div class="trans-container-footer-payment">
-                    <a class="proc-payment" data-ordertotal="<?= $master->AMOUNT + $master->TOTAL_POSTAGE; ?>" data-orderid="<?= $master->ORDER_NO; ?>" data-toggle="modal" data-target="#paymentOptions" style="color: black;">
-                      <span><i class="fas fa-money-check-alt"></i> Order Payment</span>
-                    </a>
-                  </div>
-
-                <?php } ?>
 
                 <!-- SHOW IF THE STATUS IS CONFIRMED -->
                 <?php if ($master->STATUS_ORDER == 'PAID') { ?>

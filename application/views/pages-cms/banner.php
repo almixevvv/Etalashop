@@ -10,8 +10,11 @@
         <!-- BANNER PART -->
         <div class="card mb-3">
           <div class="card-header">
+            <button class="btn btn-sm btn-primary" style="color: #fff; font-weight: bold" type="button" data-toggle="modal" data-target="#addBannerModal" data-backdrop="static" data-keyboard="false">+ Add Banner</button>
+
             <i class="fas fa-images"></i>
-            <b>Banner List</b></div>
+            <b>Banner List</b>
+          </div>
           <div class="card-body" >
             <div class="table-responsive">
               <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" style="font-size:12px"> 
@@ -47,8 +50,12 @@
                     <td>
                       <?php echo $no; ?>
                     </td>
-                    <td>
+                    <!-- <td>
                       <label style="margin-left: 0.4em;"><?php echo $img; ?></label>
+                    </td> -->
+                    <td class="text-center">
+                        <!-- <label><?= $data->IMAGE_PATH; ?></label> -->
+                        <img src= "<?php echo base_url(  $img ); ?>" width='200px'/> 
                     </td>
                     <td>
                       <label style="margin-left: 0.4em;"><?php echo $desc; ?></label>
@@ -118,6 +125,104 @@
 
   </div>
   <!-- /#wrapper -->
+
+  <!-- Modal Add Banner -->
+  <div id="addBannerModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="addBanner" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg" role="document">
+      <form id="addBanner" action="<?= base_url('CMS/Banner_cms/add_banner') ?>" method="POST" enctype='multipart/form-data'>
+        <div class="modal-content">
+          <div class="modal-header" style="background-color: #ababab">
+            <h5 class="modal-title text-light">Add Products</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-6">
+                <div class="form-group">
+                  <label for="txtType">Type</label>
+                  <input type="text" class="form-control" id="txtType" name="txtType" placeholder="Banner Type">
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="form-group">
+                  <label for="txtLinkTo">Link To</label>
+                  <input type="text" class="form-control" id="txtLinkTo" name="txtLinkTo" placeholder="Link To">
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-6">
+                <div class="form-group">
+                  <label for="txtOrderNo">Order No</label>
+                  <input type="text" class="form-control" id="txtOrderNo" name="txtOrderNo" placeholder="Order No">
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="form-group">
+                  <label for="txtFlag">Flag</label>
+                  <input type="text" class="form-control" id="txtFlag" name="txtFlag">
+                </div>
+              </div>
+            </div>
+
+            <!-- <div class="row">
+              <div class="col-6">
+                <div class="form-group">
+                  <label for="txtPRODWeight">Weight (Kg)</label>
+                  <input type="number" class="form-control" id="txtPRODWeight" name="txtPRODWeight" placeholder="Example : 8,9">
+                </div>
+              </div>
+            </div> -->
+
+            <div class="row">
+              <div class="col-6">
+                <div class="form-group">
+                  <label>Banner Image</label>
+                  <div class="card" id="previewHolder">
+                    <div class="card-body">
+                      <div class="d-flex flex-column" id="preview">
+                        <div class="justify-content-center" id="fatherPreview">
+                        </div>
+                        <div class="d-flex flex-row justify-content-around mt-2" id="motherPreview">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="custom-file mt-2">
+                    <input type="file" class="custom-file-input" id="fileBanImage" name="fileBanImage" accept="image/*" multiple>
+                    <label class="custom-file-label" for="fileBanImage">Choose files*</label>
+                  </div>
+                  <!-- <div class="alert alert-danger mt-2" role="alert">
+                    *Maximum 4 images (JPG, JPEG, PNG) <br>
+                    *(Max 2MB)
+                  </div> -->
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-12">
+                <div class="form-group">
+                  <label for="editCATDesc">Description</label>
+                  <textarea name="txtBanDetail" id="txtBanDetail"></textarea>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-info btnSaveProduct">Save Banner</button>
+              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- /Modal Add Banner -->
 
   <!-- Bootstrap core JavaScript-->
   <script src="<?php echo base_url('assets/cms/jquery/jquery.min.js');?>"></script>

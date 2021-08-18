@@ -236,6 +236,19 @@
                   confirmButtonColor: '#3085d6'
                 });
 
+            },
+            onClose: function(result) {
+              $('.btn-kku').attr('disabled', false);
+
+              swal
+                .fire({
+                  title: 'Payment Pending',
+                  text: 'Payment Process Canceled, You Can Resume This Process by Clicking The Submit Button',
+                  type: 'info',
+                  showCancelButton: false,
+                  confirmButtonText: 'Confirm',
+                  confirmButtonColor: '#3085d6'
+                });
             }
           });
 

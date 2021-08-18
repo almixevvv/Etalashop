@@ -25,7 +25,10 @@
         </a>
       </li>
       <li class="nav-item dropdown no-arrow">
-        <a class="nav-link dropdown-toggle" href="#" data-toggle="modal" data-target="#changePass" data-id="<?php echo $this->session->userdata('id'); ?>">
+        <?php
+        $dataSess = $this->session->userdata('cms_sess');
+        ?>
+        <a class="nav-link dropdown-toggle" href="#" data-toggle="modal" data-target="#changePass" data-id="<?= $dataSess['user_id']; ?>">
           <i class="fas fa-lock fa-lg fa-fw mr-2" style="color: orange;margin-top: 0.45em;"></i>
         </a>
       </li>

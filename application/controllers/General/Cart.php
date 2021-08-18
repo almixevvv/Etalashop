@@ -85,15 +85,13 @@ class Cart extends CI_Controller
 
 				$this->carts->insertCartData($itemArray);
 				$this->session->unset_userdata('cart_items');
-				// redirect('mycart');
+				redirect('mycart');
 			}
 			//EoL 2.1
 
 			//2.2 Kalo ga ada item di session
 			else {
 				$hashID 	= sha1($userData['EMAIL']);
-
-
 
 				$itemArray = array(
 					'CART_ID' 			=> $hashID,

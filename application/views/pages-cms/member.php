@@ -149,7 +149,7 @@
       var id = button.data('id');
 
       // console.log('Button Position ' + orderno);
-      var getMember = '<?= base_url('Member_cms/getMember?id='); ?>';
+      var getMember = '<?= base_url('CMS/Member_cms/getMember?id='); ?>';
 
       $('.modal-body').load(getMember + id, function() {
         $('#memberModal').modal({
@@ -168,7 +168,7 @@
         buttonsStyling: false,
       });
 
-      $('.buttonDelete').on('click', function() {
+      $(document).on('click', '.buttonDelete', function() {
         var id = $(this).attr("data-id");
         swal.fire({
           title: "Delete Member",
@@ -187,7 +187,7 @@
             );
             $.ajax({
               type: "POST",
-              url: "<?= base_url('Member_cms/deleteMember'); ?>",
+              url: "<?= base_url('CMS/Member_cms/deleteMember'); ?>",
               data: {
                 id: id
               },

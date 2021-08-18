@@ -121,7 +121,7 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
 
-      <form id="formOrder" action="<?= base_url('CMS/Orders_cms/updateOrder'); ?>">
+      <form id="formOrder" action="<?= base_url('CMS/Orders_cms/updateOrder'); ?>" method="GET">
         <div class="modal-header">
           <h4 class="modal-title">View Order Management</h4>
           <button type="button" class="close" data-dismiss="modal">
@@ -188,7 +188,7 @@
                   </div>
                 </div>
                 <div class="col-6">
-                  <textarea name="spc_instruction" class="md-textarea form-control" id="orderInstruction" rows="2" cols="50">SPESHAL</textarea>
+                  <textarea name="spc_instruction" class="md-textarea form-control" id="orderInstruction" rows="2" cols="50"></textarea>
                 </div>
               </div>
 
@@ -354,7 +354,7 @@
               <div class="col-12">
                 <div id="boxMessage" class="w-100 mb-2">
 
-                  <div class="user-message-window tri-right left-top">
+                  <!-- <div class="user-message-window tri-right left-top">
                     <div class="time-right" style="text-align: left; color: #2db4d6"><b>CUSTOMER</b>&nbsp 3213123</div>
                     <div style="text-align: left;">d21d215124</div>
                   </div>
@@ -377,7 +377,7 @@
                   <div class="admin-message-window tri-left right-top">
                     <div class="time-right" style="text-align: right; color: #2dd6a7;">3123 <b>KIKIKUKU</b></div>
                     <div style="text-align: right;">3123124213</div>
-                  </div>
+                  </div> -->
 
                 </div>
                 <div class="row">
@@ -574,7 +574,7 @@
               </div>
             </div>
             <div class="col-12">
-              <textarea id="internalNotes" name="spc_instruction" class="md-textarea form-control" rows="2" cols="50">SPESHAL</textarea>
+              <textarea id="internalNotes" name="spc_instruction" class="md-textarea form-control" rows="2" cols="50"></textarea>
             </div>
           </div>
           <!-- EoL Detail Pricing -->

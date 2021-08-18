@@ -37,7 +37,7 @@
 										</div>
 									<?php elseif ($this->session->has_userdata('not_active')) : ?>
 										<div class="alert alert-danger mt-2" role="alert">
-											This account is not verified. Please verify your account and try again.
+											This account is not verified. Please verify your account and try again or click <a href="#" id="resendEmail" class="font-weight-bold" style="color: #ff4c5c; ">here</a> to resend the email
 										</div>
 									<?php endif; ?>
 								</div>
@@ -125,6 +125,53 @@
 			showCancelButton: false,
 		});
 	<?php } ?>
+
+	const getUrl = window.location;
+	const baseUrl = getUrl.protocol + '//' + getUrl.host + '/' + getUrl.pathname.split('/')[0];
+
+	$('#resendEmail').on('click', function() {
+
+		swal.fire({
+			title: 'Enter your email address',
+			input: 'text',
+			inputAttributes: {
+				autocapitalize: 'off'
+			},
+			showCancelButton: true,
+			confirmButtonText: 'Resend Email',
+			showLoaderOnConfirm: true,
+			preConfirm: (login) => {
+
+				console.log(login);
+
+				if (login == null || login.length == 0) {
+					Swal.showValidationMessage(
+						`Email field cannot be empty`
+					)
+				} else {
+					$.get(baseUrl + 'General/Register/resendEmail?email=' + login, function(resp) {
+						if (resp.code == 200) {
+							return swal.fire({
+								title: 'Resend Confirmation Email',
+								text: 'Process Successful',
+								type: 'success'
+							});
+						}
+					});
+				}
+
+				// return fetch(baseUrl + `General/Register/resendEmail?email=${login}`)
+				// 	.then(response => {
+				// 		return response
+				// 	}).catch(error => {
+				// 		Swal.showValidationMessage(
+				// 			`Request Failed: ${error}`
+				// 		)
+				// 	})
+			},
+			allowOutsideClick: () => !Swal.isLoading()
+		});
+	});
 
 	<?php if ($this->session->has_userdata('success')) : ?>
 		swal.fire({

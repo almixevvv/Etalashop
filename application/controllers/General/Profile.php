@@ -221,10 +221,8 @@ class Profile extends CI_Controller
 		}
 	}
 
-
 	public function updatePhoto()
 	{
-		$this->output->enable_profiler(TRUE);
 		$this->load->helper('form');
 		$this->load->library('upload');
 
@@ -239,7 +237,9 @@ class Profile extends CI_Controller
 
 		$config['upload_path']   = './assets/images/member-img/';
 		$config['allowed_types'] = 'jpeg|jpg|png';
-		$config['file_name']         = $new_name;
+		$config['max_size']      = 2048;
+		$config['file_name']     = $new_name;
+
 
 		$file_name = $new_name . "." . $ext;
 		$this->profiles->updatePhoto($id, $file_name);
@@ -247,7 +247,9 @@ class Profile extends CI_Controller
 		$this->upload->initialize($config);
 
 		if (!$this->upload->do_upload('file_name')) {
-			echo $this->upload->display_errors();
+			//echo $this->upload->display_errors();
+			$this->session->set_flashdata('photo', 'danger');
+			redirect('profile/myprofile'); 
 		} else {
 			$uploadFile = $this->upload->data();
 
@@ -257,7 +259,7 @@ class Profile extends CI_Controller
 			$this->session->set_userdata('user_data', $sessQuery);
 
 			redirect('profile/myprofile');
-			// $this->set('showModal',true);
+			//$this->set('showModal',true);
 		}
 	}
 

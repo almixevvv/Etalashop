@@ -138,6 +138,42 @@ class Register extends CI_Controller
 		}
 	}
 
+	public function resendEmail()
+	{
+		$data['email'] = $this->input->get('email');
+		$data['hash'] = sha1($this->input->get('email'));
+
+		//Disable this for debug only
+		//$this->load->view('email-template/verification-email', $data);
+		$config['smtp_user']   = 'admin@etalashop.com';
+		$config['smtp_pass']   = 'rV#qMNCdt,W!';
+		$config['smtp_port']   = 25;
+		$config['charset']     = 'utf-8';
+		$config['wordwrap']    = TRUE;
+		$config['mailtype']    = 'html';
+
+		$this->email->initialize($config);
+
+		$this->email->from('admin@etalashop.com', 'Etalashop Admin');
+		$this->email->to($this->input->get('email'));
+		$this->email->set_mailtype('html');
+
+		$message = $this->load->view('email-template/verification-email', $data, true);
+
+		$this->email->subject('Please confirm your email address');
+		$this->email->message($message);
+
+		$this->email->send();
+
+		header('Content-Type: application/json');
+
+		echo json_encode(array(
+			'status'    => 'ok',
+			'code'      => 200,
+			'message'   => 'incomplete api parameter',
+		));
+	}
+
 	public function input()
 	{
 		$googleData = $this->session->userdata();
@@ -216,11 +252,11 @@ class Register extends CI_Controller
 
 			if ($this->email->send()) {
 				$this->session->set_flashdata('verification', 'pending');
-				// redirect(base_url('home'));
+				redirect(base_url('home'));
 			}
 		} else {
 			$this->session->set_flashdata('verification', 'error');
-			// redirect(base_url('home'));
+			redirect(base_url('home'));
 		}
 	}
 }

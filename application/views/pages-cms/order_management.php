@@ -9,7 +9,7 @@
       color: white;
     }
 
-    .btn-outline-info>a {
+    .btn-outline-info>span {
       font-size: .7rem;
     }
 
@@ -76,47 +76,31 @@
               <div class="col-12">
                 <div class="d-flex justify-content-between">
 
-                  <button class="btn btn-outline-info rounded flex-grow-1 mx-3 ">
-                    <a class="filter-menu text-uppercase font-weight-bold" href="#">
-                      all
-                    </a>
-                  </button>
-
-                  <button class="btn btn-outline-info rounded flex-grow-1 mx-3 ">
-                    <a class="filter-menu text-uppercase font-weight-bold" href="#">
+                  <a class="btn btn-outline-info rounded flex-grow-1 mx-3" href="<?= base_url('cms/orders/status?query=new'); ?>">
+                    <span class="filter-menu text-uppercase font-weight-bold">
                       new order
-                    </a>
-                  </button>
+                    </span>
+                  </a>
 
-                  <button class="btn btn-outline-info rounded flex-grow-1 mx-3 ">
-                    <a class="filter-menu text-uppercase font-weight-bold" href="#">
-                      updated
-                    </a>
-                  </button>
+                  <a class="btn btn-outline-info rounded flex-grow-1 mx-3" href="<?= base_url('cms/orders/status?query=confirmed'); ?>">
+                    <span class="filter-menu text-uppercase font-weight-bold">confirmed</span>
+                  </a>
 
-                  <button class="btn btn-outline-info rounded flex-grow-1 mx-3 ">
-                    <a class="filter-menu text-uppercase font-weight-bold" href="#">
-                      confirmed
-                    </a>
-                  </button>
+                  <a class="btn btn-outline-info rounded flex-grow-1 mx-3" href="<?= base_url('cms/orders/status?query=sent'); ?>">
+                    <span class="filter-menu text-uppercase font-weight-bold">sent</span>
+                  </a>
 
-                  <button class="btn btn-outline-info rounded flex-grow-1 mx-3 ">
-                    <a class="filter-menu text-uppercase font-weight-bold" href="#">
-                      paid
-                    </a>
-                  </button>
+                  <a class="btn btn-outline-info rounded flex-grow-1 mx-3" href="<?= base_url('cms/orders/status?query=received'); ?>">
+                    <span class="filter-menu text-uppercase font-weight-bold">received</span>
+                  </a>
 
-                  <button class="btn btn-outline-info rounded flex-grow-1 mx-3 ">
-                    <a class="filter-menu text-uppercase font-weight-bold" href="#">
-                      canceled
-                    </a>
-                  </button>
+                  <a class="btn btn-outline-info rounded flex-grow-1 mx-3" href="<?= base_url('cms/orders/status?query=closed'); ?>">
+                    <span class="filter-menu text-uppercase font-weight-bold">closed</span>
+                  </a>
 
-                  <button class="btn btn-outline-info rounded flex-grow-1 mx-3 ">
-                    <a class="filter-menu text-uppercase font-weight-bold" href="#">
-                      done
-                    </a>
-                  </button>
+                  <a class="btn btn-outline-info rounded flex-grow-1 mx-3" href="<?= base_url('cms/orders/status?query=canceled'); ?>">
+                    <span class="filter-menu text-uppercase font-weight-bold">canceled</span>
+                  </a>
 
                 </div>
               </div>
@@ -178,17 +162,15 @@
 
                             <div class="row mt-2 <?= ($dt->STATUS_ORDER != 'NEW ORDER' ? 'd-block' : 'd-none'); ?>">
                               <div class="col-12">
-                                <button class="btn btn-warning btn-invoice text-white" type="button" data-orderid="<?= $dt->ORDER_NO; ?>">Send Invoice</button>
+
+                                <a href="<?= base_url('cms/invoice/send?id=' . $dt->ORDER_NO); ?>">
+                                  <span class="btn btn-warning btn-invoice text-white">Send Invoice</span>
+                                </a>
+
                                 <span class="<?= ($dt->FLAG == 1 ? 'd-block' : 'd-none'); ?>">
                                   <i class="pl-2 fas fa-clipboard-check secondary-theme-color"></i>
                                   <label class="secondary-theme-color">Invoice Sent!</label>
                                 </span>
-                              </div>
-                            </div>
-
-                            <div class="row mt-2 <?= (($dt->STATUS_ORDER != 'NEW ORDER') && ($dt->STATUS_ORDER != 'UPDATED') ? 'd-block' : 'd-none'); ?>">
-                              <div class="col-12">
-                                <button class="btn btn-success btn-payment text-white" type="button" data-orderid="<?= $dt->ORDER_NO; ?>">Check Payment</button>
                               </div>
                             </div>
 

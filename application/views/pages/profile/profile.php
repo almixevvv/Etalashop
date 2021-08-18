@@ -56,7 +56,7 @@
               <div class="row">
                 <div class="col-12">
                   <?php if ($master->IMAGE == '') { ?>
-                    <img class="img-fluid"> src="<?php echo base_url('assets/images/no-image.png') ?>">
+                    <img class="img-fluid" src="<?php echo base_url('assets/images/no-image.png') ?>">
                   <?php } else { ?>
                     <img style="margin-left: 3em;width: 70%;" src="<?php echo base_url('assets/images/member-img/' . $master->IMAGE); ?>">
                   <?php } ?>
@@ -241,13 +241,27 @@
 </div>
 <!-- END OF MODAL PART -->
 
+<?php if ($this->session->userdata('photo') == 'error') { ?>
+  <script>
+    swal.fire({
+      title: "Unknown Error",
+      text: "Error - Unknown Error",
+      type: "error",
+      showCancelButton: false,
+      cancelButtonColor: '#d33',
+      confirmButtonText: "Confirm",
+      confirmButtonColor: '#3085d6'
+    });
+  </script>
+<?php } ?>
+
 <?php if ($this->session->userdata('password') == 'different') { ?>
   <script>
     swal.fire({
       title: "Incorrect Password",
       text: "Incorrect password, please try enter your old password",
       type: "error",
-      showCancelButton: true,
+      showCancelButton: false,
       cancelButtonColor: '#d33',
       confirmButtonText: "Confirm",
       confirmButtonColor: '#3085d6'
@@ -261,7 +275,7 @@
       title: "Unknown Error",
       text: "Error - Unknown Error",
       type: "error",
-      showCancelButton: true,
+      showCancelButton: false,
       cancelButtonColor: '#d33',
       confirmButtonText: "Confirm",
       confirmButtonColor: '#3085d6'
@@ -275,7 +289,7 @@
       title: "Update Password",
       text: "Success Update Password",
       type: "success",
-      showCancelButton: true,
+      showCancelButton: false,
       cancelButtonColor: '#d33',
       confirmButtonText: "Confirm",
       confirmButtonColor: '#3085d6'
@@ -289,7 +303,7 @@
       title: "Update Number",
       text: "Success Update Phone Number",
       type: "success",
-      showCancelButton: true,
+      showCancelButton: false,
       cancelButtonColor: '#d33',
       confirmButtonText: "Confirm",
       confirmButtonColor: '#3085d6'
@@ -303,7 +317,7 @@
       title: "Update Address",
       text: "Success Update Address",
       type: "success",
-      showCancelButton: true,
+      showCancelButton: false,
       cancelButtonColor: '#d33',
       confirmButtonText: "Confirm",
       confirmButtonColor: '#3085d6'

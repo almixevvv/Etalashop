@@ -13,7 +13,8 @@ class Home extends CI_Controller
 
 	public function index()
 	{
-
+		$this->load->model('M_home', 'home');
+		
 		//GET THE MARGIN PARAMETER
 		$marginParameter = $this->product->getMarginPrice();
 
@@ -29,6 +30,14 @@ class Home extends CI_Controller
 
 		// $productList = $this->incube->getProductList($queryArray);
 		$queryProduct = $this->api->getGeneralListGroup('v_g_products', 'PRODUCT_ID');
+
+		$this->db->select('*')
+			->from('g_banner')
+			->where('ORDER_NO != ', 'null')
+			->where('FLAG', '1')
+			->order_by('ORDER_NO', 'ASC');
+
+		$queryBanner  = $this->db->get();
 
 		foreach ($queryProduct->result() as $data) {
 
@@ -63,6 +72,7 @@ class Home extends CI_Controller
 		}
 
 		$tmp['sectionName'] = 'Home';
+		$tmp['bannerFile']  = $queryBanner;
 
 		$this->load->view('templates/header', $tmp);
 		$this->load->view('templates/navbar', $tmp);

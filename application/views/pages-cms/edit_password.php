@@ -1,4 +1,4 @@
-<?php echo form_open('Login_cms/updatePassword');?>
+<?php echo form_open('CMS/Login_cms/updatePassword'); ?>
 
 <!-- HEADER -->
 <div class="modal-header bg-primary" style="padding: 0.2rem;">
@@ -8,18 +8,18 @@
   </button>
 </div>
 
-  <!-- Edit Margin -->
+<!-- Edit Margin -->
 <div class="modal-body" style="font-size: 14px;">
   <div class="row" style=" margin-bottom: 1em;">
     <div class="col-lg-6">
-    	<label style="width: 10em;font-weight: bold;">New Password</label>
-    	<label style="margin-left: 4em; font-weight: bold;">:</label>
+      <label style="width: 10em;font-weight: bold;">New Password</label>
+      <label style="margin-left: 4em; font-weight: bold;">:</label>
     </div>
     <div class="col-lg-6">
-        <input type="Password" name="new_pass" class="form-control" style="width: 100%;margin-top: -0.5em;">
+      <input type="Password" name="new_pass" class="form-control" style="width: 100%;margin-top: -0.5em;">
     </div>
   </div>
-  
+
 </div>
 
 <div class="modal-footer">
@@ -28,5 +28,4 @@
 </div>
 
 
-<?php echo form_close();?>
-
+<?php echo form_close(); ?>

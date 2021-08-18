@@ -135,6 +135,20 @@
                           <span><?= $dt->CATEGORY_NAME; ?></span>
                         </div>
                       </div>
+
+                      <div class="row">
+                        <div class="col-3 pr-0 pl-2">
+                          <span class="font-weight-bold">Weight</span>
+                        </div>
+
+                        <div class="col-1 pr-0">
+                          <span>:</span>
+                        </div>
+
+                        <div class="col-8 pl-2">
+                          <span><?= $dt->WEIGHT; ?> kg </span>
+                        </div>
+                      </div>
                     </td>
 
                     <td>
@@ -161,7 +175,7 @@
                         </div>
 
                         <div class="col-7 pl-2">
-                          <span><?= date('Y-m-d', strtotime($dt->CREATED)); ?></span>
+                          <span><?= date('Y-m-d h:i:sa', strtotime($dt->CREATED)); ?></span>
                         </div>
                       </div>
                       <div class="row">
@@ -174,7 +188,7 @@
                         </div>
 
                         <div class="col-7 pl-2">
-                          <span><?= ($dt->UPDATED != null ? date('Y-m-d', strtotime($dt->UPDATED)) : '-'); ?></span>
+                          <span><?= ($dt->UPDATED != null ? date('Y-m-d h:i:sa', strtotime($dt->UPDATED)) : '-'); ?></span>
                         </div>
                       </div>
                       <div class="row">
@@ -187,7 +201,8 @@
                         </div>
 
                         <div class="col-7 pl-2">
-                          <span><?= (!isset($dt->USER_NAME) ? '-' : $dt->USER_NAME); ?></span>
+                          <!-- <span><?= $dt->USER_ID; ?></span> -->
+                          <span><?= ($dt->USER_ID != null ? $dt->USER_ID : '-'); ?></span>
                         </div>
                       </div>
                     </td>
@@ -251,7 +266,7 @@
 
   <!-- Modal Detail Product -->
   <div id="detailProductModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="detailProductModal" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog modal-xl" role="document">
       <!--  <form id="editProduct" action="<?= base_url('CMS/Product_cms/updateProduct') ?>" method="POST" enctype='multipart/form-data'> -->
       <div class="modal-content">
         <div class="modal-header" style="background-color: #ababab">
@@ -274,7 +289,7 @@
 
   <!-- Modal Add Product -->
   <div id="addProductModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="addProduct" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog modal-xl" role="document">
       <form id="addProduct" action="<?= base_url('CMS/Product_cms/add_product') ?>" method="POST" enctype='multipart/form-data'>
         <div class="modal-content">
           <div class="modal-header" style="background-color: #ababab">
@@ -319,7 +334,7 @@
               <div class="col-6">
                 <div class="form-group">
                   <label for="txtPRODWeight">Weight (Kg)</label>
-                  <input type="number" class="form-control" id="txtPRODWeight" name="txtPRODWeight" placeholder="Example : 8,9">
+                  <input type="number" class="form-control" id="txtPRODWeight" name="txtPRODWeight" placeholder="Example : 8,9" step="0.01" min="0">
                 </div>
               </div>
             </div>
@@ -355,12 +370,12 @@
                   <div class="col-12">
                     <div class="d-flex">
 
-                      <div class="form-group mr-2">
-                        <input type="number" class="form-control txtQUANMin" name="txtQUANMin[]" placeholder="Min Qty">
+                      <div class="form-group mr-2" style="width: 25%;">
+                        <input type="number" class="form-control txtQUANMin" name="txtQUANMin[]" placeholder="Min Qty" value="1">
                       </div>
 
-                      <div class="form-group mr-2">
-                        <input type="number" class="form-control txtQUANMax" name="txtQUANMax[]" placeholder="Max Qty">
+                      <div class="form-group mr-2" style="width: 25%;">
+                        <input type="number" class="form-control txtQUANMax" name="txtQUANMax[]" placeholder="Max Qty" value="99999999999">
                       </div>
 
                       <div class="form-group mr-2">
@@ -405,7 +420,7 @@
 
   <!-- Modal Edit Product -->
   <div id="editProductModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="editProductModal" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog modal-xl" role="document">
       <form id="editProduct" action="<?= base_url('CMS/Product_cms/edit_product') ?>" method="POST" enctype='multipart/form-data'>
         <div class="modal-content">
           <div class="modal-header" style="background-color: #ababab">
@@ -450,7 +465,7 @@
               <div class="col-6">
                 <div class="form-group">
                   <label for="editPRODWeight">Weight (Kg)</label>
-                  <input type="number" class="form-control" id="editPRODWeight" name="editPRODWeight" placeholder="Weight">
+                  <input type="number" class="form-control" id="editPRODWeight" name="editPRODWeight" placeholder="Weight" step="0.01" min="0">
                 </div>
               </div>
             </div>
@@ -486,11 +501,11 @@
                   <div class="col-12">
                     <div class="d-flex">
 
-                      <div class="form-group mr-2">
+                      <div class="form-group mr-2" style="width: 25%;">
                         <input type="number" class="form-control editQUANMin" name="editQUANMin[]" placeholder="Min Qty">
                       </div>
 
-                      <div class="form-group mr-2">
+                      <div class="form-group mr-2" style="width: 25%;">
                         <input type="number" class="form-control editQUANMax" name="editQUANMax[]" placeholder="Max Qty">
                       </div>
 
@@ -536,7 +551,7 @@
 
   <!-- Modal Images -->
   <div class="modal fade" id="image-gallery" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-xl">
       <div class="modal-content">
         <div class="modal-header">
           <h4 class="modal-title" id="image-gallery-title"></h4>

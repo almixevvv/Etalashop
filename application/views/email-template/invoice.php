@@ -44,7 +44,7 @@
   <?php $totalPostage = $data->TOTAL_POSTAGE; ?>
 
   <center>
-    <?php echo form_open('Orders_cms/sendInvoice'); ?>
+    <?php echo form_open('CMS/Orders_cms/sendInvoice'); ?>
 
     <a style="text-decoration: none!important;" href="<?php echo base_url('cms/orders'); ?>">
       <button type="button" class="buttonBack">

@@ -16,8 +16,11 @@
             <span style="color: #2db4d6; font-size: 14px; font-weight: bold;"><?php echo $data->ORDER_NO; ?></span>
           </td>
           <td>
-            <div style="width: 6em; font-size: 12px;color: #666666;margin-left: 22.2em; margin-top: 1em;">Order Date </div>
-            <div style="color: #2db4d6; font-size: 14px;text-align: right; margin-left: 19em;font-weight: bold;"><?php echo date("d F Y", strtotime($data->ORDER_DATE)); ?></div>
+            <div col-sm-12 col-xs-12>
+              <div style="width: 6em; font-size: 12px;color: #666666;margin-left: 22.2em; margin-top: 1em;">Order Date </div>
+              <div style="color: #2db4d6; font-size: 14px;text-align: right; margin-left: 19em;font-weight: bold;"><?php echo date("d F Y", strtotime($data->ORDER_DATE)); ?></div>
+            </div>
+            
           </td>
         </tr>
       </table>
@@ -121,7 +124,7 @@
             <div style="font-size: 12px; color: #2db4d6; font-weight: bold;"><?php echo $data->QUANTITY; ?></label> X <?php echo number_format($harga_awal, 2); ?></div>
           </td>
           <td height="10" width="400" style="text-align:right;padding: 4px;">
-            <div style="font-size: 12px; color: #666666"><?php echo number_format($$data->PRICE, 2); ?></div>
+            <div style="font-size: 12px; color: #666666"><?php echo number_format($data->PRICE, 2); ?></div>
           </td>
         </tr>
       </table>
@@ -153,7 +156,6 @@
         <!-- Shipping Cost -->
         <td height="10" width="900">
           <div style="text-align: left; margin-top: 0.5em; font-size: 12px; color: #666666; ">Shipping Cost</div>
-          <div style="text-align: left; font-size: 12px; color: #2db4d6">(Not include shipping cost to outside Jakarta)</div>
         </td>
         <td height="10" width="400">
           <div style="text-align: right;  font-size: 12px; color: #666666"><?php echo number_format($totalPostage, 2); ?></div>

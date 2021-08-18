@@ -66,6 +66,7 @@
 			?>
 				<span class="mobile-icon account-position-fix dropdown-toggle" id="dropdown-account-mobile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-offset="10, 10">
 					<a href="<?php echo base_url(); ?>">
+						<?php if ($queryMember) ?>
 						<i class="fas fa-user-circle"></i>
 					</a>
 				</span>
@@ -148,7 +149,7 @@
 
 			</div>
 
-			<div class="navbar-column-account"> 
+			<div class="navbar-column-account">
 
 				<span id="account-left">
 					<a href="<?php echo base_url('mycart'); ?>">
@@ -158,13 +159,13 @@
 
 				<?php
 				//ASSIGN SESSION TO LOCAL VARIABLE
-				$userData = $this->session->user_data;
+				$userData = $this->session->userdata('user_data');
 				if (isset($userData['EMAIL'])) {
 				?>
 					<span class="account-position-fix dropdown-toggle" id="dropdown-account" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-offset="20,15">
 						<a href="#" style="color: #C1C1C1;">
-							<?php if (!isset($userData['IMAGE'])) { ?>
-								<img src="<?php echo $userData['IMAGE']; ?>" alt="<?php echo $userData['FIRST_NAME']; ?> Profile Image" id="navbar-account-profile" onError="this.onerror=null;this.src='<?= base_url('assets/images/member-img/no-profile.png') ?>'" style="width: 30px">
+							<?php if (($userData['IMAGE'] != null)) { ?>
+								<img src="<?= base_url('assets/images/member-img/' . $userData['IMAGE']); ?>" alt="<?php echo $userData['FIRST_NAME']; ?> Profile Image" id="navbar-account-profile" onError="this.onerror=null;this.src='<?= base_url('assets/images/member-img/no-profile.png') ?>'" style="width: 30px; height: 30px; border-radius: 50%;">
 							<?php } else { ?>
 								<i class="fas fa-user-circle" id="navbar-account-logo"></i>
 							<?php } ?>

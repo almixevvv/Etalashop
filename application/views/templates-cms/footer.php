@@ -153,7 +153,7 @@
       }).then((result) => {
 
         if (result.value) {
-          window.location.replace("<?php echo base_url('CMS/logout'); ?>");
+          window.location.replace("<?php echo base_url('CMS/CMS/logout'); ?>");
           // swalWithBootstrapButtons.fire(
           //   'Deleted!',
           //   'Selected product has been removed.',
@@ -171,7 +171,7 @@
     var id = button.data('id');
     // console.log(id);
     // console.log('Button Position ' + orderno);
-    var getPassword = '<?php echo base_url('CMS/getPassword?id='); ?>';
+    var getPassword = '<?= base_url('CMS/Login_cms/getPassword?id='); ?>';
 
     $('.modal-body').load(getPassword + id, function() {
       $('#changePass').modal({

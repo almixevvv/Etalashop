@@ -26,16 +26,13 @@ class CMS extends CI_Controller
 
 	public function logout()
 	{
-
-		$this->session->unset_userdata('name');
-		$this->session->unset_userdata('user_group');
+		$this->session->unset_userdata('cms_sess');
 
 		redirect('cms/login');
 	}
 
 	public function login_process()
 	{
-
 		$email 		= $this->input->post('txt-username');
 		$password 	= $this->input->post('txt-password');
 
@@ -110,7 +107,6 @@ class CMS extends CI_Controller
 	public function dashboard()
 	{
 		$data['page'] = "Dashboard";
-
 
 		$data['sess_data'] 		= $this->session->userdata('cms_sess');
 		$data['new_order'] 		= $this->cms->select_order_new();

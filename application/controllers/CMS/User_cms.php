@@ -85,14 +85,17 @@ class User_cms extends CI_Controller
 		$password = $this->input->post('acc_password');
 		$status = $this->input->post('acc_status');
 
-		$hashPassword = sha1($password);
+
+		$salt = sha1($this->incube->generateID('10'));
+		$passHash = password_hash($password . $salt, PASSWORD_BCRYPT, array('cost' => 12));
 
 		$data = array(
-			'ID'  => $id,
-			'NAME' => $name,
-			'GROUP_ID' => $group,
-			'PASS' => $hashPassword,
-			'STATUS' => $status
+			'ID'  		=> $id,
+			'NAME' 		=> $name,
+			'SALT'		=> $salt,
+			'GROUP_ID' 	=> $group,
+			'PASS' 		=> $passHash,
+			'STATUS' 	=> $status
 		);
 
 		//UPDATE PREVIOUS DATA
