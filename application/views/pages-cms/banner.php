@@ -2,7 +2,6 @@
 
     <!-- Sidebar -->
     <?php $this->load->view('templates-cms/frame_side'); ?> 
-    <!-- COMMENT RAFIF -->
 
     <div id="content-wrapper">
 
@@ -15,6 +14,7 @@
 
             <i class="fas fa-images"></i>
             <b>Banner List</b>
+            <p>Test</p>
           </div>
           <div class="card-body" >
             <div class="table-responsive">
