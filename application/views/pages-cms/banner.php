@@ -1,7 +1,7 @@
   <div id="wrapper">
 
     <!-- Sidebar -->
-    <?php $this->load->view('templates-cms/frame_side'); ?>
+    <?php $this->load->view('templates-cms/frame_side'); ?> 
 
     <div id="content-wrapper">
 
@@ -55,7 +55,7 @@
                     </td> -->
                     <td class="text-center">
                         <!-- <label><?= $data->IMAGE_PATH; ?></label> -->
-                        <img src= "<?php echo base_url(  $img ); ?>" width='200px'/> 
+                        <img src= "<?php echo base_url( $img ); ?>" width='200px'/> 
                     </td>
                     <td>
                       <label style="margin-left: 0.4em;"><?php echo $desc; ?></label>
