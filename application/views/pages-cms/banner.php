@@ -14,7 +14,6 @@
 
             <i class="fas fa-images"></i>
             <b>Banner List</b>
-            <p>Test</p>
           </div>
           <div class="card-body" >
             <div class="table-responsive">
@@ -56,7 +55,7 @@
                     </td> -->
                     <td class="text-center">
                         <!-- <label><?= $data->IMAGE_PATH; ?></label> -->
-                        <img src= "<?php echo base_url(  $img ); ?>" width='200px'/> 
+                        <img src= "<?php echo base_url( $img ); ?>" width='200px'/> 
                     </td>
                     <td>
                       <label style="margin-left: 0.4em;"><?php echo $desc; ?></label>
