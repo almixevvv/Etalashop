@@ -1,7 +1,8 @@
   <div id="wrapper">
 
     <!-- Sidebar -->
-    <?php $this->load->view('templates-cms/frame_side'); ?>
+    <?php $this->load->view('templates-cms/frame_side'); ?> 
+    <!-- COMMENT RAFIF -->
 
     <div id="content-wrapper">
 
