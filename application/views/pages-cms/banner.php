@@ -14,6 +14,7 @@
 
             <i class="fas fa-images"></i>
             <b>Banner List</b>
+            <p>test</p>
           </div>
           <div class="card-body" >
             <div class="table-responsive">
