@@ -20,7 +20,6 @@ class M_product extends CI_Model
   //GET MARGIN PARAMETER FOR PRICING
   function getMarginPrice()
   {
-
     $this->db->select('*');
     $this->db->from('g_convert');
     $this->db->where('STATUS', 'CURRENT');
@@ -52,5 +51,7 @@ class M_product extends CI_Model
 
     $query  = $this->db->get()->row()->VALUE;
     return $query;
-  }
+  } 
+
+
 }

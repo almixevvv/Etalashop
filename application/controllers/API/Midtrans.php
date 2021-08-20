@@ -48,12 +48,13 @@ class Midtrans extends CI_Controller
             //EoL 1.1
 
             //2.2 Calculate the item weight
-            $curWeight   = $items->WEIGHT * $items->PRODUCT_QUANTITY;
-            $totalWeight = $totalWeight + $curWeight;
+            $curWeight     = $items->WEIGHT * $items->PRODUCT_QUANTITY;
+            $totalWeight   = $totalWeight + $curWeight;
+            $totalWeightUp = ceil($totalWeight);
             //EoL 2.2
 
             //2.3 Calculate the weight cost 
-            $weightPrice = $totalWeight * WEIGHT_PRICE;
+            $weightPrice = $totalWeightUp * WEIGHT_PRICE;
             //EoL 2.3
         }
 

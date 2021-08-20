@@ -125,7 +125,7 @@
 
           <div class="row mt-4">
             <div class="col-12 col-md-6 col-lg-12">
-              <label class="detail-label">Estimated Price :</label>
+              <label class="detail-label"> Price :</label>
               <?php if ($dataproduct->row()->QUANTITY_PRICE == 0) { ?>
                 <span class="detail-exw-color detail-label">Price Negotiable</span>
               <?php } else { ?>
@@ -150,7 +150,7 @@
           <div class="row mt-2">
             <div class="col-12 col-md-5 col-lg-5 col-xl-5">
               <label class="detail-label">Description :</label>
-            </div>;
+            </div>
             <div class="col-12 col-md-9 col-lg-9 col-xl-11" style="overflow:scroll; ">
               <span class="detail-txt-color">
                 <?php if (strlen($dataproduct->row()->PRODUCT_DETAIL) == 0) { ?>
@@ -242,7 +242,7 @@
               <img alt="<?= $data['TITLE']; ?>" class="product-image" src="<?= $data['PICTURE']; ?>" onerror="this.onerror=null;this.src='.'\''.base_url('assets/images/no-image-icon.png').' \''.'" />
             </div>
             <p class="product-title mt-2"><?= ucwords(mb_strimwidth($data['TITLE'], 0, 35, '...')); ?></p>
-            <label class="product-label">Estimated Price</label></br>
+            <label class="product-label"> Price</label></br>
             <span class="product-price">IDR <?= number_format($data['PRICE'], 2, '.', ','); ?></span>
           </a>
         </div>

@@ -16,7 +16,7 @@
 			<?php } ?>
 
 
-			<!-- RIGHT PART -->
+			<!-- RIGHT PART --> 
 			<div class="col-2 col-md-2 col-lg-2 col-xl-2">
 
 				<?php foreach ($bannerFile->result() as $banner2) { ?>
@@ -167,7 +167,8 @@
 									<img alt="<?= $data['TITLE']; ?>" class="product-image" src="<?= (strpos($data['PICTURE'], 'http') === false ? base_url('assets/uploads/products/' . $data['PICTURE']) : $data['PICTURE']); ?>" onerror="this.onerror=null;this.src='.'\''.base_url('assets/images/no-image-icon.png').' \''.'" />
 								</div>
 								<p class="product-title mt-2"><?= ucwords(mb_strimwidth($data['TITLE'], 0, 35, '...')); ?></p>
-								<label class="product-label">Estimated Price</label></br>
+								<!-- <label class="product-label"> Price</label></br> -->
+								<span class="badge badge-danger">25%</span> <s style="color: grey; font-size: 14px">700.000</s><br>
 								<span class="product-price"><?= $data['PRICE']; ?></span>
 							</a>
 						</div>

@@ -246,7 +246,9 @@
 
                     <td>
                       <a href="#" class="btn btn-info" style="width: 8em;font-size: 12px;margin-bottom: 1em;" onclick="buttonInfo('<?= $dt->PRODUCT_ID; ?>')">DETAIL</a>
+
                       <button class="btn btn-warning" style="width: 8em;font-size: 12px;margin-bottom: 1em;" type="button" data-backdrop="static" data-keyboard="false" data-toggle="modal" data-target="#editProductModal" data-id="<?= $dt->PRODUCT_ID; ?>">EDIT</button>
+
                       <a href="#" class="btn btn-danger" style="width: 8em;font-size: 12px;margin-bottom: 1em;" onclick="buttonDelete('<?= $dt->PRODUCT_ID; ?>')">DELETE</a>
                     </td>
                   </tr>
@@ -334,12 +336,43 @@
               <div class="col-6">
                 <div class="form-group">
                   <label for="txtPRODWeight">Weight (Kg)</label>
-                  <input type="number" class="form-control" id="txtPRODWeight" name="txtPRODWeight" placeholder="Example : 8,9" step="0.01" min="0">
+                  <input type="number" class="form-control" id="txtPRODWeight" name="txtPRODWeight" placeholder="Example : 8.9" step="0.01" min="0">
+                </div>
+              </div>
+              <div class="col-6 priceContainer">
+                <label for="txtQUAN">Price Setting</label>
+                <div class="row originalPrice">
+                  <div class="col-12">
+                    <div class="d-flex">
+
+                      <div class="form-group mr-2" style="width: 25%;">
+                        <input type="number" class="form-control txtQUANMin" name="txtQUANMin[]" placeholder="Min Qty" value="1">
+                      </div>
+
+                      <div class="form-group mr-2" style="width: 25%;">
+                        <input type="number" class="form-control txtQUANMax" name="txtQUANMax[]" placeholder="Max Qty" value="999">
+                      </div>
+
+                      <div class="form-group mr-2">
+                        <input type="number" class="form-control txtQUANPrice" name="txtQUANPrice[]" placeholder="Price">
+                      </div>
+
+                      <div class="form-group">
+                        <button type="button" class="btn btn-danger btnRemoveRow" disabled>X</button>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+                <div class="row priceButton">
+                  <div class="col-12">
+                    <button type="button" class="btn btn-info w-100 px-3 btnAddRow">+ Add Quantity</button>
+                  </div>
                 </div>
               </div>
             </div>
 
-            <div class="row">
+            <div class="row pt-4">
               <div class="col-6">
                 <div class="form-group">
                   <label>Product Image</label>
@@ -362,37 +395,12 @@
                     *(Max 2MB)
                   </div>
                 </div>
-              </div>
-
-              <div class="col-6 priceContainer">
-                <label for="txtQUAN">Price Setting</label>
-                <div class="row originalPrice">
-                  <div class="col-12">
-                    <div class="d-flex">
-
-                      <div class="form-group mr-2" style="width: 25%;">
-                        <input type="number" class="form-control txtQUANMin" name="txtQUANMin[]" placeholder="Min Qty" value="1">
-                      </div>
-
-                      <div class="form-group mr-2" style="width: 25%;">
-                        <input type="number" class="form-control txtQUANMax" name="txtQUANMax[]" placeholder="Max Qty" value="99999999999">
-                      </div>
-
-                      <div class="form-group mr-2">
-                        <input type="number" class="form-control txtQUANPrice" name="txtQUANPrice[]" placeholder="Price">
-                      </div>
-
-                      <div class="form-group">
-                        <button type="button" class="btn btn-danger btnRemoveRow" disabled>X</button>
-                      </div>
-
-                    </div>
-                  </div>
-                </div>
-                <div class="row priceButton">
-                  <div class="col-12">
-                    <button type="button" class="btn btn-info w-100 px-3 btnAddRow">+ Add Quantity</button>
-                  </div>
+              </div> 
+             <div class="col-6">
+                <div class="form-group">
+                  <label for="txtPRODDiscount">Discount</label>
+                  <input type="text" class="form-control" id="txtPRODDiscount" name="txtPRODDiscount" value="0.00">
+                  <small id="discountHelp" class="form-text text-muted"> Fill in this column if the item has a discounted price.</small>
                 </div>
               </div>
             </div>
@@ -468,33 +476,6 @@
                   <input type="number" class="form-control" id="editPRODWeight" name="editPRODWeight" placeholder="Weight" step="0.01" min="0">
                 </div>
               </div>
-            </div>
-
-            <div class="row">
-              <div class="col-6">
-                <div class="form-group">
-                  <label>Product Image</label>
-                  <div class="card" id="previewHolder">
-                    <div class="card-body">
-                      <div class="d-flex flex-column" id="preview">
-                        <div class="justify-content-center father-preview" id="fatherPreview">
-                        </div>
-                        <div class="d-flex flex-row justify-content-around mt-3 mother-preview" id="motherPreview">
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="custom-file mt-2">
-                    <input type="file" class="custom-file-input" id="editfilePRODImage" name="editfilePRODImage[]" accept="image/*" multiple>
-                    <label class="custom-file-label" for="editfilePRODImage">Choose files*</label>
-                  </div>
-                  <div class="alert alert-danger mt-2" role="alert">
-                    *Maximum 4 images (JPG, JPEG, PNG) <br>
-                    *(Max 2MB)
-                  </div>
-                </div>
-              </div>
-
               <div class="col-6 priceContainer">
                 <label for="txtQUAN">Price Setting</label>
                 <div class="row originalPrice" id="editPriceList">
@@ -526,6 +507,39 @@
                   </div>
                 </div>
               </div>
+            </div>
+
+            <div class="row pt-4">
+              <div class="col-6">
+                <div class="form-group">
+                  <label>Product Image</label>
+                  <div class="card" id="previewHolder">
+                    <div class="card-body">
+                      <div class="d-flex flex-column" id="preview">
+                        <div class="justify-content-center father-preview" id="fatherPreview">
+                        </div>
+                        <div class="d-flex flex-row justify-content-around mt-3 mother-preview" id="motherPreview">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="custom-file mt-2">
+                    <input type="file" class="custom-file-input" id="editfilePRODImage" name="editfilePRODImage[]" accept="image/*" multiple>
+                    <label class="custom-file-label" for="editfilePRODImage">Choose files*</label>
+                  </div>
+                  <div class="alert alert-danger mt-2" role="alert">
+                    *Maximum 4 images (JPG, JPEG, PNG) <br>
+                    *(Max 2MB)
+                  </div>
+                </div>
+              </div>
+               <div class="col-6">
+                <div class="form-group">
+                  <label for="editPRODDiscount">Discount</label>
+                  <input type="text" class="form-control" id="editPRODDiscount" name="editPRODDiscount">
+                </div>
+              </div>
+              
             </div>
 
             <div class="row">

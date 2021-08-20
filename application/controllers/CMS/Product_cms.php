@@ -157,7 +157,8 @@ class Product_cms extends CI_Controller
                 'CATEGORY'          => $queryCheck->row()->LINK,
                 'CREATED'           => date('Y-m-d h:i:s'),
                 'STATUS'            => 'ACTIVE',
-                'USER_ID'           => $dataSess['user_id']
+                'USER_ID'           => $dataSess['user_id'],
+                'DISCOUNT'          => $this->input->post('txtPRODDiscount')
             );
 
             $this->api->insertGeneralData('g_product_master', $masterData);
@@ -267,7 +268,8 @@ class Product_cms extends CI_Controller
                 'UPDATED'           => date('Y-m-d h:i:s'),
                 'STATUS'            => 'ACTIVE',
                 'PRODUCT_DETAIL'    => $this->input->post('editPRODDetail'),
-                'USER_ID'           => $dataSess['user_id']
+                'USER_ID'           => $dataSess['user_id'],
+                'DISCOUNT'          => $this->input->post('editPRODDiscount')
             );
 
             $this->api->updateGeneralData('g_product_master', 'PRODUCT_ID', $this->input->post('editPRODID'),  $masterData);

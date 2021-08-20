@@ -68,10 +68,11 @@
 							//2.1.1 Calculate the item weight
 							$curWeight   		= $key->WEIGHT * $key->PRODUCT_QUANTITY;
 							$totalWeight 		= $totalWeight + $curWeight;
+							$totalWeightUp		= ceil($totalWeight);
 							//EoL 2.1.1
 
 							//2.1.2 Calculate the weight cost 
-							$weightPrice 		= $totalWeight * WEIGHT_PRICE;
+							$weightPrice 		= $totalWeightUp * WEIGHT_PRICE;
 							//EoL 2.1.2
 
 							//Calculate the total price

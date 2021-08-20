@@ -20,7 +20,7 @@
 
     <div style="width: 80%; color: black!important;">
       <h4>Start shopping from our selection or visit our help section for more info.</h4>
-      <h4>Cheers, Kikikuku Team</h4>
+      <h4>Cheers, Etalashop Team</h4>
       <hr>
       <h4>If the button above doesn't appear, copy and paste this URL to your browser:</h4>
     </div>

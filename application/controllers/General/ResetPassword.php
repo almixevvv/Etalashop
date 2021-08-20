@@ -58,19 +58,26 @@ class ResetPassword extends CI_Controller
 
 			);
 
-			$config['protocol']    = 'smtp';
-			$config['smtp_host']   = 'mail.kikikuku.com';
-			$config['smtp_user']   = 'admin@kikikuku.com';
-			$config['smtp_pass']   = 'yMiBWEq=H+NN';
-			$config['smtp_port']   = 587;
+			// $config['protocol']    = 'smtp';
+			// $config['smtp_host']   = 'mail.kikikuku.com';
+			// $config['smtp_user']   = 'admin@kikikuku.com';
+			// $config['smtp_pass']   = 'yMiBWEq=H+NN';
+			// $config['smtp_port']   = 587;
+			// $config['charset']     = 'utf-8';
+			// $config['newline']     = "\r\n";
+			// $config['wordwrap']    = TRUE;
+			// $config['mailtype']    = 'html';
+
+			$config['smtp_user']   = 'admin@etalashop.com';
+			$config['smtp_pass']   = 'rV#qMNCdt,W!';
+			$config['smtp_port']   = 25;
 			$config['charset']     = 'utf-8';
-			$config['newline']     = "\r\n";
 			$config['wordwrap']    = TRUE;
 			$config['mailtype']    = 'html';
 
 			$this->email->initialize($config);
 
-			$this->email->from('admin@kikikuku.com', 'Kikikuku Team');
+			$this->email->from('admin@etalashop.com', 'Etalashop Team');
 			$this->email->to($regularEmail);
 			$this->email->set_mailtype('html');
 
@@ -101,9 +108,12 @@ class ResetPassword extends CI_Controller
 		$key 		= $this->session->KEY;
 		$email 		= $this->session->EMAIL;
 
-		$hash = sha1($password);
+		//$hash = sha1($password); 
+		$salt = sha1($this->incube->generateID('10'));
+		$passHash = password_hash($password . $salt, PASSWORD_BCRYPT, array('cost' => 12));
 
-		$queryCheckPass = $this->reset->checkPassword($resetEmail, $hash);
+		$queryCheckPass = $this->reset->checkPassword($resetEmail, $passHash); 
+		 
 
 		if ($queryCheckPass->num_rows() > 0) {
 			$this->session->set_flashdata('error', 'password');
@@ -118,7 +128,7 @@ class ResetPassword extends CI_Controller
 			);
 
 			$this->session->set_flashdata('success', 'password');
-			$this->reset->updatePassword($resetEmail, $password);
+			$this->reset->updatePassword($resetEmail, $passHash);
 			$this->reset->updateResetStatus($resetEmail, $key, $data);
 
 			redirect(base_url('login'));

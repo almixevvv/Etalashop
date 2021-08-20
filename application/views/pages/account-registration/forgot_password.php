@@ -1,6 +1,7 @@
 <div class="login-container">
     
-  <form method="POST" action="<?php echo base_url('ResetPassword/sendPasswordReset'); ?>" class="needs-validation" novalidate>
+  <!-- <form method="POST" action="<?php //echo base_url('ResetPassword/sendPasswordReset'); ?>" class="needs-validation" novalidate> -->
+  <form method="POST" action="<?php echo base_url('General/ResetPassword/sendPasswordReset'); ?>" class="needs-validation" novalidate>
     
     <div class="row" id="login-inner-container">
       

@@ -276,12 +276,14 @@ $('#editProductModal').on('show.bs.modal', function(event) {
 		function(resp) {
 			//Buat ngeliat datanya apa aja
 			console.log(resp);
+			console.log(resp[0].DISCOUNT);
 			$('#editPRODID').val(resp[0].PRODUCT_ID);
 			$('#editPRODCategory').val(resp[0].CATEGORY_NAME);
 			$('#editPRODName').val(resp[0].PRODUCT_NAME);
 			$('#editPRODSKU').val(resp[0].SKU);
 			$('#editPRODWeight').val(resp[0].WEIGHT);
 			$('#editPRODDetail').text(resp[0].PRODUCT_DETAIL);
+			$('#editPRODDiscount').val(resp[0].DISCOUNT);
 
 			//6.1.1 Buat nampilin gambar secara otomatis pas klik tombol Edit
 			let imagesArr = [];
